@@ -13,7 +13,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 
 	// buat hidden menu nya
 	// kalo masuk form LOGIN sembunyikan
-	// tapi logo nyo masih ado koq cumen bar menu bae yang ilang aaa
+	// tapi logo nyo masih ado koq cumen bar menu bae yang ilang
 	$rootScope.isLogin=false;
 
 	// Pindahkan scroll selalu ke paling atas => efek dari animasi
@@ -56,7 +56,43 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/groupTindakan',{
 			templateUrl:'partials/master/groupTindakan.html',
 		    controller:'groupTindakanController'
-		}).					
+		}).
+		when('/tindakan',{
+			templateUrl:'partials/master/tindakan.html',
+		    controller:'tindakanController'
+		}).
+		when('/bank',{
+			templateUrl:'partials/master/bank.html',
+		    controller:'bankController'
+		}).		
+		when('/pasien',{
+			templateUrl:'partials/transaksi/pasien.html',
+		    controller:'pasienController'
+		}).
+		when('/registrasi',{
+			templateUrl:'partials/transaksi/registrasi.html',
+		    controller:'registrasiController'
+		}).
+		when('/assesmentPerawat',{
+			templateUrl:'partials/transaksi/assesmentPerawat.html',
+		    controller:'assesmentPerawatController'
+		}).
+		when('/assesmentDokter',{
+			templateUrl:'partials/transaksi/assesmentDokter.html',
+		    controller:'assesmentDokterController'
+		}).			
+		when('/transaksi',{
+			templateUrl:'partials/transaksi/transaksi.html',
+		    controller:'transaksiController'
+		}).			
+		when('/pembayaran',{
+			templateUrl:'partials/transaksi/pembayaran.html',
+		    controller:'pembayaranController'
+		}).
+		when('/laporan',{
+			templateUrl:'partials/laporan/laporan.html',
+		    controller:'laporanController'
+		}).			
         otherwise({
 			redirectTo:'/'
 		});

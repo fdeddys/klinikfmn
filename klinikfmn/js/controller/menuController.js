@@ -1,12 +1,6 @@
 appControllers.controller('menuBarController', ['$scope','$rootScope','$location','$cookieStore', 
     function($scope,$rootScope,$location,$cookieStore){
     
-    
-    //alert('from cookies ' + $cookieStore.get('isLogin'));
-    //alert('from rootscope ' + $rootScope.isLogin);
-    //$scope.isLoginMenu=$rootScope.isLogin;
-    //$rootScope.isLogin=false;
-    
     $scope.namaLogin="Sign in as ";
 
     $scope.$watch('isLogin',function(newVal,oldVal, scope){
