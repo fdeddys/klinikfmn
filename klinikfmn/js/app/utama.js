@@ -14,6 +14,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 	// buat hidden menu nya
 	// kalo masuk form LOGIN sembunyikan
 	// tapi logo nyo masih ado koq cumen bar menu bae yang ilang aaa
+// coba
 	$rootScope.isLogin=false;
 
 	// Pindahkan scroll selalu ke paling atas => efek dari animasi
