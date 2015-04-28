@@ -75,11 +75,11 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		}).
 		when('/assesmentPerawat',{
 			templateUrl:'partials/transaksi/assesmentPerawat.html',
-		    controller:'assesmentPerawatController'
+		    controller:'assessmentPerawatController'
 		}).
 		when('/assesmentDokter',{
 			templateUrl:'partials/transaksi/assesmentDokter.html',
-		    controller:'assesmentDokterController'
+		    controller:'assessmentPerawatController'
 		}).			
 		when('/transaksi',{
 			templateUrl:'partials/transaksi/transaksi.html',
