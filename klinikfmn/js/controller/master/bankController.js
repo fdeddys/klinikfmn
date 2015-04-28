@@ -1,5 +1,5 @@
-appControllers.controller('bankController', ['$scope',
-    function($scope){
+appControllers.controller('bankController', ['$scope','bankFactory',
+    function($scope, bankFactory){
         
 
 }]);

@@ -1,5 +1,5 @@
-appControllers.controller('tindakanController', ['$scope',
-    function($scope){
+appControllers.controller('tindakanController', ['$scope','tindakanFactory',
+    function($scope, tindakanFactory){
         
 
 }]);

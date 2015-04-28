@@ -1,5 +1,5 @@
-appControllers.controller('assessmentDokterController', ['$scope',
-    function($scope){
+appControllers.controller('assessmentDokterController', ['$scope','assessmentFactory',
+    function($scope,assessmentFactory){
         
 
 }]);

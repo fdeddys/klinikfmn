@@ -1,4 +1,4 @@
-var myApp = angular.module('appAccrual',[
+var myApp = angular.module('appKlinikFMN',[
 	'ngRoute',
 	'appControllers',
     'appServices',	

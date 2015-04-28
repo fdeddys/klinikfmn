@@ -1,5 +1,5 @@
-appControllers.controller('registrasiController', ['$scope',
-    function($scope){
+appControllers.controller('registrasiController', ['$scope','registrasiFactory',
+    function($scope, registrasiFactory){
         
 
 }]);
