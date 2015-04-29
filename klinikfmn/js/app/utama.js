@@ -100,3 +100,4 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 
 }]);
 
+// tambah komen
