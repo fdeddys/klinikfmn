@@ -13,7 +13,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 
 	// buat hidden menu nya
 	// kalo masuk form LOGIN sembunyikan
-	// coba1
+	// coba1 lagii
 	$rootScope.isLogin=false;
 
 	// Pindahkan scroll selalu ke paling atas => efek dari animasi
