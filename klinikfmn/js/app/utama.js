@@ -13,6 +13,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 
 	// buat hidden menu nya
 	// kalo masuk form LOGIN sembunyikan
+	// coba1 lagii
 
 	$rootScope.isLogin=false;
 
