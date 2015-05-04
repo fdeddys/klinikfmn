@@ -1,12 +1,11 @@
 <!doctype html>
-<html  lang="en" ng-app="appKlinikFMN">
+<html  lang="en" ng-app="appAccrual">
 	<head>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">	    
 		<title>Klinik Feel More Nature ver :00000</title>	
 		
-	<!-- ANGULAR CS  -->
 		<script type="text/javascript" src="js/angular/angular.js"></script>
 		<script type="text/javascript" src="js/angular/angular-route.js"></script>
 		<script type="text/javascript" src="js/angular/angular-growl.js"></script>		
@@ -16,52 +15,15 @@
 		<script type="text/javascript" src="js/angular/ui-bootstrap-tpls-0.11.0.js"></script>
 		<!--script type="text/javascript" src="js/bootstrap/bootstrap.js"></script-->
 
-	<!-- UTAMA.js -->
-		<script type="text/javascript" src="js/app/utama.js"></script>		
+		<script type="text/javascript" src="js/app/utama.js"></script>
+		
+		<!-- SERVICE -->
 		
 		
-	<!-- SERVICE -->
-		<script type="text/javascript" src="js/service/appServices.js"></script>
-		<script type="text/javascript" src="js/service/authService.js"></script>
-		<script type="text/javascript" src="js/service/userService.js"></script>
-		<!-- MASTER -->
-		<script type="text/javascript" src="js/service/master/groupTindakanService.js"></script>
-		<script type="text/javascript" src="js/service/master/tindakanService.js"></script>
-		<script type="text/javascript" src="js/service/master/bankService.js"></script>
-		<!-- TRANSAKSI -->
-		<script type="text/javascript" src='js/service/transaksi/pasienService.js'></script>
-		<script type="text/javascript" src='js/service/transaksi/registrasiService.js'></script>
-		<script type="text/javascript" src='js/service/transaksi/assessmentService.js'></script>
-		<script type="text/javascript" src='js/service/transaksi/transaksiService.js'></script>
-		<script type="text/javascript" src='js/service/transaksi/pembayaranService.js'></script>
-		<!-- END SERVICE -->
-
-
-	<!-- CONTROLLER -->
-		<script type="text/javascript" src="js/controller/appController.js"></script>
-		<script type="text/javascript" src='js/controller/menuController.js'></script>
-		<script type="text/javascript" src='js/controller/loginController.js'></script>
-		<!-- MASTER -->
-		<script type="text/javascript" src='js/controller/master/groupTindakanController.js'></script>
-		<script type="text/javascript" src='js/controller/master/tindakanController.js'></script>
-		<script type="text/javascript" src='js/controller/master/bankController.js'></script>
-		<!-- TRANSAKSI -->
-		<script type="text/javascript" src='js/controller/transaksi/pasienController.js'></script>
-		<script type="text/javascript" src='js/controller/transaksi/registrasiController.js'></script>
-		<script type="text/javascript" src='js/controller/transaksi/assessmentPerawatController.js'></script>
-		<script type="text/javascript" src='js/controller/transaksi/assessmentDokterController.js'></script>
-		<script type="text/javascript" src='js/controller/transaksi/transaksiController.js'></script>
-		<script type="text/javascript" src='js/controller/transaksi/pembayaranController.js'></script>
-		<!-- END CONTROLLER -->
-
-
-		<!--  LAPORAN -->
-		<script type="text/javascript" src='js/controller/laporan/laporanController.js'></script>
-
-
-	<!-- CSS -->
+		<!-- CONTROLLER -->
+		
+						 		
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/styleSendiri.css">
 		<link rel="stylesheet" type="text/css" href="css/angular-growl.min.css">
 		
 		<base href="#/">			
@@ -75,7 +37,7 @@
 		          <a class="navbar-brand" href="#/login"><img src="img/logo.jpg"></a>
 		          <a class="navbar-brand" href="#/">
 		          <!-- <p style="color:white"class="navbar-text"></p> -->
-		          <span style='color:white'>Feel More Natural</span> 
+		          <span style='color:white'>Accrual Basis</span> 
 		          </a>
 		        </div>
 
@@ -84,9 +46,10 @@
 		            <li class="dropdown">
 		              <a ng-click="$event.preventDefault()" href="#" class="dropdown-toggle" data-toggle="dropdown" >Master <span class="caret"></span></a>
 		              <ul class="dropdown-menu">
-		                <li><a href="#/groupTindakan"><span class='glyphicon glyphicon-home'></span> Group Tindakan</a></li>
-		                <li><a href="#/tindakan"><span class='glyphicon glyphicon-paperclip'></span> Tindakan</a></li>
-		                <li><a href="#/bank"><span class='glyphicon glyphicon-gbp'></span> Bank</a></li>		                	                
+		              <li ><a href="#/masterDirektorat"><span class='glyphicon glyphicon-globe'></span> Direktorat</a></li><li><a href="#/masterBagian"><span class='glyphicon glyphicon-home'></span> Bagian</a></li>
+		                <li><a href="#/masterCustomer"><span class='glyphicon glyphicon-paperclip'></span> Customer</a></li>
+		                <li><a href="#/masterBank"><span class='glyphicon glyphicon-gbp'></span> Bank</a></li>
+		                <li><a href="#/masterCoaHeader"><span class='glyphicon glyphicon-list-alt'></span> C O A</a></li>	                
 		              </ul>
 		            </li>
 
@@ -94,20 +57,14 @@
 		            <li class="dropdown">
 		              <a ng-click="$event.preventDefault()" href="#" class="dropdown-toggle" data-toggle="dropdown" > Transaksi <span class="caret"></span></a>
 		              <ul class="dropdown-menu">
-		              		<li ><a href="#/pasien"><span class='glyphicon glyphicon-globe'></span> Pasien</a></li>
-			              <li><a href="#/registrasi"><span class='glyphicon glyphicon-book'></span> Registrasi</a></li>		  			                                      
-			              <li><a href="#/assesmentPerawat"><span class='glyphicon glyphicon-book'></span> Assessment Nurse</a></li>		  			                                      
-			              <li><a href="#/assesmentDokter"><span class='glyphicon glyphicon-book'></span> Assessment Dokter</a></li>		  			                                      
-			              <li><a href="#/transaksi"><span class='glyphicon glyphicon-book'></span> Transaksi</a></li>		  			                                      
-			              <li><a href="#/pembayaran"><span class='glyphicon glyphicon-book'></span> Pembayaran</a></li>		  			                                      
-
+			              <li><a href="#/transaksiJurnalHeader"><span class='glyphicon glyphicon-book'></span> Jurnal</a></li>		  			                                      
 		              </ul>
 		            </li>
 
 		            <li class="dropdown">
 		              <a class="dropdown-toggle" data-toggle="dropdown" ng-click="$event.preventDefault()" href="#">Laporan <span class="caret"></span></a>
 		              <ul class="dropdown-menu">
-		                <li><a href="#"><span class='glyphicon glyphicon-forward'></span> Laporan All</a></li>		                             
+		                <li><a href="#"><span class='glyphicon glyphicon-forward'></span> Laporan Harian</a></li>		                             
 		              </ul>
 		            </li>
 

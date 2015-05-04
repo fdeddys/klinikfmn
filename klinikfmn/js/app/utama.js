@@ -1,7 +1,7 @@
-var myApp = angular.module('appKlinikFMN',[
+var myApp = angular.module('appAccrual',[
 	'ngRoute',
 	'appControllers',
-    'appServices',	
+	'appServices',	
 	'ngCookies',
 	'angular-growl',	
 	'ui.bootstrap'
@@ -13,8 +13,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 
 	// buat hidden menu nya
 	// kalo masuk form LOGIN sembunyikan
-	// coba1 lagii tambah komen
-
+	// tapi logo nyo masih ado koq cumen bar menu bae yang ilang
 	$rootScope.isLogin=false;
 
 	// Pindahkan scroll selalu ke paling atas => efek dari animasi
@@ -51,53 +50,68 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/utama.html'				
 		}).
 		when('/login',{
-			templateUrl:'partials/login.html',
-			controller:'loginController'
+			templateUrl:'index2.html',
+			controller:'index2Controller'
 		}).
-		when('/groupTindakan',{
-			templateUrl:'partials/master/groupTindakan.html',
-		    controller:'groupTindakanController'
+		when('/masterDirektorat',{
+			templateUrl:'partials/master/masterDirektorat.html',
+		    controller:'direktoratController'
 		}).
-		when('/tindakan',{
-			templateUrl:'partials/master/tindakan.html',
-		    controller:'tindakanController'
-		}).
-		when('/bank',{
-			templateUrl:'partials/master/bank.html',
-		    controller:'bankController'
+		when('/masterBagian',{
+			templateUrl:'partials/master/masterBagian.html',
+		    controller:'bagianController'
 		}).		
-		when('/pasien',{
-			templateUrl:'partials/transaksi/pasien.html',
-		    controller:'pasienController'
+		when('/masterCustomer',{
+			templateUrl:'partials/master/masterCustomer.html',
+			controller:'customerController'
 		}).
-		when('/registrasi',{
-			templateUrl:'partials/transaksi/registrasi.html',
-		    controller:'registrasiController'
+		when('/masterBank',{
+			templateUrl:'partials/master/masterBank.html',
+			controller:'bankController'
+		}).		
+		when('/masterCoaHeader',{
+			templateUrl:'partials/master/masterCoaHdr.html',
+			controller:'coaHdrController'
+		}).	
+		when('/masterCoaDetil',{
+			templateUrl:'partials/master/masterCoaDtl.html',
+			controller:'coaDtlController'
 		}).
-		when('/assesmentPerawat',{
-			templateUrl:'partials/transaksi/assesmentPerawat.html',
-		    controller:'assessmentPerawatController'
+		when('/masterJurnal',{
+			templateUrl:'partials/transaksi/masterJurnal.html',
+			controller: 'jurnalController'
+		}).							
+		when('/masterUser',{
+			templateUrl:'partials/Utility/masterUser.html',
+			controller: 'userController'
+		}).	
+		when('/transaksiJurnalHeader',{
+			templateUrl:'partials/transaksi/masterJurnal.html',
+			controller: 'jurnalController'
 		}).
-		when('/assesmentDokter',{
-			templateUrl:'partials/transaksi/assesmentDokter.html',
-		    controller:'assessmentPerawatController'
-		}).			
-		when('/transaksi',{
-			templateUrl:'partials/transaksi/transaksi.html',
-		    controller:'transaksiController'
-		}).			
-		when('/pembayaran',{
-			templateUrl:'partials/transaksi/pembayaran.html',
-		    controller:'pembayaranController'
+		when('/printJurnal',{
+			templateUrl:'partials/printing/jurnalPrinting.html',
+			controller: 'jurnalPrintingController'
 		}).
-		when('/laporan',{
-			templateUrl:'partials/laporan/laporan.html',
-		    controller:'laporanController'
-		}).			
+		when('/transaksiJurnalDetil/:idDetil',{
+			templateUrl:'partials/transaksi/detilJurnal.html',
+			controller: 'jurnalDetilController'
+		}).
+		when('/transaksiJurnalBalik/:idDetil',{
+			templateUrl:'partials/transaksi/jurnalBalik.html',
+			controller: 'jurnalBalikController'
+		}).	
+		when('/inputBooking',{
+			templateUrl:'partials/transaksi/bookingPembayaran.html',
+			controller: 'isiBookingController'
+		}).	
+		when('/config',{
+			templateUrl:'partials/Utility/accrualConfig.html',
+			controller: 'accrualConfigController'
+		}).				
         otherwise({
 			redirectTo:'/'
 		});
 
 }]);
 
-// tambah komen
