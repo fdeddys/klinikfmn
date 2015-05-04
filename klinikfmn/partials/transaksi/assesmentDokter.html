@@ -1,1 +1,76 @@
-<h1>Assesment Dokter</h1>
+<div growl></div> 
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Assessment Dokter </h3>
+  </div>
+  <div class="panel-body">
+
+	<div id="PanelPencarian" class='container-fluid' collapse="tutupGrid" style="background-color:whitesmoke" >
+		<br>
+		<div class='container-fluid' style="background-color:#CEECF5" >	
+		<br>
+		Cari no Reg     : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >		
+		Tgl Reg  : 
+			<input type="text" 						
+				datepicker-popup="dd-MMM-yyyy" 
+				ng-model="tgl" 
+				is-open="opened" 
+				datepicker-options="dateOptions" 
+				date-disabled="disabled(date, mode)" 
+				ng-required="true" 
+				id='tgl'
+				close-text="Tutup" 					
+				size='15%'
+				/>
+				<button type="button" class="btn btn-info" ng-click="open($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>			
+		<button class="btn btn-default " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
+		
+		<br>	
+		<br>	
+		</div>
+
+		<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
+			<thead>
+				<tr>								
+					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+					<td width="12%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
+					<td width="12%" ><button class="btn btn-block btn-default" >Jam</button></td>
+				    <td width="15%"><button class="btn btn-block btn-default" >No Reg</button></td> 
+				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
+				    <td width="10%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
+				    <td width="13%" ></td>
+				    <!-- <td width="10%"></td> -->
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat='registasi in registrasis | orderBy:orderRegistrasi ' >
+					<td>{{registasi.idRegistration}}</td>
+					<td>{{registasi.registrationDate | date:'dd-MMM-yyyy'}}</td>					
+					<td>{{registasi.registrationTime | date:'hh:mm:ss'}}</td>					
+					<td>{{registasi.registrationNo}}</td>				
+				    <td>{{registasi.patient.patientNo }}</td> 
+				    <td>{{registasi.patient.patientName}}</td> 
+				    <td>{{registasi.isVoid}}</td>									    
+				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
+				    	ng-click='proses(registasi.id, $index)'
+				    	>Proses Reg</button></td>		    
+				</tr>		
+			</tbody>
+		</table>
+
+		<!-- PAGING -->
+		<div class="container">
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+    	</div> <!-- END PAGING -->
+
+	</div>	<!-- END Panel-Pencarian -->
+
+
+  </div> <!-- END PANEL BODY -->
+
+</div>

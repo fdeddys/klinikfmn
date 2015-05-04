@@ -7,7 +7,7 @@ appServices.factory('groupTindakanFactory',['$http','$rootScope',
 	groupTindakanFactory.getAll=function(){
 		return $http({
 			method:'GET',
-			url : urlApi
+			url : urlApi  +'/'
 		})
 	};
 

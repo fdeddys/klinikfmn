@@ -68,6 +68,10 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pasien.html',
 		    controller:'pasienController'
 		}).
+		when('/pasienDetil/:idPasien',{
+			templateUrl:'partials/transaksi/pasienDetil.html',
+		    controller:'pasienDetilController'
+		}).
 		when('/registrasi',{
 			templateUrl:'partials/transaksi/registrasi.html',
 		    controller:'registrasiController'

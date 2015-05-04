@@ -1,57 +1,68 @@
 <div growl></div> 
-<div class='container' collapse="tutupGrid" style="background-color:white" >
-	<br>
-	<div>	
-		Cari no Nama  : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >
-		Tgl Lahir  : 
-			<input type="text" 						
-				datepicker-popup="dd-MMM-yyyy" 
-				ng-model="tgl1" 
-				is-open="opened" 
-				datepicker-options="dateOptions" 
-				date-disabled="disabled(date, mode)" 
-				ng-required="true" 
-				id='tgl1'
-				close-text="Tutup" 					
-				size='15%'
-				/>
-				<button type="button" class="btn btn-info" ng-click="open($event)">
-					<i class="glyphicon glyphicon-calendar"></i>
-				</button>
-		<button class="btn btn-success " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
-		<br>		
-	</div>
-	<br>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Pasien </h3>
+  </div>
+<div class="panel-body">
 
-	<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
-		<thead>
-			<tr>				
-			<!-- -->
-				<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
-				<td width="15%"><button class="btn btn-block btn-default" >No</button></td>		
-			    <td width="15%"><button class="btn btn-block btn-default" >nama</button></td> 		
-			    <td width="10%"><button class="btn btn-block btn-default" >Tgl lahir</button></td>
-			    <td width="5%"><button class="btn btn-block btn-default" >JK</button></td>
-			    <td width="30%"><button class="btn btn-block btn-default" >Alamat</button></td>
-			    <td width="10%"><button class="btn btn-block btn-default" >Kota</button></td>	
-			    <td width="10%"><button class="btn btn-block btn-default" >Aktif</button></td>	
-			</tr>	
-		</thead>
-		<tbody>
-			<tr ng-repeat='pasien in pasiens | orderBy:orderPasien ' >
-				<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.idPatient}}</a></td>
-				<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.patientNo}}</a></td>							    
-				<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.patientName}}</a></td>				
-			    <td>{{pasien.birthDate | date:'dd-MMM-yyyy'}}</td> 
-			    <td>{{pasien.sex}}</td> 
-			    <td>{{pasien.patientAddress}}</td>					
-			    <td>{{pasien.patientCity}}</td>	    
-			    <td>{{pasien.active}}</td>	    			    
-			</tr>		
-		</tbody>
-	</table>
-	<div class="container">
-        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
-         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
-    </div>
+	<div class='container-fluid' collapse="tutupGrid" collapse="tutupGrid" style="background-color:whitesmoke" >
+		<br>
+		<div class='container-fluid' style="background-color:#CEECF5">	
+		<br>
+			Cari no Nama  : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >
+			Tgl Lahir  : 
+				<input type="text" 						
+					datepicker-popup="dd-MMM-yyyy" 
+					ng-model="tgl" 
+					is-open="opened" 
+					disabled="true" 
+					datepicker-options="dateOptions" 
+					date-disabled="disabled(date, mode)" 
+					ng-required="true" 
+					id='tgl'
+					close-text="Tutup" 					
+					size='15%'
+					/>
+					<button type="button" class="btn btn-info" ng-click="open($event)">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+			<button class="btn btn-default " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
+			<button class="btn btn-warning " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true">    Tambah   </button>
+			<br>	
+			<br>	
+		</div>
+		
+		<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
+			<thead>
+				<tr>								
+					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+					<td width="10%"><button class="btn btn-block btn-default" >No</button></td>		
+				    <td width="15%"><button class="btn btn-block btn-default" >nama</button></td> 	
+				    <td width="10%"><button class="btn btn-block btn-default" >Tgl lahir</button></td>
+				    <td width="5%" ><button class="btn btn-block btn-default" >JK</button></td>
+				    <td width="25%"><button class="btn btn-block btn-default" >Alamat</button></td>
+				    <td width="10%"><button class="btn btn-block btn-default" >Kota</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >Aktif</button></td>	
+				    <td width="10%"></td>	
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat='pasien in pasiens | orderBy:orderPasien ' >
+					<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.idPatient}}</a></td>
+					<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.patientNo}}</a></td>							    
+					<td><a href="#/transaksiJurnalDetil/{{jurnalHeader.idPatient}}">{{pasien.patientName}}</a></td>				
+				    <td>{{pasien.birthDate | date:'dd-MMM-yyyy'}}</td> 
+				    <td>{{pasien.sex}}</td> 
+				    <td>{{pasien.patientAddress}}</td>					
+				    <td>{{pasien.patientCity}}</td>	    
+				    <td>{{pasien.active}}</td>	    			    
+				    <td><button class="btn btn-block btn-warning" >Edit</button></td>	
+				</tr>		
+			</tbody>
+		</table>
+		<div class="container">
+	        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+	         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+	    </div>
+	</div>
 </div>
