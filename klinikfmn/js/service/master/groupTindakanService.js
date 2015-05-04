@@ -1,7 +1,7 @@
 appServices.factory('groupTindakanFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/groupTindakan';
+	var urlApi = $rootScope.pathServerJSON + '/tariffgroup';
 	var groupTindakanFactory={};
 
 	groupTindakanFactory.getAll=function(){
@@ -11,12 +11,6 @@ appServices.factory('groupTindakanFactory',['$http','$rootScope',
 		})
 	};
 
-	groupTindakanFactory.getAllByPage=function(hal, jumlah){		
-		return $http({
-			method:'GET',
-			url:urlApi + '/hal/' + hal + '/jumlah/' + jumlah  
-		});			
-	};
 	
 	groupTindakanFactory.getById=function(id){
 		return $http({
@@ -25,20 +19,20 @@ appServices.factory('groupTindakanFactory',['$http','$rootScope',
 		});
 	};
 
-	groupTindakanFactory.insert = function(customer){
+	groupTindakanFactory.insert = function(groupTindakan){
 		return $http({
 			method:'POST',
-			url:urlApi,
-			data:JSON.stringify(customer),
+			url:urlApi + '/',
+			data:JSON.stringify(groupTindakan),
 			headers:{'Content-Type':'application/json'}
 		});
 	};
 
-	groupTindakanFactory.update  = function(id,customer){
+	groupTindakanFactory.update  = function(id,groupTindakan){
 		return $http({
 			method:'PUT',
-			url:urlApi + '/'+ id,
-			data:JSON.stringify(customer)
+			url:urlApi + '/id/'+ id,
+			data:JSON.stringify(groupTindakan)
 		});
 	};
 

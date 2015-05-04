@@ -1,7 +1,7 @@
-var myApp = angular.module('appAccrual',[
+var myApp = angular.module('appKlinikFMN',[
 	'ngRoute',
 	'appControllers',
-	'appServices',	
+    'appServices',	
 	'ngCookies',
 	'angular-growl',	
 	'ui.bootstrap'
@@ -19,9 +19,8 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 	// Pindahkan scroll selalu ke paling atas => efek dari animasi
 	$rootScope.$on('$viewContentLoaded', function(){ window.scrollTo(0, 0); });
 
-	// Path server database
-	//$rootScope.pathServerJSON='http://127.0.0.1:8080/AccrualBasisDB';
-	$rootScope.pathServerJSON='http://localhost:8081';
+	// Path server database	
+	$rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
 
 
 	// refresh masih tetep login brooo
@@ -50,65 +49,53 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/utama.html'				
 		}).
 		when('/login',{
-			templateUrl:'index2.html',
-			controller:'index2Controller'
+			templateUrl:'partials/login.html',
+			controller:'loginController'
 		}).
-		when('/masterDirektorat',{
-			templateUrl:'partials/master/masterDirektorat.html',
-		    controller:'direktoratController'
+		when('/groupTindakan',{
+			templateUrl:'partials/master/groupTindakan.html',
+		    controller:'groupTindakanController'
 		}).
-		when('/masterBagian',{
-			templateUrl:'partials/master/masterBagian.html',
-		    controller:'bagianController'
+		when('/tindakan',{
+			templateUrl:'partials/master/tindakan.html',
+		    controller:'tindakanController'
+		}).
+		when('/bank',{
+			templateUrl:'partials/master/bank.html',
+		    controller:'bankController'
 		}).		
-		when('/masterCustomer',{
-			templateUrl:'partials/master/masterCustomer.html',
-			controller:'customerController'
+		when('/pasien',{
+			templateUrl:'partials/transaksi/pasien.html',
+		    controller:'pasienController'
 		}).
-		when('/masterBank',{
-			templateUrl:'partials/master/masterBank.html',
-			controller:'bankController'
-		}).		
-		when('/masterCoaHeader',{
-			templateUrl:'partials/master/masterCoaHdr.html',
-			controller:'coaHdrController'
-		}).	
-		when('/masterCoaDetil',{
-			templateUrl:'partials/master/masterCoaDtl.html',
-			controller:'coaDtlController'
+		when('/registrasi',{
+			templateUrl:'partials/transaksi/registrasi.html',
+		    controller:'registrasiController'
 		}).
-		when('/masterJurnal',{
-			templateUrl:'partials/transaksi/masterJurnal.html',
-			controller: 'jurnalController'
-		}).							
-		when('/masterUser',{
-			templateUrl:'partials/Utility/masterUser.html',
-			controller: 'userController'
-		}).	
-		when('/transaksiJurnalHeader',{
-			templateUrl:'partials/transaksi/masterJurnal.html',
-			controller: 'jurnalController'
+		when('/assesmentPerawat',{
+			templateUrl:'partials/transaksi/assesmentPerawat.html',
+		    controller:'assessmentPerawatController'
 		}).
-		when('/printJurnal',{
-			templateUrl:'partials/printing/jurnalPrinting.html',
-			controller: 'jurnalPrintingController'
+		when('/assesmentDokter',{
+			templateUrl:'partials/transaksi/assesmentDokter.html',
+		    controller:'assessmentPerawatController'
+		}).			
+		when('/transaksi',{
+			templateUrl:'partials/transaksi/transaksi.html',
+		    controller:'transaksiController'
+		}).			
+		when('/pembayaran',{
+			templateUrl:'partials/transaksi/pembayaran.html',
+		    controller:'pembayaranController'
 		}).
-		when('/transaksiJurnalDetil/:idDetil',{
-			templateUrl:'partials/transaksi/detilJurnal.html',
-			controller: 'jurnalDetilController'
+		when('/laporan',{
+			templateUrl:'partials/laporan/laporan.html',
+		    controller:'laporanController'
 		}).
-		when('/transaksiJurnalBalik/:idDetil',{
-			templateUrl:'partials/transaksi/jurnalBalik.html',
-			controller: 'jurnalBalikController'
-		}).	
-		when('/inputBooking',{
-			templateUrl:'partials/transaksi/bookingPembayaran.html',
-			controller: 'isiBookingController'
-		}).	
-		when('/config',{
-			templateUrl:'partials/Utility/accrualConfig.html',
-			controller: 'accrualConfigController'
-		}).				
+		when('/user',{
+			templateUrl:'partials/utility/user.html',
+		    controller:'userController'
+		}).			
         otherwise({
 			redirectTo:'/'
 		});

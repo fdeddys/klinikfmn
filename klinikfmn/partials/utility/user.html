@@ -14,20 +14,18 @@
 	<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF"  >
 		<thead>
 			<tr>
-				<td width="5%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>	
-				<td width="20%" align="center"> <button class="btn btn-block btn-default" >Nama</button></td>
-				<td width="55%" align="center"> <button class="btn btn-block btn-default">Aktif</button></td>			    							   			    
-			    <td width="15%" ></td>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>	
+				<td width="70%" align="center"> <button class="btn btn-block btn-default" >Nama</button></td>					    							   			   
+			    <td width="20%" ></td>
 			    <!-- <td width="10%"></td> -->
 			</tr>	
 		</thead>
 		<tbody>
-			<tr ng-repeat='groupTindakan in groupTindakans  ' >
-				<td>{{groupTindakan.idTariffGroup}}</td>
-				<td>{{groupTindakan.tariffGroupName}}</td>
-				<td>{{groupTindakan.active}}</td>				
+			<tr ng-repeat='user in users  ' >
+				<td>{{user.idUser}}</td>
+				<td>{{user.username}}</td>				
 			    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-			    	ng-click='ubah(groupTindakan.idTariffGroup, $index)'
+			    	ng-click='ubah(user.idUser, $index)'
 			    	><span> Edit </span></button></td>			    	    
 			</tr>		
 		</tbody>
@@ -54,20 +52,54 @@
 				<tr>
 					<td >Id</td>
 					<td >:</td>
-					<td ><input type='text' ng-disabled='true' ng-model='groupTindakan.idTariffGroup' /> </td>
+					<td ><input type='text' ng-disabled='true' ng-model='user.idUser' /> </td>
 				</tr>				
-			     <tr>
+			    <tr>
 					<td>Nama</td>
 					<td>:</td>
-					<td ><input type='text'  ng-model='groupTindakan.tariffGroupName' size="50"  /> </td>
-				</tr>	
-				
+					<td ><input type='text'  ng-model='user.username' size="30"  /> </td>
+				</tr>
 				<tr>
-					<td>Aktif</td>
+					<td>Password</td>
 					<td>:</td>
-					<td><input type='text' maxlength='100' ng-model='groupTindakan.active' size="50"  /> </td>
+					<td ><input type='password'  ng-model='user.password' size='10'  /> </td>
+				</tr>	
+				<tr>
+					<td >field</td>
+					<td >:</td>
+					<td ><input type='checkbox' ng-model='user.field' /> </td>
+				</tr>				
+			    <tr>
+					<td>Tarif</td>
+					<td>:</td>
+					<td ><input type='checkbox'  ng-model='user.tariff'   /> </td>
+				</tr>
+				<tr>
+					<td>Pasien</td>
+					<td>:</td>
+					<td ><input type='checkbox'  ng-model='user.patient'  /> </td>
 				</tr>														
-			</tbody>
+				<tr>
+					<td >Registrasi</td>
+					<td >:</td>
+					<td ><input type='checkbox' ng-model='user.registration' /> </td>
+				</tr>				
+			    <tr>
+					<td>User</td>
+					<td>:</td>
+					<td ><input type='checkbox'  ng-model='user.user'   /> </td>
+				</tr>
+				<tr>
+					<td>Transaksi</td>
+					<td>:</td>
+					<td ><input type='checkbox'  ng-model='user.transaction'  /> </td>
+				</tr>		
+				<tr>
+					<td>Pembayaran</td>
+					<td>:</td>
+					<td ><input type='checkbox'  ng-model='user.payment'  /> </td>
+				</tr>		
+			</tbody>			
 		</table>
 		<br>		
 
