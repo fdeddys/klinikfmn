@@ -13,7 +13,6 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
     };
     $scope.search='';
 
-
     $scope.jenisTransaksi;
     //1. add
     //2. edit
