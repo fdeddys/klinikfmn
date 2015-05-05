@@ -5,11 +5,11 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
     $scope.tutupGrid=false;
     $scope.classForm='';
     $scope.groupTindakans=[];
-    $scope.orderGroupTindakan='kode';
+    $scope.orderGroupTindakan='id';
     $scope.groupTindakan={
         id: 0,      
         nama: "",
-        kode:""
+        active:""
     };
     $scope.search='';
 
@@ -31,7 +31,7 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
         $scope.classForm = 'formTambah';
         $scope.groupTindakan.id='[Automatic]';             
         $scope.groupTindakan.nama='';
-        $scope.groupTindakan.kode='';
+        $scope.groupTindakan.active='true';
     };
 
     function getAllGroupTindakan(){

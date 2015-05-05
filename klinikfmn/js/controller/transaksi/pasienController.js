@@ -1,5 +1,5 @@
-appControllers.controller('pasienController', ['$scope','pasienFactory','growl',
-    function($scope, pasienFactory, growl){
+appControllers.controller('pasienController', ['$scope','pasienFactory','growl','$location',
+    function($scope, pasienFactory, growl, $location){
  
 
  	$scope.pasiens=[];
@@ -21,9 +21,13 @@ appControllers.controller('pasienController', ['$scope','pasienFactory','growl',
 				$scope.totalItems = data.totalElements;						
 			})
 			.error(function(data){
-				growl.addWarnMessage('Error loading status vouchers from server !!!');
+				growl.addWarnMessage('Error loading from server !!!');
 			})		
 	}
+
+	$scope.tambah=function(idPasien){
+		$location.path('/pasienDetil/new')
+	};
 
 	// tanggal
 		$scope.today = function() {
