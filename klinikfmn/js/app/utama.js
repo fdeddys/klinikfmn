@@ -68,7 +68,7 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pasien.html',
 		    controller:'pasienController'
 		}).
-		when('/pasienDetil/:idPasien',{
+		when('/pasienDetil/:noPass',{
 			templateUrl:'partials/transaksi/pasienDetil.html',
 		    controller:'pasienDetilController'
 		}).

@@ -26,7 +26,11 @@ appControllers.controller('pasienController', ['$scope','pasienFactory','growl',
 	}
 
 	$scope.tambah=function(idPasien){
-		$location.path('/pasienDetil/new')
+		$location.path('/pasienDetil/0')
+	};
+
+	$scope.edit=function(noPass){
+		$location.path('/pasienDetil/'+noPass)	
 	};
 
 	// tanggal
@@ -51,6 +55,7 @@ appControllers.controller('pasienController', ['$scope','pasienFactory','growl',
 		$scope.today();				
 	};
 
+	
 	startModule();
 
 }]);

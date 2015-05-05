@@ -12,10 +12,10 @@ appServices.factory('pasienFactory',['$http','$rootScope',
 		});			
 	};
 	
-	pasienFactory.getById=function(id){
+	pasienFactory.getByNo=function(no){
 		return $http({
 			method:'GET',
-			url:urlApi + '/id/' + id		
+			url:urlApi + '/id/' + no		
 		});
 	};
 
