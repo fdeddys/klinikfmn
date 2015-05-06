@@ -43,7 +43,8 @@
 				    <td width="25%"><button class="btn btn-block btn-default" >Alamat</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >Kota</button></td>	
 				    <td width="10%"><button class="btn btn-block btn-default" >Aktif</button></td>	
-				    <td width="10%"></td>	
+				    <td width="5%"></td>	
+				    <td width="5%"></td>	
 				</tr>	
 			</thead>
 			<tbody>
@@ -57,6 +58,7 @@
 				    <td>{{pasien.patientCity}}</td>	    
 				    <td>{{pasien.active}}</td>	    			    
 				    <td><button class="btn btn-block btn-warning" ng-click="edit(pasien.patientNo)" >Edit</button></td>	
+				    <td><button class="btn btn-block btn-primary" ng-click="registrasi(pasien.patientNo)" >Registrasi</button></td>	
 				</tr>		
 			</tbody>
 		</table>

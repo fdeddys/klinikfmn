@@ -76,9 +76,17 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/registrasi.html',
 		    controller:'registrasiController'
 		}).
+		when('/registrasiDetil/:noPass',{
+			templateUrl:'partials/transaksi/registrasiDetil.html',
+		    controller:'registrasiDetilController'
+		}).
 		when('/assesmentPerawat',{
 			templateUrl:'partials/transaksi/assesmentPerawat.html',
 		    controller:'assessmentPerawatController'
+		}).
+		when('/assesmentPerawatDetil/:noReg',{
+			templateUrl:'partials/transaksi/assesmentPerawatDetil.html',
+		    controller:'assessmentPerawatDetilController'
 		}).
 		when('/assesmentDokter',{
 			templateUrl:'partials/transaksi/assesmentDokter.html',
@@ -87,6 +95,10 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/transaksi',{
 			templateUrl:'partials/transaksi/transaksi.html',
 		    controller:'transaksiController'
+		}).	
+		when('/transaksiDetil/:idReg',{
+			templateUrl:'partials/transaksi/transaksiDetil.html',
+		    controller:'transaksiDetilController'
 		}).			
 		when('/pembayaran',{
 			templateUrl:'partials/transaksi/pembayaran.html',

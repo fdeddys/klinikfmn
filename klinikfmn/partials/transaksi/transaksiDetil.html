@@ -1,0 +1,63 @@
+<div growl></div> 
+<div class='container' style="background-color:white" >	
+	<br>
+
+	<div class='container-fluid' style=" background-color:SteelBlue; "  >
+	<table border="0" style="width:100%; " >
+		<thead>
+			<tr width='15%'></tr>	
+			<tr width='15%'></tr>	
+			<tr width='15%'></tr>	
+			<tr width='15%'></tr>	
+			<tr width='15%'></tr>	
+			<tr width='25%'></tr>					
+		</thead>			
+		<tbody>
+			<tr>
+				<td style="color:white" >No Urut</td>					
+				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.noUrut' /> </td>
+				<td style="color:white">Issue Date</td>					
+				<td ><input type="text" 						
+							datepicker-popup="dd-MMM-yyyy" 
+							ng-model="jurnalHeader.issueDate" 
+							is-open="opened" 
+							datepicker-options="dateOptions" 
+							date-disabled="disabled(date, mode)" 
+							ng-required="true" 
+							id='jurnalHeader.issueDate'
+							close-text="Tutup" 					
+							size='15%'
+							ng-disabled="true"
+							/>
+							<button type="button" 
+									class="btn btn-info" 
+									ng-click="open($event)" 
+									ng-disabled="kondisiView">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+				</td>
+				<td style="color:white">Jenis Voucher</td>					
+				<td >
+					<select ng-model="jurnalHeader.jenisVoucher" 
+							ng-options="jenisVoucher as jenisVoucher for jenisVoucher in jenisVouchers" 
+							id='comboJenis' 
+							ng-change="cekJenisVoucher()"
+							ng-disabled="kondisiView" ></select>
+					<input type="text" ng-disabled="true" ng-model="jurnalHeader.id" size="5%" >
+				</td>
+			</tr>								
+			<tr>
+				<td style="color:white">No Voucher</td>					
+				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.noVoucher' /> </td>
+				<td style="color:white">Booking Date</td>					
+				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.bookingDate'  size='15%' /> </td>
+				<td style="color:white">Dibayar kepada</td>					
+				<td ><input type='text' id='idDibayarKe' ng-model='jurnalHeader.diBayar' size='45%' ng-disabled="disableDibayarKe"  /> </td>
+			</tr>				 				 
+		</tbody>
+	</table>		
+	<!-- <hr> -->
+	<br>
+	</div>
+	
+</div>

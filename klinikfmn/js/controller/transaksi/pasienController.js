@@ -33,6 +33,10 @@ appControllers.controller('pasienController', ['$scope','pasienFactory','growl',
 		$location.path('/pasienDetil/'+noPass)	
 	};
 
+	$scope.registrasi=function(noPass){
+		$location.path('/registrasiDetil/'+noPass)	
+	};	
+
 	// tanggal
 		$scope.today = function() {
 	    	$scope.tgl = new Date();

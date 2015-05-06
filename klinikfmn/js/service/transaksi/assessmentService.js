@@ -1,7 +1,7 @@
 appServices.factory('assessmentFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/assessment';
+	var urlApi = $rootScope.pathServerJSON + '/assessment';
 	var assessmentFactory={};
 
 	assessmentFactory.getAll=function(){

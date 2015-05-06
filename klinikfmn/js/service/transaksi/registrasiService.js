@@ -1,13 +1,13 @@
 appServices.factory('registrasiFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/pasien';
+	var urlApi = $rootScope.pathServerJSON + '/registration';
 	var registrasiFactory={};
 
 	registrasiFactory.getAll=function(){
 		return $http({
 			method:'GET',
-			url : urlApi
+			url : urlApi + '/'
 		})
 	};
 
@@ -22,6 +22,13 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 		return $http({
 			method:'GET',
 			url:urlApi + '/id/' + id		
+		});
+	};
+
+	registrasiFactory.getByNo=function(no){
+		return $http({
+			method:'GET',
+			url:urlApi + '/no/' + no		
 		});
 	};
 
