@@ -28,9 +28,14 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
         $scope.jenisTransaksi=1;
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formTambah';
-        $scope.groupTindakan.id='[Automatic]';             
-        $scope.groupTindakan.nama='';
-        $scope.groupTindakan.active='true';
+        // $scope.groupTindakan.id='[Automatic]';             
+        // $scope.groupTindakan.nama='';
+        // $scope.groupTindakan.active='true';
+        $scope.groupTindakan={
+            id: 0,      
+            nama: "",
+            active:"true"
+        };
     };
 
     function getAllGroupTindakan(){
@@ -134,6 +139,16 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
                     });             
                 break;          
         }
+
+        growl.addInfoMessage("Coba");
+            groupTindakanFactory
+                .getAll()
+                .success(function (data){
+                    $scope.groupTindakans = data ;                                     
+                }).error(function(data){
+                    growl.addWarnMessage("Error Loading getAll data !",{ttl: 4000});        
+                });             
+
     };
 
     $scope.tutupDetil=function(){
