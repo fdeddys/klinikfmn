@@ -25,7 +25,6 @@
 			/>
 			<button type="button" class="btn btn-success" ng-click="open($event)">
 				<i class="glyphicon glyphicon-calendar"></i></button>	
-			<button class="btn btn-danger " size='10%' ng-click='tambah()'  ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true">    Tambah   </button>
 
 		<button class="btn btn-default " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
 		<br>	
@@ -36,14 +35,13 @@
 			<thead>
 				<tr>								
 					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
-					<td width="12%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
-					<td width="12%" ><button class="btn btn-block btn-default" >Jam</button></td>
-				    <td width="15%"><button class="btn btn-block btn-default" >No Reg</button></td> 
+					<td width="10%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
+					<td width="10%" ><button class="btn btn-block btn-default" >Jam</button></td>
+				    <td width="10%"><button class="btn btn-block btn-default" >No Reg</button></td> 
 				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
-				    <td width="10%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="40%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="10%" ><button class="btn btn-block btn-default" >Tgl Lahir</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
-				    <td width="13%" ></td>
-				    <!-- <td width="10%"></td> -->
 				</tr>	
 			</thead>
 			<tbody>
@@ -54,10 +52,8 @@
 					<td>{{registasi.registrationNo}}</td>				
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
-				    <td>{{registasi.isVoid}}</td>									    
-				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-				    	ng-click='proses(registasi.id, $index)'
-				    	>Proses Reg</button></td>		    
+				    <td>{{registasi.patient.birthDate}}</td> 
+				    <td>{{registasi.isVoid}}</td>										    
 				</tr>		
 			</tbody>
 		</table>

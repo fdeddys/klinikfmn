@@ -28,7 +28,7 @@ appServices.factory('assessmentFactory',['$http','$rootScope',
 	assessmentFactory.insert = function(assessment){
 		return $http({
 			method:'POST',
-			url:urlApi,
+			url:urlApi +'/',
 			data:JSON.stringify(assessment),
 			headers:{'Content-Type':'application/json'}
 		});

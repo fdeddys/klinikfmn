@@ -1,63 +1,112 @@
 <div growl></div> 
-<div class='container' style="background-color:white" >	
+<div class='container' style="background-color:white" >		
 	<br>
-
-	<div class='container-fluid' style=" background-color:SteelBlue; "  >
-	<table border="0" style="width:100%; " >
-		<thead>
-			<tr width='15%'></tr>	
-			<tr width='15%'></tr>	
-			<tr width='15%'></tr>	
-			<tr width='15%'></tr>	
-			<tr width='15%'></tr>	
-			<tr width='25%'></tr>					
+	<div class='container-fluid' style=" background-color:#99B2FF; "  >
+	<br>
+	<table border="0" style="width:100%;" >
+		<!-- <thead>
+			<tr style="width:10%;"  ></tr>	
+			<tr style="width:40%;"></tr>	
+			<tr style="width:10%;"></tr>	
+			<tr style="width:40%;"></tr>				
 		</thead>			
-		<tbody>
+		<tbody > -->
+		<col width="10%">
+		<col width="40%">
+  		<col width="10%">
+  		<col width="40%">
 			<tr>
-				<td style="color:white" >No Urut</td>					
-				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.noUrut' /> </td>
-				<td style="color:white">Issue Date</td>					
-				<td ><input type="text" 						
-							datepicker-popup="dd-MMM-yyyy" 
-							ng-model="jurnalHeader.issueDate" 
-							is-open="opened" 
-							datepicker-options="dateOptions" 
-							date-disabled="disabled(date, mode)" 
-							ng-required="true" 
-							id='jurnalHeader.issueDate'
-							close-text="Tutup" 					
-							size='15%'
-							ng-disabled="true"
-							/>
-							<button type="button" 
-									class="btn btn-info" 
-									ng-click="open($event)" 
-									ng-disabled="kondisiView">
-								<i class="glyphicon glyphicon-calendar"></i>
-							</button>
+				<td style="color:white" height="25" >					
+				    <label >Id Transaksi</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' size="8"/> 
 				</td>
-				<td style="color:white">Jenis Voucher</td>					
-				<td >
-					<select ng-model="jurnalHeader.jenisVoucher" 
-							ng-options="jenisVoucher as jenisVoucher for jenisVoucher in jenisVouchers" 
-							id='comboJenis' 
-							ng-change="cekJenisVoucher()"
-							ng-disabled="kondisiView" ></select>
-					<input type="text" ng-disabled="true" ng-model="jurnalHeader.id" size="5%" >
+				<td style="color:white" >					
+				      <label >No Reg / RM</label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true'  size="12"/> / 
+				    <input type='text' ng-disabled='true'  size="12"/> 				     
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label >Tanggal</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true'  size="10" /> 
+				</td>
+				<td style="color:white" >					
+				      <label >Status</label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true'  size="20"/> 		
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label >Nama</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true'  size="50" /> 
+				</td>
+				<td style="color:white" >					
+				      <label >update</label>		
+				</td>									
+				<td style="color:white" >									    		     
 				</td>
 			</tr>								
-			<tr>
-				<td style="color:white">No Voucher</td>					
-				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.noVoucher' /> </td>
-				<td style="color:white">Booking Date</td>					
-				<td ><input type='text' ng-disabled='true' ng-model='jurnalHeader.bookingDate'  size='15%' /> </td>
-				<td style="color:white">Dibayar kepada</td>					
-				<td ><input type='text' id='idDibayarKe' ng-model='jurnalHeader.diBayar' size='45%' ng-disabled="disableDibayarKe"  /> </td>
-			</tr>				 				 
-		</tbody>
+		<!-- </tbody> -->
 	</table>		
 	<!-- <hr> -->
 	<br>
+		<div style="height:300px; background-color:white" >
+			<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#FFFFC2" >
+				<thead>
+					<tr>								
+						<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+						<td width="20%"><button class="btn btn-block btn-default" >Kode Paket</button></td>		
+					    <td width="35	%"><button class="btn btn-block btn-default" >nama</button></td> 
+					    <td width="10%"><button class="btn btn-block btn-default" >Harga</button></td> 
+					    <td width="10%"><button class="btn btn-block btn-default" >Jumlah</button></td>
+					    <td width="10%"><button class="btn btn-block btn-default" >Total</button></td>
+					    <td width="5%"></td>	
+					    <td width="5%"></td>	
+					</tr>	
+				</thead>
+				<tbody>
+					<tr ng-repeat='pasien in pasiens | orderBy:orderPasien ' >
+						<td>{{pasien.idPatient}}</td>
+						<td>{{pasien.patientNo}}</td>							    
+						<td>{{pasien.patientName}}</td>				
+					    <td>{{pasien.birthDate | date:'dd-MMM-yyyy'}}</td> 
+					    <td>{{pasien.sex}}</td> 
+					    <td>{{pasien.patientAddress}}</td>					
+					    <td>{{pasien.patientCity}}</td>	    
+					    <td>{{pasien.active}}</td>	    			    
+					    <td><button class="btn btn-block btn-warning" ng-click="edit(pasien.patientNo)" >Edit</button></td>	
+					    <td><button class="btn btn-block btn-primary" ng-click="registrasi(pasien.patientNo)" >Registrasi</button></td>	
+					</tr>		
+				</tbody>
+			</table>			
+		</div>
+		<hr>
+		
+		<!--  INPUT TINDAKAN -->
+		<form class="form-inline">
+			<div class="form-group">
+		    	<label class="sr-only" for="tindakan">Email address</label>
+		    	<input type="email" style="width:400px" class="form-control" id="tindakan" placeholder="Nama tindakan"  >
+		  	</div>
+		  	<div class="form-group">
+		    	<label class="sr-only" for="jumlah">Password</label>
+		    	<input type="number" class="form-control" id="jumlah" placeholder="Jumlah" style="width:100px">
+		  	</div>
+		  	<button  class="btn btn-danger">Simpan</button>
+		</form>
+		<!-- END INPUT TINDAKAN -->
+		<br>
 	</div>
-	
+	<br>
 </div>

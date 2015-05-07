@@ -28,9 +28,9 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		registrationNo: null,
 		patient: null,
 		registrationDate: null,
-		registrationTime: '00:00:00',
+		registrationTime: null,
 		isVoid: 0,
-		usrUpdate: 'SYSTEM',
+		usrUpdate: null,
 		lastUpdate: new Date()
 	}
 
@@ -94,8 +94,12 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 
 	$scope.simpan=function(){
 		var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');		
+		//var vJam = $filter('date')($scope.tgl,'HH:mm:ss Z');		
+
 		$scope.registrasi.registrationDate=vTgl;
+		// $scope.registrasi.registrationTime=vJam;
 		$scope.registrasi.patient = $scope.pasien;
+		// $scope.pasien;
 
 
 		// regist ={
