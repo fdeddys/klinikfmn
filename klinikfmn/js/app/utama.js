@@ -96,7 +96,7 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/transaksi.html',
 		    controller:'transaksiController'
 		}).	
-		when('/transaksiDetil/:idReg',{
+		when('/transaksiDetil/:idReg/status/:statusRec',{
 			templateUrl:'partials/transaksi/transaksiDetil.html',
 		    controller:'transaksiDetilController'
 		}).			

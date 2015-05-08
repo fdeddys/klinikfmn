@@ -1,20 +1,14 @@
 appServices.factory('transaksiFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/transaksi';
+	var urlApi = $rootScope.pathServerJSON + '/transaction/hdr';
 	var transaksiFactory={};
 
-	transaksiFactory.getAll=function(){
-		return $http({
-			method:'GET',
-			url : urlApi
-		})
-	};
 
 	transaksiFactory.getAllByPage=function(hal, jumlah){		
 		return $http({
 			method:'GET',
-			url:urlApi + '/hal/' + hal + '/jumlah/' + jumlah  
+			url:urlApi +  '/size/' + jumlah + '/number/' + hal
 		});			
 	};
 	
@@ -25,10 +19,17 @@ appServices.factory('transaksiFactory',['$http','$rootScope',
 		});
 	};
 
+	transaksiFactory.getByNoRegPage=function(noreg, hal, jumlah){
+		return $http({
+			method:'GET',
+			url:urlApi + '/registrationno/' + noreg + '/size/' + jumlah + '/number/' + hal
+		});
+	};
+	
 	transaksiFactory.insert = function(transaksi){
 		return $http({
 			method:'POST',
-			url:urlApi,
+			url:urlApi +'/',
 			data:JSON.stringify(transaksi),
 			headers:{'Content-Type':'application/json'}
 		});
@@ -37,7 +38,7 @@ appServices.factory('transaksiFactory',['$http','$rootScope',
 	transaksiFactory.update  = function(id,transaksi){
 		return $http({
 			method:'PUT',
-			url:urlApi + '/'+ id,
+			url:urlApi + '/id/'+ id,
 			data:JSON.stringify(transaksi)
 		});
 	};
