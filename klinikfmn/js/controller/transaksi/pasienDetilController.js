@@ -1,5 +1,5 @@
-appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams',
-    function($scope, pasienFactory, growl, $filter, $routeParams){
+appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','fieldGroupFactory',
+    function($scope, pasienFactory, growl, $filter, $routeParams, fieldGroupFactory){
  
  	$scope.pasien={ 		
 		idPatient: null,
@@ -23,6 +23,36 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		active: 1
 		
  	};
+
+ 	$scope.dataPekerjaans=[];
+
+ 	function getPekerjaan(){
+ 		console.log('get pendidikans');
+ 		fieldGroupFactory
+ 			.getAllPendidikan()
+ 			.success(function(data){
+ 				console.log('iterate');
+ 				
+ 				var dataPekerjaan;
+ 				angular.forEach(data, function(value, key) {
+    				/* do something for all key: value pairs */
+    				console.log(value.idField + "--" + value.fieldName +  "--" +key)
+    				dataPekerjaan={
+    					id:value.idField,
+    					name:value.fieldName 
+    				}
+    				$scope.dataPekerjaans.push(dataPekerjaan);    				
+				});
+				console.log($scope.dataPekerjaans.length);
+				selectedJob=0;
+ 			// 	var all=data;
+				// $scope.pakerjaans; 				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+ 	}
+
  	// tanggal
 		$scope.today = function() {
 	    	$scope.tgl = new Date();
@@ -98,7 +128,8 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				active: 1				
 		 	};
 		}
-		$scope.today();				
+		$scope.today();	
+		getPekerjaan();			
 	};
 
 	$scope.simpan=function(){
