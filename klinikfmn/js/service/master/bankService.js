@@ -1,7 +1,7 @@
 appServices.factory('bankFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/bank';
+	var urlApi = $rootScope.pathServerJSON + '/fieldgroup';
 	var bankFactory={};
 
 	bankFactory.getAll=function(){

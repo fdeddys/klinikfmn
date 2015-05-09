@@ -140,8 +140,8 @@ appControllers.controller('groupTindakanController', ['$scope', 'groupTindakanFa
                 break;          
         }
 
-        growl.addInfoMessage("Coba");
-            groupTindakanFactory
+        growl.addInfoMessage("Coba1");
+        groupTindakanFactory
                 .getAll()
                 .success(function (data){
                     $scope.groupTindakans = data ;                                     
