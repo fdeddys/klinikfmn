@@ -7,7 +7,8 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
     $scope.banks=[];
     $scope.orderbank='id';
     $scope.bank={
-        id: 0,      
+        id: 0,
+        fieldgroup : 4,      
         nama: "",
         active:""
     };
@@ -17,7 +18,7 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
     //1. add
     //2. edit
     //3. deleter    
-
+    alert("start");
     getAllbank();
 
     $scope.getAll=function(){
@@ -32,7 +33,8 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
         // $scope.bank.nama='';
         // $scope.bank.active='true';
         $scope.bank={
-            id: 0,      
+            id: 0, 
+            fieldgroup : 4,     
             nama: "",
             active:"true"
         };
