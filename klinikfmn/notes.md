@@ -46,3 +46,8 @@ u/payment :
    set byrfm dari data fm 1 :  http://10.1.0.11:8080/fmn-clinic-server/api/transaction/hdr/registrationno/{registrationNo}/update/status/{status}--> boolean
    set isPaid dari data transaction 1 : http://10.1.0.11:8080/fmn-clinic-server/api/pharmacy/registrationno/{registrationNo}/update
 
+
+u/ searching payment date + name --> payment date di isi format yyyy-MM-dd
+u/ searching name -->payment date dibuat "-"
+
+

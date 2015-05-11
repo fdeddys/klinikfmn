@@ -1,0 +1,208 @@
+<div growl></div> 
+<div class='container' style="background-color:white" >		
+	<br>
+	<div class='container-fluid' style=" background-color:#99B2FF; "  >
+	<br>
+	<table border="0" style="width:100%;" >
+		<!-- <thead>
+			<tr style="width:10%;"  ></tr>	
+			<tr style="width:40%;"></tr>	
+			<tr style="width:10%;"></tr>	
+			<tr style="width:40%;"></tr>				
+		</thead>			
+		<tbody > -->
+		<col width="15%">
+		<col width="35%">
+  		<col width="10%">
+  		<col width="40%">
+			<tr>
+				<td style="color:white"  >					
+				    <label class="control-label" >No Pembayaran</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:50%"  ng-model='transaksiHd.transactionNo' class="form-control"/> 
+				</td>
+				<td style="color:white" >					
+				      <label class="control-label">No Reg </label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true' style="width:50%"  ng-model='registrasi.registrationNo' class="form-control"/>
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label class="control-label">Tanggal Bayar</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' 
+				    	ng-disabled='true' 
+				    	ng-model='transaksiHd.transactionDate'
+						datepicker-popup="dd-MMM-yyyy" 						
+						 style="width:50%" 
+						class="form-control"
+				    	/> 
+				</td>
+				<td style="color:white" >					
+				      <label class="control-label">No RM</label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true' style="width:50%"  ng-model='registrasi.patient.patientNo' class="form-control"/> 			
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label class="control-label">Nama</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:90%"   ng-model='registrasi.patient.patientName' class="form-control"/> 
+				</td>
+				<td style="color:white" >					
+				      <label ></label>		
+				</td>									
+				<td style="color:white" >	
+				 	<button  class="btn btn-success" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved">Approve</button>
+				 	<button  class="btn " style="width:30%" ng-click="void()" ng-disabled="isVoided ">Print</button>
+				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided ">Void</button>
+				</td>
+			</tr>								
+		<!-- </tbody> -->
+	</table>		
+	<!-- <hr> -->
+	<br>
+		<div style="height:200px; background-color:white" >
+			<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#FFFFC2" >
+				<thead>
+					<tr>								
+						<td width="10%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+						<td width="20%"><button class="btn btn-block btn-default" >No Reg</button></td>		
+					    <td width="20%"><button class="btn btn-block btn-default" >Total</button></td> 
+					    <td width="20%"><button class="btn btn-block btn-default" >Approve</button></td> 					    
+					    <td width="20%"><button class="btn btn-block btn-default" >Void</button></td>						    
+					</tr>	
+				</thead>
+				<tbody>
+					<tr ng-repeat='transaksiDetil in transaksiDetils | orderBy:orderTransaksiDetil ' >
+						<td>{{transaksiDetil.idTransactionDtl}}</td>
+						<td>{{transaksiDetil.tariff.idTariff}}</td>	
+						<td>{{transaksiDetil.tariff.tariffName}}</td>			
+					    <td>{{transaksiDetil.harga}}</td>					
+					    <td>{{transaksiDetil.paket}}</td>
+					</tr>		
+				</tbody>
+			</table>			
+		</div>
+		<hr>
+		<!--  TOTAL -->
+		<table border="0" style="width:50%;" >		
+			<col width="20%">
+			<col width="80%">	  	
+			<tr>
+				<td style="color:white"  >					
+				    <label class="control-label"> Tindakan</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:70%" ng-model='transaksiHd.transactionNo'  class="form-control"/> 
+				</td>				
+			</tr>
+			<tr>
+				<td style="color:white" >					
+				    <label class="control-label">Farmasi</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:70%" ng-model='transaksiHd.transactionNo' class="form-control"/> 
+				</td>						
+			</tr>
+			<tr>
+				<td style="color:white" >					
+				    <label class="control-label"> Total</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:70%" ng-model='transaksiHd.transactionNo' class="form-control"/> 
+				</td>												
+			</tr>
+			<tr>
+				<td style="color:white"  >					
+				    <label class="control-label"> Disc</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='number' step="10000" min="0" placeholder='Discount dalam Rp'  style="width:50%" ng-model='transaksiHd.transactionNo' class="form-control"/> 
+				</td>												
+			</tr>
+			<tr>
+				<td style="color:white"  >					
+				    <label class="control-label">Grand Total</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true' style="width:70%" ng-model='transaksiHd.transactionNo' class="form-control"/> 
+				</td>												
+			</tr>
+		</table>
+		<hr>
+		
+		<!--  INPUT Pembayaran -->
+		<table border="0" style="width:50%;" >		
+			<col width="20%">
+			<col width="44%">
+	  		<col width="1%">
+	  		<col width="44%">
+			<tr>
+				<td style="color:white"  >					
+				    <label class="col-sm-2 control-label">Tunai</label>
+				</td>									
+				<td style="color:white"  >
+					<label ></label>						    
+				</td>
+				<td style="color:white" >					
+				      <label ></label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='number' step="10000" min="0" ng-model='transaksiHd.transactionNo' class="form-control" placeholder='Jumlah Tunai'/>   
+				</td>									
+				
+			</tr>
+			<tr>
+				<td style="color:white" >					
+				    <label class="col-sm-2 control-label" >Debet</label>
+				</td>									
+				<td style="color:white"  >
+				    <select class="form-control" 
+		                  id="bankKredit"
+		                  ng-model="selectedBankDebet"                   
+		                  ng-options="dokter.name  for dokter in dokters track by dokter.id"
+		                  style="width:100%"
+		                  ></select>   
+				</td>
+				<td style="color:white" >					
+				      <label ></label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='number' step="10000" min="0" ng-model='transaksiHd.transactionNo' class="form-control" placeholder='Jumlah Debet'/> 
+				</td>													
+			</tr>
+			<tr>
+				<td style="color:white" >					
+				    <label class="col-sm-2 control-label" >Kredit</label>
+				</td>									
+				<td style="color:white"  >
+				    <select class="form-control" 
+		                  id="bankKredit"
+		                  ng-model="selectedBankKredit"                   
+		                  ng-options="dokter.name  for dokter in dokters track by dokter.id"
+		                  style="width:100%"
+		                  ></select>   
+				</td>
+				<td style="color:white" >					
+				      <label ></label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='number' step="10000" min="0" ng-model='transaksiHd.transactionNo' class="form-control" placeholder='Jumlah Kredit'/> 
+				</td>									
+				
+			</tr>
+		</table>
+		<hr>
+		<!-- END INPUT TINDAKAN -->
+		<br>
+	</div>
+	<br>
+</div>

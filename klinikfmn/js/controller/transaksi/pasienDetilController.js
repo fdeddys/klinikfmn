@@ -1,5 +1,5 @@
-appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams',
-    function($scope, pasienFactory, growl, $filter, $routeParams){
+appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','fieldGroupFactory',
+    function($scope, pasienFactory, growl, $filter, $routeParams, fieldGroupFactory){
  
  	$scope.dataPendidikans=[];
  	$scope.dataPekerjaans=[];
@@ -25,7 +25,6 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		emergencyJob: '-',
 		active: 1	
  	}; 	
-
 
  	// tanggal
 		$scope.today = function() {

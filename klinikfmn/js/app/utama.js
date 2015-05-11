@@ -106,6 +106,10 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pembayaran.html',
 		    controller:'pembayaranController'
 		}).
+		when('/pembayaranDetil',{
+			templateUrl:'partials/transaksi/pembayaranDetil.html'
+		    // controller:'pembayaranController'
+		}).
 		when('/laporan',{
 			templateUrl:'partials/laporan/laporan.html',
 		    controller:'laporanController'
