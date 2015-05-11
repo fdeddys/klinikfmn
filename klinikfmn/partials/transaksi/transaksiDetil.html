@@ -46,7 +46,7 @@
 				      <label >Status</label>		
 				</td>									
 				<td style="color:white" >					
-				    <input type='text' ng-disabled='true'  size="20"/> 		
+				    <input type='text' ng-disabled='true' ng-model='pesanStatus' size="20"/> 		
 				</td>
 			</tr>
 			<tr>
@@ -54,12 +54,14 @@
 				    <label >Nama</label>
 				</td>									
 				<td style="color:white"  >
-				    <input type='text' ng-disabled='true'  size="50" ng-model='registrasi.patient.patientName' /> 
+				    <input type='text' ng-disabled='true'  size="40" ng-model='registrasi.patient.patientName' /> 
 				</td>
 				<td style="color:white" >					
-				      <label >update</label>		
+				      <label ></label>		
 				</td>									
-				<td style="color:white" >									    		     
+				<td style="color:white" >	
+				 	<button  class="btn btn-info" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved">Approve</button>
+				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided ">Void</button>
 				</td>
 			</tr>								
 		<!-- </tbody> -->
@@ -72,26 +74,24 @@
 					<tr>								
 						<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
 						<td width="20%"><button class="btn btn-block btn-default" >Kode Paket</button></td>		
-					    <td width="35	%"><button class="btn btn-block btn-default" >nama</button></td> 
+					    <td width="35%"><button class="btn btn-block btn-default" >nama</button></td> 
 					    <td width="10%"><button class="btn btn-block btn-default" >Harga</button></td> 
-					    <td width="10%"><button class="btn btn-block btn-default" >Jumlah</button></td>
-					    <td width="10%"><button class="btn btn-block btn-default" >Total</button></td>
-					    <td width="5%"></td>	
-					    <td width="5%"></td>	
+					    <!-- <td width="10%"><button class="btn btn-block btn-default" >Jumlah</button></td>
+					    <td width="10%"><button class="btn btn-block btn-default" >Total</button></td> -->
+					    <td width="10%"><button class="btn btn-block btn-default" >Paket</button></td>	
+					    <td width="10%">Action</td>	
 					</tr>	
 				</thead>
 				<tbody>
-					<tr ng-repeat='pasien in pasiens | orderBy:orderPasien ' >
-						<td>{{pasien.idPatient}}</td>
-						<td>{{pasien.patientNo}}</td>							    
-						<td>{{pasien.patientName}}</td>				
-					    <td>{{pasien.birthDate | date:'dd-MMM-yyyy'}}</td> 
-					    <td>{{pasien.sex}}</td> 
-					    <td>{{pasien.patientAddress}}</td>					
-					    <td>{{pasien.patientCity}}</td>	    
-					    <td>{{pasien.active}}</td>	    			    
-					    <td><button class="btn btn-block btn-warning" ng-click="edit(pasien.patientNo)" >Edit</button></td>	
-					    <td><button class="btn btn-block btn-primary" ng-click="registrasi(pasien.patientNo)" >Registrasi</button></td>	
+					<tr ng-repeat='transaksiDetil in transaksiDetils | orderBy:orderTransaksiDetil ' >
+						<td>{{transaksiDetil.idTransactionDtl}}</td>
+						<td>{{transaksiDetil.tariff.idTariff}}</td>	
+						<td>{{transaksiDetil.tariff.tariffName}}</td>				
+					    <!-- <td>{{transaksiDetil.harga}}</td> 
+					    <td>1</td>  -->
+					    <td>{{transaksiDetil.harga}}</td>					
+					    <td>{{transaksiDetil.paket}}</td>
+					    <td><button class="btn btn-block btn-warning" ng-click="deleteDetil(transaksiDetil.idTransactionDtl)" ng-disabled="isVoided || isApproved">Delete</button></td>	
 					</tr>		
 				</tbody>
 			</table>			
@@ -102,14 +102,34 @@
 		<form class="form-inline">
 			<div class="form-group">
 		    	<label 	class="sr-only" for="tindakan"></label>
-		    	<input type="text" ng-model="selected" typeahead="tariffgroup as tariffgroup.tariffGroupName for tariffgroup in tariffgroups | filter:$viewValue | limitTo:8" class="form-control">
-	    	
+		    	<input type="text" ng-model="tarifSelected" typeahead="tarif as tarif.tariffName for tarif in tarifs | filter:$viewValue | limitTo:8" class="form-control" style="width:400px" placeholder="Nama Tindakan">
 		  	</div>
-		  	<div class="form-group">
+		  	<!-- <div class="form-group">
 		    	<label class="sr-only" for="jumlah">Jumlah</label>
 		    	<input type="number" class="form-control" id="jumlah" placeholder="Jumlah" style="width:100px">
-		  	</div>
-		  	<button  class="btn btn-danger" ng-click="simpan()">Simpan</button>
+		  	</div> -->
+		  	<div class="form-group">
+				<label class="sr-only" for="Dokter">Dokter</label>				
+				  <select class="form-control" 
+				          id="Dokter"
+				          ng-model="selectedDokter"                   
+				          ng-options="dokter.name  for dokter in dokters  track by dokter.id"
+				          style="width:200px"
+				          ></select>   
+				          <!-- {{selectedPendidikan}} -->                  				
+		    </div>
+
+		  	<!-- <div class="form-group">
+		    	<label class="sr-only" for="Dokter">Dokter</label>
+		    	<input type="text" class="form-control" id="Dokter" placeholder="Dokter" style="width:300px">
+		  	</div> -->
+		  	<div class="checkbox">
+			    <label>
+			      <input type="checkbox" ng-model="isPaket"> PAKET 
+			    </label>
+			</div>		  
+		  	<button  class="btn btn-primary" ng-click="simpan()" ng-disabled="isVoided || isApproved">Simpan</button>		  	
+		  	<!-- {{tarifSelected}} -->
 		</form>
 		<!-- END INPUT TINDAKAN -->
 		<br>

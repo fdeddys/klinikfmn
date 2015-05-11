@@ -1,6 +1,9 @@
 appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','fieldGroupFactory',
     function($scope, pasienFactory, growl, $filter, $routeParams, fieldGroupFactory){
  
+ 	$scope.dataPendidikans=[];
+ 	$scope.dataPekerjaans=[];
+ 	
  	$scope.pasien={ 		
 		idPatient: null,
 		patientNo: null,
@@ -20,38 +23,8 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		emergencyPostCode: '-',
 		emergencyPhone: '-',
 		emergencyJob: '-',
-		active: 1
-		
- 	};
-
- 	$scope.dataPekerjaans=[];
-
- 	function getPekerjaan(){
- 		console.log('get pendidikans');
- 		fieldGroupFactory
- 			.getAllPendidikan()
- 			.success(function(data){
- 				console.log('iterate');
- 				
- 				var dataPekerjaan;
- 				angular.forEach(data, function(value, key) {
-    				/* do something for all key: value pairs */
-    				console.log(value.idField + "--" + value.fieldName +  "--" +key)
-    				dataPekerjaan={
-    					id:value.idField,
-    					name:value.fieldName 
-    				}
-    				$scope.dataPekerjaans.push(dataPekerjaan);    				
-				});
-				console.log($scope.dataPekerjaans.length);
-				selectedJob=0;
- 			// 	var all=data;
-				// $scope.pakerjaans; 				
- 			})
- 			.error(function(data){
- 				growl.addWarnMessage("Error loading pekerjaan from server ");
- 			})
- 	}
+		active: 1	
+ 	}; 	
 
  	// tanggal
 		$scope.today = function() {
@@ -71,15 +44,25 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 	// END tanggal  
 
 	function startModule(){
-		
+			
 		var noPass=$routeParams.noPass;
 		if(!isNaN(parseFloat(noPass)) && isFinite(noPass)){
-			//alert('numeric');
+			//alert('numeric');	
+			console.log('searching data pas ' + noPass);		
 			pasienFactory
 				.getByNo(noPass)	
 				.success(function(data){
-					$scope.pasien=data;		
-					growl.addWarnMessage('Success loading !!!');				
+					if(data===null | data ===''){
+						growl.addWarnMessage('new Record !!!');				
+					}else {
+						$scope.pasien=data;			
+						console.log("sukses dapet data pasien job : " + $scope.pasien.patientJob);
+						growl.addWarnMessage('Success loading !!!');
+						console.log('jalankan cek ' + $scope.pasien.patientJob);
+						setPekerjaan($scope.pasien.patientJob);	
+						setPendidikan($scope.pasien.education);				
+					}					
+					
 				})
 				.error(function(data){
 					growl.addWarnMessage('Error loading !!!');		
@@ -127,26 +110,157 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				emergencyJob: '-',
 				active: 1				
 		 	};
-		}
+		};
+
+		getPendidikan();
+		console.log('jalankan cek ' + $scope.pasien.patientJob);
+		getPekerjaan($scope.pasien.patientJob);
 		$scope.today();	
-		getPekerjaan();			
+				
 	};
 
 	$scope.simpan=function(){
 		var vTgl1 = $filter('date')($scope.tgl,'yyyy-MM-dd');
 		$scope.pasien.birthDate=vTgl1;
-
-		pasienFactory
-			.insert($scope.pasien)	
-			.success(function(data){
-				$scope.pasien=data;
-				growl.addWarnMessage('Save success !!!');
-			})
-			.error(function(data){
-				growl.addWarnMessage('Error Save !!!');				
-			});
+		$scope.pasien.education=$scope.selectedPendidikan.id;
+		$scope.pasien.patientJob=$scope.selectedPekerjaan.id;
+		if($scope.pasien.idPatient===null || $scope.pasien.idPatient==='' ){
+			pasienFactory
+				.insert($scope.pasien)	
+				.success(function(data){
+					$scope.pasien=data;
+					growl.addWarnMessage('Save success !!!');
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error Save !!!');				
+				});
+		}else{
+			pasienFactory
+				.update($scope.pasien.idPatient,$scope.pasien)	
+				.success(function(data){
+					// $scope.pasien=data;
+					growl.addWarnMessage('Save success !!!');
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error Save !!!');				
+				});
+		}
+		
 	}
 
+	function getPekerjaan(idRec){ 		
+ 		// temp jika edit record, ambil id nya utk selected pada SELECT
+ 		var selRec=null; 		
+ 		console.log("id rec = " + idRec);
+ 		fieldGroupFactory
+ 			.getAllPekerjaan()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {     				     				
+					var dataPekerjaan={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};				    	
+				 	console.log('cek = ' + idRec + ' pekerjaan id =' + dataPekerjaan.id);			
+				 	if(idRec==dataPekerjaan.id){
+				 		selRec=dataPekerjaan;
+				 		console.log(selRec.name);
+				 	}
+    				$scope.dataPekerjaans.push(dataPekerjaan);    				    				
+				});	
+				if(selRec==null){
+					// jika terpilih tidak ada maka default SELECT ke 0
+					$scope.selectedPekerjaan=$scope.dataPekerjaans[0];				
+				}else{
+					$scope.selectedPekerjaan=selRec;				
+				}
+				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+ 	};
+
+ 	function setPekerjaan(idRec){ 		
+ 		// temp jika edit record, ambil id nya utk selected pada SELECT
+ 		var selRec=null; 		
+ 		console.log("id rec = " + idRec);
+ 		fieldGroupFactory
+ 			.getAllPekerjaan()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {     				     				
+					var dataPekerjaan={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};				    	
+				 	console.log('cek = ' + idRec + ' pekerjaan id =' + dataPekerjaan.id);			
+				 	if(idRec==dataPekerjaan.id){
+				 		selRec=dataPekerjaan;
+				 		console.log(selRec.name);
+				 	}    				
+				});	
+				if(selRec==null){										
+				}else{
+					$scope.selectedPekerjaan=selRec;				
+				}
+				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+ 	};
+
+
+ 	function getPendidikan(){
+ 		//console.log('get pendidikan routin');
+ 		fieldGroupFactory
+ 			.getAllPendidikan()
+ 			.success(function(data){
+ 				//console.log('iterate');
+ 			 	angular.forEach(data, function(value, key) {
+     				// Iterate isi dari pendidikan
+     				//console.log(value.idField + "--" + value.fieldName +  "--" +key)
+					var dataPendidikan={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};
+  				    				
+    				$scope.dataPendidikans.push(dataPendidikan);    				
+    				//console.log($scope.dataPendidikans[$scope.dataPendidikans.length-1]);
+				});	
+				$scope.selectedPendidikan=$scope.dataPendidikans[0];			
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+ 	};
+
+	function setPendidikan(idRec){ 		
+ 		// temp jika edit record, ambil id nya utk selected pada SELECT
+ 		var selRec=null; 		 		
+ 		fieldGroupFactory
+ 			.getAllPendidikan()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {     				     				
+					var dataPendidikan={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};				    	
+				 	console.log('cek = ' + idRec + ' data Pendidikan id =' + dataPendidikan.id);			
+				 	if(idRec==dataPendidikan.id){
+				 		selRec=dataPendidikan;
+				 		console.log(selRec.name);
+				 	}    				
+				});	
+				if(selRec==null){										
+				}else{
+					$scope.selectedPendidikan=selRec;				
+				}
+				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+ 	};
 	startModule();
 
 }]);

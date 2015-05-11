@@ -20,7 +20,9 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 	$rootScope.$on('$viewContentLoaded', function(){ window.scrollTo(0, 0); });
 
 	// Path server database	
-	$rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
+	// $rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
+	$rootScope.pathServerJSON='http://localhost:8080/fmn-clinic-server/api';
+
 
 
 	// refresh masih tetep login brooo

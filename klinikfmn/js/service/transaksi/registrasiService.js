@@ -54,7 +54,13 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 			method:'DELETE',
 			url:urlApi + '/' + id
 		});
+	}
 
+	registrasiFactory.updateAssessment = function (idReg){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/id/' + idReg + '/assess'
+		});
 	}
 
 	return registrasiFactory;

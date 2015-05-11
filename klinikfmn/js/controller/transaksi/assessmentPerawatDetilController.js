@@ -77,6 +77,16 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 			.insert($scope.assessment)	
 			.success(function(data){
 				$scope.assessment=data;
+
+				// registrasiFactory
+				// 	.updateAssessment($scope.registrasi.idRegistration)
+				// 	.success(function(data){
+				// 		growl.addWarnMessage("save update status assessment");
+				// 	})
+				// 	.error(function(data){
+
+				// 	})
+
 				growl.addWarnMessage('Save success !!!');
 			})
 			.error(function(data){

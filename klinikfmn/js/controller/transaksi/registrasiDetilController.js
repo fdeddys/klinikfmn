@@ -1,6 +1,9 @@
-appControllers.controller('registrasiDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory',
-    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory){
+appControllers.controller('registrasiDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','fieldGroupFactory',
+    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, fieldGroupFactory){
  
+ 	$scope.dokters=[];
+ 	$scope.selectedDokter;
+
  	$scope.pasien={ 		
 		idPatient: null,
 		patientNo: null,
@@ -31,7 +34,9 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		registrationTime: null,
 		isVoid: 0,
 		usrUpdate: null,
-		lastUpdate: new Date()
+		dokter: null,
+		isAssess: 0,
+		lastUpdate: null
 	}
 
  	// tanggal
@@ -52,7 +57,7 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 	// END tanggal  
 
 	function startModule(){
-		
+		getAllDokter();
 		var noPass=$routeParams.noPass;
 		if(!isNaN(parseFloat(noPass)) && isFinite(noPass)){
 			//alert('numeric');
@@ -92,6 +97,24 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		$scope.today();				
 	};
 
+	function getAllDokter(){
+		fieldGroupFactory
+ 			.getAllDokter()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {
+					var dokter={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};
+    				$scope.dokters.push(dokter);    				    				
+				});	
+				$scope.selectedDokter=$scope.dokters[0];			
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 			})
+	};
+
 	$scope.simpan=function(){
 		var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');		
 		//var vJam = $filter('date')($scope.tgl,'HH:mm:ss Z');		
@@ -100,19 +123,7 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		// $scope.registrasi.registrationTime=vJam;
 		$scope.registrasi.patient = $scope.pasien;
 		// $scope.pasien;
-
-
-		// regist ={
-		// 	idRegistration: null,
-		// 	registrationNo: null,
-		// 	patient: null,
-		// 	registrationDate: null,
-		// 	registrationTime: null,
-		// 	isVoid: null,
-		// 	usrUpdate: null,
-		// 	lastUpdate: null
-		// }
-
+		$scope.registrasi.dokter = $scope.selectedDokter.id;;
 		registrasiFactory
 			.insert($scope.registrasi )	
 			.success(function(data){

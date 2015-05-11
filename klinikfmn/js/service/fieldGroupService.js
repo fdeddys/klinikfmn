@@ -11,6 +11,20 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};	
 
+	fieldGroupFactory.getAllPekerjaan=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/1/field'
+		})
+	};	
+
+	fieldGroupFactory.getAllDokter=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/5/field'
+		})
+	};
+
 	return fieldGroupFactory;
 
 }]);

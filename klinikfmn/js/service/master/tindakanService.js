@@ -1,28 +1,21 @@
 appServices.factory('tindakanFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/master/tindakan';
+	var urlApi = $rootScope.pathServerJSON + '/tariff';
 	var tindakanFactory={};
-
-	tindakanFactory.getAll=function(){
-		return $http({
-			method:'GET',
-			url : urlApi
-		})
-	};
 
 	tindakanFactory.getAllByPage=function(hal, jumlah){		
 		return $http({
 			method:'GET',
-			url:urlApi + '/hal/' + hal + '/jumlah/' + jumlah  
+			url:urlApi + '/size/' + jumlah + '/number/' + hal 
 		});			
 	};
-	
-	tindakanFactory.getById=function(id){
+
+	tindakanFactory.getAllByNamePage=function(name, hal, jumlah){		
 		return $http({
 			method:'GET',
-			url:urlApi + '/id/' + id		
-		});
+			url:urlApi + '/name/' + name + '/size/' + jumlah + '/number/' + hal
+		});			
 	};
 
 	tindakanFactory.insert = function(tindakan){
@@ -41,14 +34,6 @@ appServices.factory('tindakanFactory',['$http','$rootScope',
 			data:JSON.stringify(tindakan)
 		});
 	};
-
-	tindakanFactory.deleteRec = function (id){
-		return $http({
-			method:'DELETE',
-			url:urlApi + '/' + id
-		});
-
-	}
 
 	return tindakanFactory;
 
