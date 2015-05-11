@@ -36,13 +36,13 @@
 			<thead>
 				<tr>								
 					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
-					<td width="10%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
-					<td width="10%" ><button class="btn btn-block btn-default" >Jam</button></td>
+					<td width="12%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
+					<td width="12%" ><button class="btn btn-block btn-default" >Jam</button></td>
 				    <td width="15%"><button class="btn btn-block btn-default" >No Reg</button></td> 
 				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
-				    <td width="35%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >Nama</button></td>	
 				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
-				    <td width="10%" ></td>
+				    <td width="13%" ></td>
 				    <!-- <td width="10%"></td> -->
 				</tr>	
 			</thead>
@@ -55,9 +55,9 @@
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
 				    <td>{{registasi.isVoid}}</td>									    
-				    <td><button type='button' class='btn btn-primary btn-block btn-sm'
+				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
 				    	ng-click='proses(registasi.id, $index)'
-				    	> <i class="glyphicon glyphicon-usd"></i> Pembayaran</button></td>		    
+				    	>Proses Reg</button></td>		    
 				</tr>		
 			</tbody>
 		</table>
