@@ -117,7 +117,7 @@ GET  date       : http://10.1.0.11:8080/fmn-clinic-server/api/payment/date/{paym
 Get no          : http://10.1.0.11:8080/fmn-clinic-server/api/payment/payment/{paymentNo}
 POST            : http://10.1.0.11:8080/fmn-clinic-server/api/payment
 PUT             : http://10.1.0.11:8080/fmn-clinic-server/api/payment/id/{idPayment}
-NEW             : http://10.1.0.11:8080/fmn-clinic-server/api/patient/layout
+NEW             : http://10.1.0.11:8080/fmn-clinic-server/api/payment/layout
 
 
 

@@ -25,6 +25,13 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	fieldGroupFactory.getAllBank=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/4/field'
+		})
+	};
+
 	return fieldGroupFactory;
 
 }]);

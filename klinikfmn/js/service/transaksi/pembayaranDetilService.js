@@ -1,7 +1,7 @@
-appServices.factory('pembayaranFactory',['$http','$rootScope',
+appServices.factory('pembayaranDetilFactory',['$http','$rootScope',
 	function($http,$rootScope){
 
-	var urlApi = $rootScope.pathServerJSON + '/payment';
+	var urlApi = $rootScope.pathServerJSON + '/master/pembayaran';
 	var pembayaranFactory={};
 
 	pembayaranFactory.getAll=function(){
@@ -28,7 +28,7 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 	pembayaranFactory.insert = function(pembayaran){
 		return $http({
 			method:'POST',
-			url:urlApi + '/',
+			url:urlApi,
 			data:JSON.stringify(pembayaran),
 			headers:{'Content-Type':'application/json'}
 		});

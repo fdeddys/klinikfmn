@@ -1,5 +1,5 @@
-appControllers.controller('pembayaranController', ['$scope','registrasiFactory',
-    function($scope, registrasiFactory){
+appControllers.controller('pembayaranController', ['$scope','registrasiFactory','$location',
+    function($scope, registrasiFactory, $location){
         
 	$scope.registrasis=[];
  	
@@ -46,6 +46,10 @@ appControllers.controller('pembayaranController', ['$scope','registrasiFactory',
 		$scope.today();				
 	};
 
+	$scope.bayar=function(idBayar){
+		
+		$location.path('/pembayaranDetil/'+idBayar)
+	}
 	
 	startModule();
 	    	

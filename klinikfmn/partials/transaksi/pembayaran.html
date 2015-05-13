@@ -55,9 +55,9 @@
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
 				    <td>{{registasi.isVoid}}</td>									    
-				    <td><button type='button' class='btn btn-success btn-block btn-sm'
-				    	ng-click='proses(registasi.id, $index)'
-				    	> <i class="glyphicon glyphicon-usd"></i> Pembayaran</button></td>		    
+				    <td><button type='button' class='btn btn-success btn-block btn-block'
+				    	ng-click='bayar(registasi.idRegistration)'
+				    	> <i class="glyphicon glyphicon-usd"></i> Bayar</button></td>		    
 				</tr>		
 			</tbody>
 		</table>
