@@ -31,7 +31,7 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 		})
 	};
 
-	userFactory.insertUser = function(user){
+	userFactory.insert = function(user){
 		return $http({
 			method:'POST',
 			url:urlApi,
@@ -40,7 +40,7 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 		});
 	};
 
-	userFactory.updateUser = function(id,user){
+	userFactory.update = function(id,user){
 		return $http({
 			method:'PUT',
 			url:urlApi + '/id/'+ id,
@@ -48,13 +48,6 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 		});
 	};
 
-	userFactory.deleteUser = function (id){
-		return $http({
-			method:'DELETE',
-			url:urlApi + '/id/' + id
-		});
-
-	}
 
 	return userFactory;
 
