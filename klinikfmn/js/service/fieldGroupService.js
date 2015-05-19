@@ -32,6 +32,13 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	fieldGroupFactory.getAllAgama=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/3/field'
+		})
+	};
+
 	return fieldGroupFactory;
 
 }]);

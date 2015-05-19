@@ -4,6 +4,20 @@ appServices.factory('tindakanFactory',['$http','$rootScope',
 	var urlApi = $rootScope.pathServerJSON + '/tariff';
 	var tindakanFactory={};
 
+	tindakanFactory.getAll=function(){
+		return $http({
+			method:'GET',
+			url : urlApi
+		})
+	};
+
+	tindakanFactory.getById=function(id){
+		return $http({
+			method:'GET',
+			url:urlApi + '/id/' + id		
+		});
+	};
+
 	tindakanFactory.getAllByPage=function(hal, jumlah){		
 		return $http({
 			method:'GET',
@@ -34,6 +48,14 @@ appServices.factory('tindakanFactory',['$http','$rootScope',
 			data:JSON.stringify(tindakan)
 		});
 	};
+
+	tindakanFactory.deleteRec = function (id){
+		return $http({
+			method:'DELETE',
+			url:urlApi + '/' + id
+		});
+
+	}
 
 	return tindakanFactory;
 

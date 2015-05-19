@@ -11,6 +11,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		total: 0,
 		disc: 0,
 		ppn: 0,
+		cash:0,
 		debitBank: null,
 		creditBank: null,
 		debit: 0,
@@ -19,10 +20,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		lastUpdate: null,
 		pharmacyTotal: 0
 	};
-
-	$scope.xpayment={
-		tunai:0
-	};
+	
 
 	// jika sudah approve atau void tidak bisa edit transaksi
  	$scope.isVoided = false;
@@ -129,7 +127,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 
 	$scope.approve=function(){
 		var totalKembali = -1;
-		totalKembali = ($scope.xpayment.tunai + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal - $scope.payment.disc ) ;
+		totalKembali = ($scope.payment.cash + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal - $scope.payment.disc ) ;
 		growl.addWarnMessage(totalKembali);
 		if(totalKembali==='NaN'){
 			growl.addWarnMessage("Error total pembayaran NAN !!!")

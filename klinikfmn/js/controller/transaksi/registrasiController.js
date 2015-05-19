@@ -1,5 +1,5 @@
-appControllers.controller('registrasiController', ['$scope','registrasiFactory',
-    function($scope, registrasiFactory){
+appControllers.controller('registrasiController', ['$scope','registrasiFactory','$filter','growl',
+    function($scope, registrasiFactory, $filter, growl){
         
 
 	$scope.registrasis=[];
@@ -9,13 +9,40 @@ appControllers.controller('registrasiController', ['$scope','registrasiFactory',
 	$scope.itemsPerPage= 8;
 	$scope.currentPage = 1;     
 
+	$scope.searchNama='';
+	$scope.searchNoReg='';
+	$scope.isTglReg=true;
+
 	$scope.pageChanged=function(){
  		getAll($scope.currentPage); 		  
-    }
+    };
+
+    $scope.search=function(){
+		getAll(1);
+    };
 	
 	function getAll(halaman){
+		var kriteriaNama, kriteriaNoReg, kriteriaTgl;
+
+		var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');
+		if($scope.searchNama===''){
+			kriteriaNama='--';
+		}else{
+			kriteriaNama=$scope.searchNama;
+		};
+		if($scope.searchNoReg===''){
+			kriteriaNoReg='--';
+		}else{
+			kriteriaNoReg=$scope.searchNoReg;
+		};
+		if($scope.isTglReg==false){
+			kriteriaTgl='--';
+		}else{
+			kriteriaTgl=vTgl;
+		}
+
 		registrasiFactory
-			.getAllByPage(halaman, $scope.itemsPerPage)
+			.getAllByNamaNoRegTglPage(kriteriaNama, kriteriaNoReg, kriteriaTgl, halaman, $scope.itemsPerPage)
 			.success(function(data){					
 				$scope.registrasis=data.content;
 				$scope.totalItems = data.totalElements;						
@@ -23,6 +50,56 @@ appControllers.controller('registrasiController', ['$scope','registrasiFactory',
 			.error(function(data){
 				growl.addWarnMessage('Error loading from server !!!');
 			})		
+		
+
+
+		// if($scope.searchNama===''){
+  //   		if($scope.isTglReg==false){
+  //   			// search null isTgl null
+		//     	registrasiFactory
+		// 			.getAllByPage(halaman, $scope.itemsPerPage)
+		// 			.success(function(data){					
+		// 				$scope.registrasis=data.content;
+		// 				$scope.totalItems = data.totalElements;						
+		// 			})
+		// 			.error(function(data){
+		// 				growl.addWarnMessage('Error loading from server !!!');
+		// 			})		
+  //   		}else{
+  //   			// search null isTgl true
+  //   			var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');
+  //   			registrasiFactory
+		// 			.getTglReg(vTgl, halaman, $scope.itemsPerPage)
+		// 			.success(function(data){					
+		// 				$scope.registrasis=data.content;
+		// 				$scope.totalItems = data.totalElements;						
+		// 			})
+		// 			.error(function(data){
+		// 				growl.addWarnMessage('Error loading from server !!!');
+		// 			})	    			
+  //   		}
+  //   	}else{
+  //   		if($scope.isTglReg==false){
+  //   			// search true isTgl null
+
+  //   		}else{
+  //   			// search true isTgl true    
+  //   			var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');			
+		//     	registrasiFactory
+		// 			.getNameTglReg($scope.searchNama, vTgl, halaman, $scope.itemsPerPage)
+		// 			.success(function(data){					
+		// 				$scope.registrasis=data.content;
+		// 				$scope.totalItems = data.totalElements;						
+		// 			})
+		// 			.error(function(data){
+		// 				growl.addWarnMessage('Error loading from server !!!');
+		// 			})		
+
+  //   		}	
+
+  //   	}
+
+		
 	}	
 
 	// tanggal

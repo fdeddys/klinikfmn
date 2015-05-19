@@ -3,6 +3,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
  
  	$scope.dataPendidikans=[];
  	$scope.dataPekerjaans=[];
+ 	$scope.dataAgamas=[];
  	
  	$scope.pasien={ 		
 		idPatient: null,
@@ -23,7 +24,8 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		emergencyPostCode: '-',
 		emergencyPhone: '-',
 		emergencyJob: '-',
-		active: 1	
+		active: 1,
+		agama:null	
  	}; 	
 
  	// tanggal
@@ -61,6 +63,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 						console.log('jalankan cek ' + $scope.pasien.patientJob);
 						setPekerjaan($scope.pasien.patientJob);	
 						setPendidikan($scope.pasien.education);				
+						setAgama($scope.pasien.agama)
 					}					
 					
 				})
@@ -85,7 +88,8 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 						emergencyPostCode: '-',
 						emergencyPhone: '-',
 						emergencyJob: '-',
-						active: 1				
+						active: 1,
+						agama:null				
 				 	};		
 				})		
 		}else{
@@ -108,11 +112,13 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				emergencyPostCode: '-',
 				emergencyPhone: '-',
 				emergencyJob: '-',
-				active: 1				
+				active: 1,
+				agama:null				
 		 	};
 		};
 
 		getPendidikan();
+		getAgama();
 		console.log('jalankan cek ' + $scope.pasien.patientJob);
 		getPekerjaan($scope.pasien.patientJob);
 		$scope.today();	
@@ -124,6 +130,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		$scope.pasien.birthDate=vTgl1;
 		$scope.pasien.education=$scope.selectedPendidikan.id;
 		$scope.pasien.patientJob=$scope.selectedPekerjaan.id;
+		$scope.pasien.agama=$scope.selectedAgama.id;
 		if($scope.pasien.idPatient===null || $scope.pasien.idPatient==='' ){
 			pasienFactory
 				.insert($scope.pasien)	
@@ -261,6 +268,51 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
  				growl.addWarnMessage("Error loading pekerjaan from server ");
  			})
  	};
+
+ 	function getAgama(){
+ 		
+ 		fieldGroupFactory
+ 			.getAllAgama()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {
+					var dataAgama={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};
+    				$scope.dataAgamas.push(dataAgama);    				    				
+				});	
+				$scope.selectedAgama=$scope.dataAgamas[0];			
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading agama from server ");
+ 			})
+ 	};
+
+	function setAgama(idRec){ 		
+ 		
+ 		var selRec=null; 		 		
+ 		fieldGroupFactory
+ 			.getAllAgama()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {     				     				
+					var dataAgama={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};				    					 	
+				 	if(idRec==dataAgama.id){
+				 		selRec=dataAgama;				 		
+				 	}    				
+				});	
+				if(selRec==null){										
+				}else{
+					$scope.selectedAgama=selRec;				
+				}				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading Agama from server ");
+ 			})
+ 	};
+
 	startModule();
 
 }]);

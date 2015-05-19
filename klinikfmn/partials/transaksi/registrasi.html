@@ -10,7 +10,10 @@
 		<br>
 		<div class='container-fluid' style="background-color:#CEECF5" >	
 		<br>
-		Cari no Reg     : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >		
+		Nama  : <input type='text' ng-model='searchNama' ng-change='getAll()' >		
+		<label>
+	      	<input type="checkbox" ng-model="isTglReg"> 
+	    </label>
 		Tgl Reg  : 
 			<input type="text" 						
 				datepicker-popup="dd-MMM-yyyy" 
@@ -23,10 +26,11 @@
 				close-text="Tutup" 					
 				size='15%'
 			/>
-			<button type="button" class="btn btn-success" ng-click="open($event)">
-				<i class="glyphicon glyphicon-calendar"></i></button>	
+			<button type="button" class="btn btn-success" ng-click="open($event)" ng-disabled="!isTglReg" >
+			<i class="glyphicon glyphicon-calendar"></i></button>	
+		<!-- No Reg  : <input type='text' ng-model='searchNoReg' ng-change='getAll()' >		 -->
+		<button class="btn btn-default " size='10%' ng-click='search()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
 
-		<button class="btn btn-default " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
 		<br>	
 		<br>	
 		</div>

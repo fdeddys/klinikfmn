@@ -9,9 +9,13 @@
 		<br>
 		<div class='container-fluid' style="background-color:#CEECF5">	
 		<br>
-			Cari no Nama  : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >
+			Cari no Nama  : <input type='text' ng-model='searchNama' ng-change='getAll()' >
+			<label>
+		      	<input type="checkbox" ng-model="isTglLahir"> 
+		    </label>
 			Tgl Lahir  : 
-				<input type="text" 						
+			    			
+			    <input type="text" 						
 					datepicker-popup="dd-MMM-yyyy" 
 					ng-model="tgl" 
 					is-open="opened" 
@@ -23,10 +27,12 @@
 					close-text="Tutup" 					
 					size='15%'
 					/>
-					<button type="button" class="btn btn-info" ng-click="open($event)">
-						<i class="glyphicon glyphicon-calendar"></i>
-					</button>
-			<button class="btn btn-success " size='10%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
+					
+				<button type="button" class="btn btn-info" ng-disabled="!isTglLahir" ng-click="open($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			
+			<button class="btn btn-success " size='10%' ng-click='search()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
 			<button class="btn btn-danger " size='10%' ng-click='tambah()'  ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true">    Tambah   </button>
 			<br>	
 			<br>	

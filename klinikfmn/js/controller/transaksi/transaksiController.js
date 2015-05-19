@@ -1,5 +1,5 @@
-appControllers.controller('transaksiController', ['$scope','registrasiFactory','$location','transaksiFactory',
-    function($scope, registrasiFactory, $location, transaksiFactory){
+appControllers.controller('transaksiController', ['$scope','registrasiFactory','$location','transaksiFactory','$filter','growl',
+    function($scope, registrasiFactory, $location, transaksiFactory, $filter, growl){
         
     var noReg;
     $scope.registrasis=[];
@@ -19,6 +19,9 @@ appControllers.controller('transaksiController', ['$scope','registrasiFactory','
 	$scope.pageChanged=function(){
  		getAll($scope.currentPage); 		  
     };  
+
+    $scope.isTglReg=true;
+    $scope.searchNama='';
 
 	// Paging Detil
 	$scope.totalItems2;
@@ -41,32 +44,52 @@ appControllers.controller('transaksiController', ['$scope','registrasiFactory','
     	getDetilAll(1);
 
     	$scope.isCollapsed = false;
-    }
+    };
+
+    $scope.getAll=function(){
+    	getAll(1);
+    };
 	
     function getDetilAll(halaman){
     	transaksiFactory
     		.getByNoRegPage( noReg ,halaman, $scope.itemsPerPage2)
     		.success(function(data){
     			$scope.transaksiHds	=data.content;
-    			$scope.totalItems2 = data.totalElements;		
-
-    			
+    			$scope.totalItems2 = data.totalElements;		    			
     		})
     		.error(function(data){
 
     		})
-    }
+    };
 
 	function getAll(halaman){
+		var kriteriaNama, kriteriaNoReg, kriteriaTgl;
+
+		var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');
+		if($scope.searchNama===''){
+			kriteriaNama='--';
+		}else{
+			kriteriaNama=$scope.searchNama;
+		};
+		
+		kriteriaNoReg='--';
+		
+		if($scope.isTglReg==false){
+			kriteriaTgl='--';
+		}else{
+			kriteriaTgl=vTgl;
+		}
+
 		registrasiFactory
-			.getAllByPage(halaman, $scope.itemsPerPage)
+			.getAllByNamaNoRegTglPage(kriteriaNama, kriteriaNoReg, kriteriaTgl, halaman, $scope.itemsPerPage)
 			.success(function(data){					
 				$scope.registrasis=data.content;
 				$scope.totalItems = data.totalElements;						
 			})
 			.error(function(data){
 				growl.addWarnMessage('Error loading from server !!!');
-			})		
+			})	
+		
 	}	
 
 	// tanggal

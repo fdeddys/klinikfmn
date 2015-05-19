@@ -10,7 +10,10 @@
 		<br>
 		<div class='container-fluid' style="background-color:#CEECF5" >	
 		<br>
-		Cari no Reg     : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >		
+		Cari Nama  : <input type='text' ng-model='searchNama'  >
+		<label>
+	      	<input type="checkbox" ng-model="isTglReg"> 
+	    </label>		
 		Tgl Reg  : 
 			<input type="text" 						
 				datepicker-popup="dd-MMM-yyyy" 
@@ -40,8 +43,8 @@
 					<td width="10%" ><button class="btn btn-block btn-default" >Jam</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >No Reg</button></td> 
 				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
-				    <td width="35%"><button class="btn btn-block btn-default" >Nama</button></td>	
-				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
+				    <td width="30%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="15%"><button class="btn btn-block btn-default" >Assessment</button></td>	
 				    <td width="15%" ></td>
 				    <!-- <td width="10%"></td> -->
 				</tr>	
@@ -54,7 +57,7 @@
 					<td>{{registasi.registrationNo}}</td>				
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
-				    <td>{{registasi.isVoid}}</td>									    
+				    <td>{{registasi.isAssess}}</td>									    
 				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
 				    	ng-click='assessmentDetil(registasi.registrationNo)'
 				    	><span class="glyphicon glyphicon-wrench" aria-hidden="true">  Assessment</button></td>		    

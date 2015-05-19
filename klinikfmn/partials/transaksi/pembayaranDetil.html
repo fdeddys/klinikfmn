@@ -170,7 +170,7 @@
 				      <label ></label>		
 				</td>									
 				<td style="color:white" >					
-				    <input type='number' step="100000" min="0" ng-model='xpayment.tunai' class="form-control" placeholder='Jumlah Tunai'/>   
+				    <input type='number' step="100000" min="0" ng-model='payment.cash' class="form-control" placeholder='Jumlah Tunai'/>   
 				</td>									
 				
 			</tr>
@@ -216,7 +216,7 @@
 		<hr>
 		<!-- END INPUT PEMBAYARAN -->
 		<div class="well well-lg">
-			<h2 style="color:blue">Kembali : {{(xpayment.tunai + payment.debit + payment.credit) - (subTotal - payment.disc )  | currency :'Rp '}}</h2>
+			<h2 style="color:blue">Kembali : {{(payment.cash + payment.debit + payment.credit) - (subTotal - payment.disc )  | currency :'Rp '}}</h2>
 		</div>
 		<br>
 

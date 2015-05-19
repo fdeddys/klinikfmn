@@ -26,6 +26,13 @@ appServices.factory('pasienFactory',['$http','$rootScope',
 		});
 	};
 
+	pasienFactory.getByNameTglLahir=function(tgllahir, name, hal, jumlah){
+		return $http({
+			method:'GET',
+			url:urlApi + '/name/' + name + '/date/'+ tgllahir +'/size/' + jumlah  + '/number/' + hal 	
+		});
+	};
+
 	pasienFactory.insert = function(pasien){
 		return $http({
 			method:'POST',

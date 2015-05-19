@@ -1,5 +1,5 @@
-appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','assessmentFactory',
-    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, assessmentFactory){
+appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','assessmentFactory','$location',
+    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, assessmentFactory, $location){
  
  	$scope.registrasi={ 					
 		idRegistration: null,
@@ -77,15 +77,17 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 			.insert($scope.assessment)	
 			.success(function(data){
 				$scope.assessment=data;
+				growl.addWarnMessage("success insert assessment ");
 
-				// registrasiFactory
-				// 	.updateAssessment($scope.registrasi.idRegistration)
-				// 	.success(function(data){
-				// 		growl.addWarnMessage("save update status assessment");
-				// 	})
-				// 	.error(function(data){
+				registrasiFactory
+					.updateAssessment($scope.registrasi.idRegistration)
+					.success(function(data){
+						growl.addWarnMessage("save update status assessment");
+						$location.path('/assesmentPerawat');
+					})
+					.error(function(data){
 
-				// 	})
+					})
 
 				growl.addWarnMessage('Save success !!!');
 			})

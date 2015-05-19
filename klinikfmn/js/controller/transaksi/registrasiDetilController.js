@@ -1,5 +1,5 @@
-appControllers.controller('registrasiDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','fieldGroupFactory',
-    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, fieldGroupFactory){
+appControllers.controller('registrasiDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','fieldGroupFactory','$location',
+    function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, fieldGroupFactory, $location){
  
  	$scope.dokters=[];
  	$scope.selectedDokter;
@@ -37,7 +37,7 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		dokter: null,
 		isAssess: 0,
 		lastUpdate: null
-	}
+	};
 
  	// tanggal
 		$scope.today = function() {
@@ -129,6 +129,7 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 			.success(function(data){
 				$scope.registrasi=data;
 				growl.addWarnMessage('Save success !!!');
+				$location.path('/registrasi');
 			})
 			.error(function(data){
 				growl.addWarnMessage('Error Save !!!');				

@@ -4,6 +4,14 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 	var urlApi = $rootScope.pathServerJSON + '/registration';
 	var registrasiFactory={};
 
+
+	registrasiFactory.getAllByNamaNoRegTglPage=function(nama, noReg, tgl, hal, jumlah){		
+		return $http({
+			method:'GET',
+			url:urlApi + '/date/'+ tgl + '/patientno/' + noReg + '/name/' + nama + '/size/' + jumlah + '/number/' + hal 
+		});			
+	};
+
 	registrasiFactory.getAll=function(){
 		return $http({
 			method:'GET',
@@ -31,6 +39,20 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 			url:urlApi + '/no/' + no		
 		});
 	};
+
+	registrasiFactory.getTglReg=function(tglReg, hal, jumlah){
+		return $http({
+			method:'GET',
+			url:urlApi + '/date/' + tglReg + '/size/' + jumlah + '/number/' + hal	
+		});
+	};
+
+	registrasiFactory.getNameTglReg=function(name, tglReg,  hal, jumlah){
+		return $http({
+			method:'GET',
+			url:urlApi + '/date/' + tglReg + '/name/'+ name + '/size/' + jumlah + '/number/' + hal	
+		});
+	};	
 
 	registrasiFactory.insert = function(registrasi){
 		return $http({

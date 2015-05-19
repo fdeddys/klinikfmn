@@ -1,5 +1,5 @@
-appControllers.controller('assessmentPerawatController', ['$scope','registrasiFactory','$location',
-    function($scope, registrasiFactory, $location){
+appControllers.controller('assessmentPerawatController', ['$scope','registrasiFactory','$location','$filter',
+    function($scope, registrasiFactory, $location, $filter){
         
     $scope.registrasis=[];
  	
@@ -8,13 +8,35 @@ appControllers.controller('assessmentPerawatController', ['$scope','registrasiFa
 	$scope.itemsPerPage= 8;
 	$scope.currentPage = 1;     
 
+	$scope.searchNama='';
+	$scope.isTglReg=true;
+	
 	$scope.pageChanged=function(){
  		getAll($scope.currentPage); 		  
+    };
+
+    $scope.getAll=function(){
+    	getAll(1);
     }
 	
 	function getAll(halaman){
+		var kriteriaNama, kriteriaNoReg, kriteriaTgl;
+		
+		var vTgl = $filter('date')($scope.tgl,'yyyy-MM-dd');
+		if($scope.searchNama===''){
+			kriteriaNama='--';
+		}else{
+			kriteriaNama=$scope.searchNama;
+		};
+		kriteriaNoReg='--';
+		if($scope.isTglReg==false){
+			kriteriaTgl='--';
+		}else{
+			kriteriaTgl=vTgl;
+		}
+
 		registrasiFactory
-			.getAllByPage(halaman, $scope.itemsPerPage)
+			.getAllByNamaNoRegTglPage(kriteriaNama, kriteriaNoReg, kriteriaTgl, halaman, $scope.itemsPerPage)
 			.success(function(data){					
 				$scope.registrasis=data.content;
 				$scope.totalItems = data.totalElements;						
@@ -22,6 +44,16 @@ appControllers.controller('assessmentPerawatController', ['$scope','registrasiFa
 			.error(function(data){
 				growl.addWarnMessage('Error loading from server !!!');
 			})		
+
+		// registrasiFactory
+		// 	.getAllByPage(halaman, $scope.itemsPerPage)
+		// 	.success(function(data){					
+		// 		$scope.registrasis=data.content;
+		// 		$scope.totalItems = data.totalElements;						
+		// 	})
+		// 	.error(function(data){
+		// 		growl.addWarnMessage('Error loading from server !!!');
+		// 	})		
 	}	
 
 	// tanggal
