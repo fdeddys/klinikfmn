@@ -9,10 +9,10 @@
   
     <br>
     <h2 class="form-signin-heading text-center">Login</h2>
-    <label for="inputEmail" class="sr-only">User id</label>
-    <input type="text" ng-model="userId" class="form-control text-center" placeholder="Input User ID" required autofocus>
+    <label for="inputId" class="sr-only">User id</label>
+    <input type="text" ng-model="userId" class="form-control text-center" placeholder="Input User ID" required autofocus id="inputId">
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" ng-model="password" class="form-control text-center" placeholder="Password" ng-keypress="login()" required>
+    <input type="password" ng-model="password" class="form-control text-center" placeholder="Password"  required>
     <br>
     <button class="btn btn-lg btn-primary btn-block" ng-click='login()'>Sign in</button>
     <br>

@@ -1,13 +1,11 @@
 appControllers.controller('userController', ['$scope', 'userFactory','growl','Base64',
 	function($scope, userFactory, growl, Base64){
 	
-	var idx=0;
     $scope.tutupGrid=false;
     $scope.classForm='';
     $scope.users=[];    
     $scope.user={
-        idUser: null,
-		userID: null,
+        idUser: null,		
 		username: null,
 		password: null,
 		field: null,
@@ -40,10 +38,9 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
         $scope.jenisTransaksi=1;
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formTambah';
-
+        $scope.resetPass=true;  
         $scope.user={
-            idUser: null,
-			userID: null,
+            idUser: null,			
 			username: null,
 			password: null,
 			field: false,
@@ -71,9 +68,9 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
 
         // }	
             userFactory
-                .getUserByNama($scope.search, halaman, $scope.itemsPerPage )
+                .getAllUser( )
                 .success(function (data){
-                    $scope.groupTindakans = data ;                 
+                    $scope.users = data ;                 
                 }).error(function(data){
                     growl.addWarnMessage("Error Loading getAll data by nama !",{ttl: 4000});        
                 });                 
@@ -85,24 +82,26 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
     $scope.ubah=function(id){
         $scope.jenisTransaksi=2;
         $scope.tutupGrid = !$scope.tutupGrid;
-        $scope.classForm = 'formUbah';
-        idx=urut;
+        $scope.classForm = 'formUbah';        
+        $scope.resetPass=false;         
         userFactory
             .getUserById(id)
             .success(function(data){
-                $scope.groupTindakan =data;                
+                $scope.user =data;     
+                $scope.user.password='';  
+
             });
         
-        growl.addInfoMessage(urut);
-
     };
 
 
     $scope.proses=function(){
+        var pass;
         switch($scope.jenisTransaksi){
             case 1:
                 $scope.user.idUser='';
-                $scope.user.password=Base64.encode($scope.user.username + ':' + $scope.user.password);
+                pass=Base64.encode($scope.user.username + ':' + $scope.user.password);
+                $scope.user.password=pass;
                 userFactory
                     .insert($scope.user)
                     .success(function(data){
@@ -116,17 +115,42 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
                 
                 break;
             case 2:
-                userFactory
-                    .update($scope.user.idUser, $scope.user)
-                    .success(function(data){
-                        growl.addInfoMessage('edit success');   
-                        $scope.tutupGrid = !$scope.tutupGrid;   
-                        getAll(1);            
-                    })
-                    .error(function(data){
-                        growl.addWarnMessage('Error Updata ' + data);
-                        console.log(data);      
-                    })              
+                if($scope.resetPass==true){
+                    pass=Base64.encode($scope.user.username + ':' + $scope.user.password);
+                    $scope.user.password=pass;
+                    userFactory
+                        .update($scope.user.idUser, $scope.user)
+                        .success(function(data){
+                            growl.addInfoMessage('edit success');   
+                            $scope.tutupGrid = !$scope.tutupGrid;   
+                            getAll(1);            
+                        })
+                        .error(function(data){
+                            growl.addWarnMessage('Error Updata ' + data);
+                            console.log(data);      
+                        }) 
+
+                }else{
+                    userFactory
+                        .getUserById($scope.user.idUser)
+                        .success(function(data){
+                            pass=data.password;        
+                            $scope.user.password=pass;
+                            userFactory
+                                .update($scope.user.idUser, $scope.user)
+                                .success(function(data){
+                                    growl.addInfoMessage('edit success');   
+                                    $scope.tutupGrid = !$scope.tutupGrid;   
+                                    getAll(1);            
+                                })
+                                .error(function(data){
+                                    growl.addWarnMessage('Error Updata ' + data);
+                                    console.log(data);      
+                                })                                 
+                        });                    
+                };
+
+                             
                 break;
         }         
 

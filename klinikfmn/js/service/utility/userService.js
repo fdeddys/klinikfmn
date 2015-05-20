@@ -3,9 +3,16 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 	var urlApi = $rootScope.pathServerJSON + '/user';
 	var userFactory = {};
 
-	userFactory.getAllUser=function(hal, jumlah){
+	userFactory.getAllUserPage=function(hal, jumlah){
 		return $http({
 			url:urlApi + '/hal/' + hal + '/jumlah/' + jumlah,
+			method:'GET'
+		})
+	};
+
+	userFactory.getAllUser=function(){
+		return $http({
+			url:urlApi ,
 			method:'GET'
 		})
 	};
@@ -24,9 +31,10 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 		})
 	};
 
-	userFactory.getUserByUserName=function(nama){
+	//http://localhost:8080/fmn-clinic-server/api/user/name/deddy/password/ZGVkZHk6MTIz
+	userFactory.getUserByUserNamePassword=function(nama,password){
 		return $http({
-			url : urlApi + '/nama/' + name + '/user',
+			url : urlApi + '/name/' + nama + '/password/' + password,
 			method : 'GET'
 		})
 	};

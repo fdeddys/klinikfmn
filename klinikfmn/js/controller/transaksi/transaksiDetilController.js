@@ -1,9 +1,10 @@
-appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', 
-    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory){
+appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', '$location',
+    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory, $location){
         
     //untuk temp tarif group yg sudah di pilih    
     $scope.tarifSelected = '';
     $scope.tarifs;    
+    $scope.isPaket=false;
 
 	$scope.dokters=[];
  	$scope.selectedDokter;
@@ -152,6 +153,10 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 				growl.addWarnMessage("Error save data !!");
 			})	
     };
+
+    $scope.listPasien=function(){
+    	$location.path('/transaksi')
+    }
 
     $scope.void=function(){
     	var tmpTrns;
