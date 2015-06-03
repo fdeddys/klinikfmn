@@ -39,6 +39,13 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	fieldGroupFactory.getAllFloor=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/6/field'
+		})
+	};
+
 	return fieldGroupFactory;
 
 }]);

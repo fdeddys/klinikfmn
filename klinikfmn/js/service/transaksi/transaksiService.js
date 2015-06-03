@@ -25,6 +25,30 @@ appServices.factory('transaksiFactory',['$http','$rootScope',
 			url:urlApi + '/registrationno/' + noreg + '/size/' + jumlah + '/number/' + hal
 		});
 	};
+
+	//api/transaction/hdr/id/{idTransactionHdr}/update/approveStatus/{approveStatus}/user/{username}]
+	transaksiFactory.approveTransaksi=function(idTransactionHdr,username){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/id/' + idTransactionHdr + '/update/approveStatus/true/user/' + username
+		})
+	}
+
+	transaksiFactory.voidTransaksi=function(idTransactionHdr,username){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/id/' + idTransactionHdr + '/update/approveStatus/false/user/' + username
+		})
+	};
+
+	//api/transaction/hdr/registrationno/{registrationNo}/update/paidstatus/{paidstatus}/user/{username}
+	//api/transaction/hdr/registrationno/{registrationNo}/update/paidstatus/{paidStatus}/user/{username}
+	transaksiFactory.statusPaid=function(idReg, userName){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/registrationno/' + idReg + '/update/paidstatus/true/user/'+ userName
+		})
+	}	
 	
 	transaksiFactory.insert = function(transaksi){
 		return $http({
@@ -48,7 +72,6 @@ appServices.factory('transaksiFactory',['$http','$rootScope',
 			method:'DELETE',
 			url:urlApi + '/' + id
 		});
-
 	}
 
 	return transaksiFactory;

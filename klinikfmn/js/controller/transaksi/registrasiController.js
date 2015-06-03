@@ -124,6 +124,31 @@ appControllers.controller('registrasiController', ['$scope','registrasiFactory',
 		$scope.today();				
 	};
 
+	$scope.gantiStatus=function(statusSekarang, idReg){
+		if(statusSekarang==true){
+			//alert('ganti false')
+			registrasiFactory
+				.openReg(idReg)
+				.success(function(data){
+					getAll(1);	
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error open status');	
+				})
+		}else{
+			//alert('ganti true')
+			registrasiFactory
+				.closeReg(idReg)
+				.success(function(data){
+					getAll(1);	
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error open status');	
+				})
+
+		}
+	}
+
 	
 	startModule();
 

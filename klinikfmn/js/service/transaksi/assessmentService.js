@@ -47,8 +47,17 @@ appServices.factory('assessmentFactory',['$http','$rootScope',
 			method:'DELETE',
 			url:urlApi + '/' + id
 		});
-
 	}
+
+	
+	assessmentFactory.getByNoReg=function(noReg){
+		return $http({
+			method:'GET',
+			url:urlApi + '/registrationno/' + noReg
+		})
+	}
+
+
 
 	return assessmentFactory;
 

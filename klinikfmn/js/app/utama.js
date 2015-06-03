@@ -20,8 +20,8 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 	$rootScope.$on('$viewContentLoaded', function(){ window.scrollTo(0, 0); });
 
 	// Path server database	
-        //$rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
-	 $rootScope.pathServerJSON='http://localhost:8080/fmn-clinic-server/api';
+        $rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
+	//$rootScope.pathServerJSON='http://localhost:8080/fmn-clinic-server/api';
 
 
 
@@ -67,6 +67,22 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/master/bank.html',
 		    controller:'bankController'
 		}).		
+		when('/dokter',{
+			templateUrl:'partials/master/dokter.html',
+		    controller:'dokterController'
+		}).		
+		when('/agama',{
+			templateUrl:'partials/master/agama.html',
+		    controller:'agamaController'
+		}).		
+		when('/pekerjaan',{
+			templateUrl:'partials/master/pekerjaan.html',
+		    controller:'pekerjaanController'
+		}).		
+		when('/pendidikan',{
+			templateUrl:'partials/master/pendidikan.html',
+		    controller:'pendidikanController'
+		}).		
 		when('/pasien',{
 			templateUrl:'partials/transaksi/pasien.html',
 		    controller:'pasienController'
@@ -94,7 +110,11 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/assesmentDokter',{
 			templateUrl:'partials/transaksi/assesmentDokter.html',
 		    controller:'assessmentPerawatController'
-		}).			
+		}).		
+		when('/assesmentDokterDetil/:noReg',{
+			templateUrl:'partials/transaksi/assesmentDokterDetil.html',
+		    controller:'assessmentPerawatDetilController'
+		}).		
 		when('/transaksi',{
 			templateUrl:'partials/transaksi/transaksi.html',
 		    controller:'transaksiController'
@@ -107,7 +127,7 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pembayaran.html',
 		    controller:'pembayaranController'
 		}).
-		when('/pembayaranDetil/:idReg',{
+		when('/pembayaranDetil/:idReg/status/:statusRec',{
 			templateUrl:'partials/transaksi/pembayaranDetil.html',
 		    controller:'pembayaranDetilController'
 		}).

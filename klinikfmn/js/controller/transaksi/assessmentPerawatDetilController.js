@@ -42,7 +42,12 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 		temperature: null,
 		height: null,
 		weight: null,
-		tools: null
+		tools: null,
+		notes: null,
+		subjective: null,
+		objective: null,
+		assessment: null,
+		plan: null
  	}
 
 
@@ -55,7 +60,22 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 				.getByNo(noReg)	
 				.success(function(data){
 					$scope.registrasi=data;		
-					growl.addWarnMessage('Success loading !!!');				
+					growl.addWarnMessage('Success loading !!!');	
+
+					assessmentFactory
+						.getByNoReg(noReg)			
+						.success(function(data){
+							if(data===null){
+								growl.addWarnMessage('assessment null')
+							}else{
+								if(data===''){
+									growl.addWarnMessage('assessment kosong')	
+								}else{
+									$scope.assessment=data;
+								}
+							}
+						})
+						
 				})
 				.error(function(data){
 					growl.addWarnMessage('Error loading !!!');		
@@ -95,6 +115,14 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 				growl.addWarnMessage('Error Save !!!');				
 			});
 	}
+
+	$scope.closeDokter=function(){
+		$location.path('/assesmentDokter');		
+	};
+
+	$scope.closePerawat=function(){
+		$location.path('/assesmentPerawat');		
+	};
 
 	startModule();
 

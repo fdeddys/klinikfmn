@@ -22,20 +22,20 @@
 			<tr>
 				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>	
 				<td width="15%" align="center"> <button class="btn btn-block btn-default" >Group</button></td>
-				<td width="50%" align="center"> <button class="btn btn-block btn-default" >Nama Bank</button></td>
+				<td width="50%" align="center"> <button class="btn btn-block btn-default" >Nama Dokter</button></td>
 				<td width="10%" align="center"> <button class="btn btn-block btn-default">Status</button></td>			    							   			    
 			    <td width="10%" ></td>
 			    <!-- <td width="10%"></td> -->
 			</tr>	
 		</thead>
 		<tbody>
-			<tr ng-repeat='bank in banks  ' >
-				<td>{{bank.idField}}</td>
-				<td>{{bank.fieldGroup.fieldGroupName}}</td>
-				<td>{{bank.fieldName}}</td>
-				<td>{{bank.active}}</td>				
+			<tr ng-repeat='dokter in dokters  ' >
+				<td>{{dokter.idField}}</td>
+				<td>{{dokter.fieldGroup.fieldGroupName}}</td>
+				<td>{{dokter.fieldName}}</td>
+				<td>{{dokter.active}}</td>				
 			    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-			    	ng-click='ubah(bank.idField, bank.fieldName, $index)'
+			    	ng-click='ubah(dokter.idField, dokter.fieldName, $index)'
 			    	><span> Edit </span></button></td>			    	    
 			</tr>		
 		</tbody>
@@ -56,21 +56,21 @@
 		  <div class="form-group">
 		      <label for="idField" class="col-sm-2 control-label">ID</label>
 		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="idField" placeholder="Kode Bank " ng-model="bank.idField" style="width:20%" ng-disabled="true">
+		        <input type="text" class="form-control" id="idField" placeholder="Kode Dokter " ng-model="dokter.idField" style="width:20%" ng-disabled="true">
 		      </div>
 		    </div>
 
 		  <div class="form-group">
 		      <label for="fieldGroup" class="col-sm-2 control-label">Group</label>
 		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="fieldGroup" placeholder="BANK " ng-model="bank.fieldGroup" style="width:20%" ng-disabled="true">
+		        <input type="text" class="form-control" id="fieldGroup" placeholder="DOKTER " ng-model="dokter.fieldGroup" style="width:20%" ng-disabled="true">
 		      </div>
 		    </div>
 
 		    <div class="form-group">
-		      <label for="fieldName" class="col-sm-2 control-label">Nama Bank</label>
+		      <label for="fieldName" class="col-sm-2 control-label">Nama Dokter</label>
 		      <div class="col-sm-10">
-		        <input type="text" class="form-control" id="fieldName" placeholder="Nama Bank " ng-model="bank.fieldName"  style="width:70%">
+		        <input type="text" class="form-control" id="fieldName" placeholder="Nama Dokter " ng-model="dokter.fieldName"  style="width:70%">
 		      </div>
 		    </div>
 
@@ -78,7 +78,7 @@
 		    <div class="form-group">
 		      <label for="active" class="col-sm-2 control-label">Status</label>
 		      <div class="col-sm-10">
-		        <select class="form-control" if="active" ng-model="bank.active"  style="width:20%">
+		        <select class="form-control" if="active" ng-model="dokter.active"  style="width:20%">
 		          <option value="true" >Aktif</option>
 		          <option value="false">Non Aktif</option>        
 		        </select>

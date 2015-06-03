@@ -83,7 +83,22 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 			method:'PUT',
 			url:urlApi + '/id/' + idReg + '/assess'
 		});
-	}
+	};
+
+	//api/registration/id/{idRegistration}/closed/{isClosed}
+	registrasiFactory.closeReg = function (idReg){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/id/' + idReg + '/closed/true'
+		});
+	};
+
+	registrasiFactory.openReg = function (idReg){
+		return $http({
+			method:'PUT',
+			url:urlApi + '/id/' + idReg + '/closed/false'
+		});
+	};
 
 	return registrasiFactory;
 

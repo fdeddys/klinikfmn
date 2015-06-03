@@ -1,87 +1,70 @@
-appControllers.controller('tindakanController', ['$scope','tindakanFactory','growl','$location','$filter',
-    function($scope, tindakanFactory, growl, $location, $filter){
-        
+appControllers.controller('dokterController', ['$scope', 'dokterFactory','growl',
+    function($scope, dokterFactory, growl){
+    
     var idx=0;
     $scope.tutupGrid=false;
     $scope.classForm='';
-    $scope.tindakans=[];
-    $scope.ordertindakan='idTariff';
+    $scope.dokters=[];
+    $scope.orderdokter='id';
     $scope.grup={
     	idFieldGroup: 5,
     	fieldGroupName: "DOKTER",
     	active: "true"
     }
-    $scope.tindakan={
-        idTariff: null,
-        tariffName: "",      
-        rs: "",
-        dokter: "",
-        variable: "",
+    $scope.dokter={
+        idField: null,
+        fieldGroup: null,      
+        fieldName: "",
         active:""
     };
-	$scope.totalItems;
-	$scope.itemsPerPage= 8;
-	$scope.currentPage = 1; 
     $scope.search='';
 
     $scope.jenisTransaksi;
     //1. add
     //2. edit
-    //3. delete    
+    //3. deleter    
 
-    //getAlltindakan(1);
+    getAlldokter();
 
-	$scope.pageChanged=function(){
- 		getAlltindakan($scope.currentPage); 		
-    }
-
-    //$scope.search=function(){
-    //	alert('coba1');
-    //	getAlltindakan(1);
-    //}
-	
     $scope.getAll=function(){
-    	getAlltindakan(1);
-    }
-	
+        getAlldokter();
+    };
+    
     $scope.tambah=function(){
         $scope.jenisTransaksi=1;
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formTambah';
-        // $scope.tindakan.id='[Automatic]';             
-        // $scope.tindakan.nama='';
-        // $scope.tindakan.active='true';
-        $scope.tindakan={
-	        idTariff: null,
-    	    tariffName: "",      
-        	rs: "",
-        	dokter: "",
-            variable:"false",
+        // $scope.dokter.id='[Automatic]';             
+        // $scope.dokter.nama='';
+        // $scope.dokter.active='true';
+        $scope.dokter={
+            idField: null, 
+            fieldGroup: null,     
+            fieldName: "",
             active:"true"
         };
     };
 
     $scope.cari=function(){
-        getAlltindakan(1);
+        getAlldokter();
     };
-
-    function getAlltindakan(halaman){
+    
+    function getAlldokter(){
+        //alert('get all kode arsip');
 
         if($scope.search===''){
-            tindakanFactory
-                .getAllByPage(halaman, $scope.itemsPerPage)
+            dokterFactory
+                .getAll()
                 .success(function (data){
-                    $scope.tindakans = data.content;   
-                    $scope.totalItems = data.totalElements;                                  
+                    $scope.dokters = data ;                                     
                 }).error(function(data){
                     growl.addWarnMessage("Error Loading getAll data !",{ttl: 4000});        
                 });             
         }else{
-            tindakanFactory
-                .getAllByNamePage($scope.search, 1, $scope.itemsPerPage)
+            dokterFactory
+                .getAllByName($scope.search)
                 .success(function (data){
-                    $scope.tindakans = data.content ;                 
-                    $scope.totalItems = data.totalElements;                                  
+                    $scope.dokters = data ;                 
                 }).error(function(data){
                     growl.addWarnMessage("Error Loading getAll data by nama !",{ttl: 4000});        
                 });                 
@@ -90,7 +73,7 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
     };
 
     $scope.urut=function(urut_berdasar){
-        $scope.ordertindakan=urut_berdasar;       
+        $scope.orderdokter=urut_berdasar;       
     };
 
     $scope.ubah=function(id, nama,urut){
@@ -98,10 +81,11 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formUbah';
         idx=urut;
-        tindakanFactory
+        dokterFactory
             .getById(id)
             .success(function(data){
-                $scope.tindakan =data;                
+                $scope.dokter =data;                
+		   		$scope.dokter.fieldGroup = null;
             });
 
     };
@@ -111,10 +95,10 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formHapus';
         idx=urut;
-        tindakanFactory
+        dokterFactory
             .getById(id)
             .success(function(data){
-                $scope.tindakan =data;                
+                $scope.dokter =data;                
             });
         
     };
@@ -122,28 +106,29 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
     $scope.proses=function(){
         switch($scope.jenisTransaksi){
             case 1:
-                $scope.tindakan.idField='';
-                tindakanFactory
-                    .insert($scope.tindakan)
+                $scope.dokter.idField='';
+        		$scope.dokter.fieldGroup = $scope.grup;
+                dokterFactory
+                    .insert($scope.dokter)
                     .success(function(data){
                         growl.addInfoMessage('insert success ' + data );
                         $scope.jenisTransaksi=2;
-                        $scope.tindakan.idTariff=data.idTariff;
-                        $scope.tindakans.push($scope.tindakan);
+                        $scope.dokter.idField=data.idField;
+                        $scope.dokters.push($scope.dokter);
                         $scope.tutupGrid = !$scope.tutupGrid;
-		                getAlltindakan(1);
+		                getAlldokter();
                     })
                     .error(function(data){
                         growl.addWarnMessage('Error insert ' + data);       
                     })
                 break;
             case 2:
-        		$scope.tindakan.fieldGroup = $scope.grup;
-                tindakanFactory
-                    .update($scope.tindakan.idField, $scope.tindakan)
+        		$scope.dokter.fieldGroup = $scope.grup;
+                dokterFactory
+                    .update($scope.dokter.idField, $scope.dokter)
                     .success(function(data){
                         growl.addInfoMessage('edit success');   
-                        $scope.tindakans[idx]=$scope.tindakan;  
+                        $scope.dokters[idx]=$scope.dokter;  
                         $scope.tutupGrid = !$scope.tutupGrid;               
                     })
                     .error(function(data){
@@ -152,11 +137,11 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
                     })              
                 break;
             case 3:
-                tindakanFactory
-                    .deleteRec($scope.tindakan.id)
+                dokterFactory
+                    .deleteRec($scope.dokter.id)
                     .success(function(data){
                         growl.addInfoMessage('Delete success, silahkan refresh data ulang !!');     
-                        //delete $scope.tindakans[idx];
+                        //delete $scope.dokters[idx];
                         getAllDirektorat();
                         $scope.tutupGrid = !$scope.tutupGrid;
                     })
@@ -173,9 +158,7 @@ appControllers.controller('tindakanController', ['$scope','tindakanFactory','gro
     };
 
     $scope.previewLaporan=function(){
-         $window.open($rootScope.pathServerJSON + '/laporan/tindakan', '_blank');
+         $window.open($rootScope.pathServerJSON + '/laporan/dokter', '_blank');
     }      
-
-    getAlltindakan(1);
 
 }]);

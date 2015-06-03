@@ -22,10 +22,11 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
     $scope.resetPass=false;
     // Paging 
 	$scope.totalItems;
-	$scope.itemsPerPage= 8;
-	$scope.currentPage = 1;     
+	$scope.itemsPerPage= 5;
+	$scope.currentPage = 1;    
+
 	$scope.pageChanged=function(){
- 		getAll($scope.currentPage); 		  
+ 		getAllUser($scope.currentPage); 		  
     }
 
     getAllUser(1);
@@ -56,24 +57,26 @@ appControllers.controller('userController', ['$scope', 'userFactory','growl','Ba
     function getAllUser(halaman){
         //alert('get all kode arsip');
 
-        // if($scope.search===''){
-        //     userFactory
-        //         .getAllUser(halaman, $scope.itemsPerPage)
-        //         .success(function (data){
-        //             $scope.groupTindakans = data ;                                     
-        //         }).error(function(data){
-        //             growl.addWarnMessage("Error Loading getAll data !",{ttl: 4000});        
-        //         });             
-        // }else{
-
-        // }	
+        if($scope.search===''){
             userFactory
-                .getAllUser( )
+                .getAllUserPage (halaman, $scope.itemsPerPage )
                 .success(function (data){
-                    $scope.users = data ;                 
+                    $scope.users = data.content ; 
+                    $scope.totalItems = data.totalElements;                 
                 }).error(function(data){
                     growl.addWarnMessage("Error Loading getAll data by nama !",{ttl: 4000});        
-                });                 
+                });              
+        }else{
+            userFactory
+                .getUserByNama($scope.search, halaman, $scope.itemsPerPage)
+                .success(function (data){
+                    $scope.users = data.content ;           
+                    $scope.totalItems = data.totalElements;                           
+                }).error(function(data){
+                    growl.addWarnMessage("Error Loading getAll data !",{ttl: 4000});        
+                });             
+        }	
+                           
         
         
     };

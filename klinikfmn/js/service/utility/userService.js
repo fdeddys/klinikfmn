@@ -5,7 +5,7 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 
 	userFactory.getAllUserPage=function(hal, jumlah){
 		return $http({
-			url:urlApi + '/hal/' + hal + '/jumlah/' + jumlah,
+			url:urlApi + '/size/' + jumlah + '/number/' + hal,
 			method:'GET'
 		})
 	};
@@ -19,7 +19,7 @@ appServices.factory('userFactory', ['$http','$rootScope', function($http,$rootSc
 
 	userFactory.getUserByNama=function(nama, hal, jumlah){
 		return $http({
-			url : urlApi + '/nama/' + nama + '/hal/' + hal + '/jumlah/' + jumlah,
+			url : urlApi + '/name/' + nama + + '/size/' + jumlah + '/number/' + hal,
 			method:'GET'
 		})
 	};

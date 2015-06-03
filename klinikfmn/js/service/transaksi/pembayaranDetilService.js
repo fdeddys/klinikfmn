@@ -18,12 +18,7 @@ appServices.factory('pembayaranDetilFactory',['$http','$rootScope',
 		});			
 	};
 	
-	pembayaranFactory.getById=function(id){
-		return $http({
-			method:'GET',
-			url:urlApi + '/id/' + id		
-		});
-	};
+	
 
 	pembayaranFactory.insert = function(pembayaran){
 		return $http({
@@ -47,8 +42,8 @@ appServices.factory('pembayaranDetilFactory',['$http','$rootScope',
 			method:'DELETE',
 			url:urlApi + '/' + id
 		});
+	};	
 
-	}
 
 	return pembayaranFactory;
 

@@ -2,21 +2,29 @@
 <div class='container' collapse="tutupGrid"  style="background-color:white"  >
 <br>
 	<div>
-		Cari Nama  : <input id='idCari' type='text' ng-model='searchNama' ng-change='getAll()' >
+		Cari Nama  : <input id='idCari' type='text' ng-model='search' ng-change='getAll()' style='width:30em'>
+		<input type='button' 				
+				class='btn btn-primary btn-xm'
+				ng-click='cari()'				
+				value=" Refresh " 
+				style='width:10em; height:3em; background-color:green'				
+				/>
 		<input type='button' 				
 				class='btn btn-primary btn-xm'
 				ng-click='tambah()'				
 				value="  Add New " 
-				style='width:15em; height:3em'				
+				style='width:10em; height:3em'				
 				/>
 	</div>
 	<br>
 	<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF"  >
 		<thead>
 			<tr>
-				<td width="20%" align="center"> <button class="btn btn-block btn-default" >Group</button></td>	
-				<td width="5%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>
-				<td width="55%" align="center"> <button class="btn btn-block btn-default" >Nama</button></td>
+				<td width="5%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>	
+				<td width="45%" align="center"> <button class="btn btn-block btn-default" >Nama Tarif</button></td>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Tarif RS</button></td>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Tarif Dokter</button></td>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Variabel</button></td>
 				<td width="10%" align="center"> <button class="btn btn-block btn-default">Aktif</button></td>			    							   			    
 			    <td width="10%" ></td>
 			    <!-- <td width="10%"></td> -->
@@ -24,12 +32,14 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat='tindakan in tindakans  ' >
-				<td>{{tindakan.tariffGroup.tariffGroupName}}</td>
 				<td>{{tindakan.idTariff}}</td>
 				<td>{{tindakan.tariffName}}</td>
+				<td>{{tindakan.rs}}</td>
+				<td>{{tindakan.dokter}}</td>				
+				<td>{{tindakan.variable}}</td>				
 				<td>{{tindakan.active}}</td>				
 			    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-			    	ng-click='ubah(tindakan.idTariffGroup, $index)'
+			    	ng-click='ubah(tindakan.idTariff, tindakan.tariffName, $index)'
 			    	><span> Edit </span></button></td>			    	    
 			</tr>		
 		</tbody>
@@ -41,59 +51,68 @@
 </div>
 
 <div collapse="!tutupGrid" ng-class='classForm' class='container-fluid' style='color:whitesmoke'  >
-	<div>
-		<h3 >Detil</h3>		
-		<br>
+	<div class="container-fluid" style="width: 80%">
+		<h3 >Detil</h3>
+		<hr>	
+		  <form class="form-horizontal" >
+		  <div class="form-group">
+		      <label for="idTariff" class="col-sm-2 control-label">ID</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="idTariff" placeholder="Kode Tarif " ng-model="tindakan.idTariff" style="width:20%" ng-disabled="true">
+		      </div>
+		    </div>
 
-		<table id="tableFormEdit">
-			<thead>
-				<tr width='10%'></tr>	
-				<tr width='10%'></tr>	
-				<tr width='60%'></tr>	
-				
-			</thead>			
-			<tbody>
-				<tr>
-					<td >Id</td>
-					<td >:</td>
-					<td ><input type='text' ng-disabled='true' ng-model='groupTindakan.idTariffGroup' /> </td>
-				</tr>				
-			     <tr>
-					<td>Nama</td>
-					<td>:</td>
-					<td ><input type='text'  ng-model='groupTindakan.tariffGroupName' size="50"  /> </td>
-				</tr>	
-				
-				<tr>
-					<td>Aktif</td>
-					<td>:</td>
-					<td><input type='text' maxlength='100' ng-model='groupTindakan.active' size="50"  /> </td>
-				</tr>														
-			</tbody>
-		</table>
-		<br>		
+		    <div class="form-group">
+		      <label for="tariffName" class="col-sm-2 control-label">Nama Tarif</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="tariffName" placeholder="Nama Tarif " ng-model="tindakan.tariffName"  style="width:70%">
+		      </div>
+		    </div>
 
-		<table border='0' >
-			<thead>
-				<tr >
-					<td width='8%'></td>
-					<td width='1%'></td>
-					<td width='8%'></td>
-					<td width='20%'></td>
-					<td width='20%'></td>
-				</tr>	
-			</thead>			
-			<tbody>
-				<tr>
-					<td><button class="btn btn-warning btn-block" ng-click='proses()'>Ok</button></td>
-					<td></td>					
-					<td><button class="btn btn-success btn-block" ng-click='tutupDetil()'>Close</button></td>
-					<td></td>					
-					<td></td>					
-				</tr>
-			</tbody>
-		</table>
-		
+		    <div class="form-group">
+		      <label for="rs" class="col-sm-2 control-label">Tarif RS</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="rs" placeholder="Tarif RS " ng-model="tindakan.rs"  style="width:30%">
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <label for="dokter" class="col-sm-2 control-label">Tarif Dokter</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="rs" placeholder="Tarif Dokter " ng-model="tindakan.dokter"  style="width:30%">
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <label for="variable" class="col-sm-2 control-label">Variabel</label>
+		      <div class="col-sm-10">
+		        <select class="form-control" if="variable" ng-model="tindakan.variable"  style="width:20%">
+		          <option value="true" >Aktif</option>
+		          <option value="false">Non Aktif</option>        
+		        </select>
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <label for="active" class="col-sm-2 control-label">Status</label>
+		      <div class="col-sm-10">
+		        <select class="form-control" if="active" ng-model="tindakan.active"  style="width:20%">
+		          <option value="true" >Aktif</option>
+		          <option value="false">Non Aktif</option>        
+		        </select>
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <div class="col-sm-offset-2 col-sm-2">
+		        <button ng-click='proses()' class="btn btn-danger btn-block"><span class="glyphicon glyphicon-save" aria-hidden="true">  Simpan  </button>
+		      </div>
+		      <div class="col-sm-2">
+		        <button ng-click='tutupDetil()' class="btn  btn-block"><span class="glyphicon glyphicon-save" aria-hidden="true">  Close  </button>
+		      </div>
+		    </div>
+
+		  </form>
 	</div>
 
 	<hr>	

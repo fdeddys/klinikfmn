@@ -1,5 +1,5 @@
-appControllers.controller('assessmentPerawatController', ['$scope','registrasiFactory','$location','$filter',
-    function($scope, registrasiFactory, $location, $filter){
+appControllers.controller('assessmentPerawatController', ['$scope','registrasiFactory','$location','$filter','growl',
+    function($scope, registrasiFactory, $location, $filter, growl){
         
     $scope.registrasis=[];
  	
@@ -78,9 +78,21 @@ appControllers.controller('assessmentPerawatController', ['$scope','registrasiFa
 		$scope.today();				
 	};
 
-	$scope.assessmentDetil=function(noPass){
-		$location.path('/assesmentPerawatDetil/'+noPass)
+	$scope.assessmentDetil=function(noPass, isClose){
+		if(isClose==true){
+			growl.addWarnMessage('Registrasi telah di tutup, silahkan buka di menu Registrasi !!');
+		}else{
+			$location.path('/assesmentPerawatDetil/'+noPass)	
+		}		
 	};
+
+	$scope.soap=function(noPass, isClose){
+		if(isClose==true){
+			growl.addWarnMessage('Registrasi telah di tutup, silahkan buka di menu Registrasi !!');
+		}else{
+			$location.path('/assesmentDokterDetil/'+noPass)	
+		}	
+	}
 
 	
 	startModule();

@@ -1,8 +1,8 @@
 appControllers.controller('loginController', ['$scope','growl','$location','$rootScope','userFactory', 'Base64','$cookieStore','$rootScope',
     function($scope,growl,$location,$rootScope,userFactory, Base64, $cookieStore, $rootScope){
 	
-	$scope.userId='';
-	$scope.password='';	
+	$scope.userId='tes';
+	$scope.password='123';	
     $rootScope.isLogin=false;
     ClearCredentials();
     

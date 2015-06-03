@@ -1,0 +1,165 @@
+
+<div class="container-fluid" style="width: 80%; background-color:white" >
+<div growl></div> 
+<br>
+<table border="0" style="width:100%;" >
+    <!-- <thead>
+      <tr style="width:10%;"  ></tr>  
+      <tr style="width:40%;"></tr>  
+      <tr style="width:10%;"></tr>  
+      <tr style="width:40%;"></tr>        
+    </thead>      
+    <tbody > -->
+  <col width="20%">
+  <col width="30%">
+  <col width="20%">
+  <col width="30%">
+  <tr>
+      <td >          
+        <label for="patientNo" class="col-sm-2 control-label" style="width:90%" >No Pasien</label>
+      </td>                 
+      <td  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='registrasi.patient.patientNo' class="form-control" style="color:blue" /> 
+      </td>
+      <td >         
+        <label for="patientName" class="col-sm-2 control-label" style="width:90%">Nama</label>  
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%;color:blue"  ng-model='registrasi.patient.patientName' class="form-control" />
+      </td>
+  </tr>
+
+  <tr>
+      <td  >          
+        <label for="birthDate" class="col-sm-2 control-label" style="width:90%">Tgl Lahir</label>
+      </td>                 
+      <td  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='registrasi.patient.birthDate' class="form-control" style="color:blue" /> 
+      </td>
+      <td  >         
+        <label for="patientCity" class="col-sm-2 control-label" style="width:90%">Kota</label> 
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%;color:blue"  ng-model='registrasi.patient.patientCity' class="form-control" />
+      </td>
+  </tr>
+
+  <tr>
+      <td   >          
+        <label for="weight" class="col-sm-2 control-label" style="width:90%">weight </label>
+      </td>                 
+      <td style="color:white"  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.weight' class="form-control" style="color:blue" /> 
+      </td>
+      <td  >         
+        <label for="height" class="col-sm-2 control-label" style="width:90%">height </label>
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%;color:blue"  ng-model='assessment.height' class="form-control" />
+      </td>
+  </tr>
+
+  <tr>
+      
+      <td  >         
+        <label for="height" class="col-sm-2 control-label" style="width:90%">BMI </label>
+      </td>                 
+      <td  >         
+          <span class="form-control" placeholder="automatic" style="width:90%">{{assessment.weight / (assessment.height * assessment.height / 10000) | number:3 }}</span>        
+      </td>
+      <td  >          
+         <!-- <label for="height" class="col-sm-2 control-label" style="width:90%">BMI</label> -->
+      </td>                 
+      <td style="color:white"  >
+        <!-- <input type='text' ng-disabled='true' style="width:50%"  ng-model='assessment.weight' class="form-control" style="color:blue" />  -->
+      </td>
+  </tr>
+
+ <tr>
+      <td >          
+         <label for="respiratoryRate" class="col-sm-2 control-label" style="width:90%">respiratory Rate </label>
+      </td>                 
+      <td style="color:white"  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.respiratoryRate' class="form-control" style="color:blue" /> 
+      </td>
+      <td >         
+        <label for="sistolic" class="col-sm-2 control-label" style="width:90%">sistolic </label>
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.sistolic' class="form-control" style="color:blue" />      
+      </td>
+  </tr>
+
+  <tr>
+      <td >          
+         <label for="diastolic" class="col-sm-2 control-label" style="width:90%">diastolic </label>
+      </td>                 
+      <td style="color:white"  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.diastolic' class="form-control" style="color:blue" /> 
+      </td>
+      <td  >         
+        <label for="temperature" class="col-sm-2 control-label" style="width:90%">temperature </label>
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.temperature' class="form-control" style="color:blue" />      
+      </td>
+  </tr>
+
+  <tr>
+      <td  >          
+         <label for="heartRate" class="col-sm-2 control-label" style="width:90%">heartRate </label>
+      </td>                 
+      <td style="color:white"  >
+        <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.heartRate' class="form-control" style="color:blue" /> 
+      </td>
+      <td >         
+        <label for="tools" class="col-sm-2 control-label" style="width:90%">tools </label>
+      </td>                 
+      <td style="color:white" >         
+          <input type='text' ng-disabled='true' style="width:90%"  ng-model='assessment.tools' class="form-control" style="color:blue" />      
+      </td>
+  </tr>
+</table>
+<hr>
+ <form class="form-horizontal" >
+  <div class="form-group">
+      <label for="patientNo" class="col-sm-2 control-label">Subjective</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="3" id="subjective" placeholder="subjective " ng-model="assessment.subjective"></textarea>           
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="patientNo" class="col-sm-2 control-label">Objective</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="3" id="objective" placeholder="objective " ng-model="assessment.objective"></textarea>           
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="patientNo" class="col-sm-2 control-label">Assessment</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="3" id="assessment" placeholder="assessment " ng-model="assessment.assessment"></textarea>           
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="patientNo" class="col-sm-2 control-label">Plan</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="3" id="plan" placeholder="plan " ng-model="assessment.plan"></textarea>           
+      </div>
+  </div>
+          
+  <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button ng-click="simpan()" class="btn btn-primary" style="width:30%"><span class="glyphicon glyphicon-save" aria-hidden="true">  Simpan  </button>
+        <button ng-click="closeDokter()" class="btn btn-warning" style="width:30%"><span class="glyphicon glyphicon-save" aria-hidden="true">  Close  </button>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+        
+      </div>
+  </div>
+
+  <hr>
+  
+</div>

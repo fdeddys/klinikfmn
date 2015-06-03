@@ -61,10 +61,21 @@
 				</td>									
 				<td style="color:white" >	
 				 	<button  class="btn btn-success" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved">Approve</button>
-				 	<button  class="btn btn-info " style="width:30%" ng-click="void()" ng-disabled="isVoided ">Print</button>
-				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided ">Void</button>
+				 	<button  class="btn btn-info " style="width:30%" ng-click="showPreview=!showPreview"  ng-disabled="isVoided ">Print</button>
+				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided ">Void</button>				 	
+				</td>				
+			</tr>	
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<div class="well" collapse='showPreview'>
+				 		<button  class="btn btn-default "  style="width:40%" ng-click="printkwitansi()">Print Kwitansi</button>				 	
+				 		<button  class="btn btn-default " style="width:40%" ng-click="printRincian()" ng-disabled="isVoided ">Print Rincian</button>				 	
+				 	</div>
 				</td>
-			</tr>								
+			</tr>						
 		<!-- </tbody> -->
 	</table>		
 	<!-- <hr> -->
@@ -103,16 +114,33 @@
 		</div>
 		<!--  TOTAL -->
 		<br>
-		<table border="0" style="width:50%;" >		
-			<col width="20%">
-			<col width="80%">	  	
+		<table border="0" style="width:100%;" >		
+			<col width="10%">
+			<col width="25%">
+			<col width="10%">
+			<col width="25%">
+			<col width="5%">
+			<col width="25%">			
 			<tr>
 				<td style="color:white"  >					
 				    <label class="control-label"> Tindakan</label>
 				</td>									
 				<td style="color:white"  >
 				    <!-- <input type='text' ng-disabled='true'/> -->
-				    <span class="form-control" style="width:70%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.transactionTotal | currency :'Rp '}} </span>
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.transactionTotal | currency :'Rp '}} </span>
+				</td>		
+				<td style="color:white"  >					
+				    <label class="control-label"> disc tindakan</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='number' step="50000" min="0" placeholder='Discount dalam Rp'  style="width:90%" ng-model='payment.discTransaction' class="form-control"/> 
+				</td>	
+				<td style="color:white"  >					
+				    <label class="control-label; text-align:center" > :</label>
+				</td>									
+				<td style="color:white"  >
+				    <!-- <input type='text' ng-disabled='true'/> -->
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.transactionTotal - payment.discTransaction | currency :'Rp '}} </span>
 				</td>				
 			</tr>
 			<tr>
@@ -121,19 +149,36 @@
 				</td>									
 				<td style="color:white"  >
 				    <!-- <input type='text' ng-disabled='true' style="width:70%" ng-model='payment.pharmacyTotal' class="form-control"/>  -->
-				    <span class="form-control" style="width:70%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.pharmacyTotal | currency :'Rp '}} </span>
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.pharmacyTotal | currency :'Rp '}} </span>
+				</td>	
+				<td style="color:white"  >					
+				    <label class="control-label"> disc Farmasi</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='number' step="50000" min="0" placeholder='Discount dalam Rp'  style="width:90%" ng-model='payment.discPharmacy' class="form-control"/> 
+				</td>	
+				<td style="color:white"  >					
+				    <label class="control-label; text-align:center" > :</label>
+				</td>									
+				<td style="color:white"  >
+				    <!-- <input type='text' ng-disabled='true'/> -->
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.pharmacyTotal - payment.discPharmacy | currency :'Rp '}} </span>
 				</td>						
 			</tr>
 			<tr>
-				<td style="color:white" >					
-				    <label class="control-label"> Total</label>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td style="color:white" >									
+				    <label class="control-label" align='right'> Total</label>
 				</td>									
+				<td></td>
 				<td style="color:white"  >
 				    <!-- <input type='text' ng-disabled='true' style="width:70%" ng-model='subTotal' class="form-control"/>  -->
-				    <span class="form-control" style="width:70%; text-align:right; color:blue; background-color:whitesmoke"  >{{subTotal | currency :'Rp '}} </span>
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.transactionTotal - payment.discTransaction + payment.pharmacyTotal - payment.discPharmacy | currency :'Rp '}} </span>
 				</td>												
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td style="color:white"  >					
 				    <label class="control-label"> Disc</label>
 				</td>									
@@ -145,11 +190,10 @@
 				<td style="color:white"  >					
 				    <label class="control-label">Grand Total</label>
 				</td>									
-				<td style="color:white"  >
-				    <!-- <input type='text' ng-disabled='true' style="width:70%" ng-model='payment.total' class="form-control"/>  -->
-				    <span class="form-control" style="width:70%; text-align:right; color:blue; background-color:whitesmoke"  >{{subTotal - payment.disc | currency :'Rp '}} </span>
+				<td style="color:white"  > -->				    
+<!-- 				    <span class="form-control" style="width:70%; text-align:right; color:blue; background-color:whitesmoke"  >{{subTotal - payment.disc | currency :'Rp '}} </span>
 				</td>												
-			</tr>
+			</tr> -->
 		</table>
 		<hr>
 		
@@ -190,7 +234,7 @@
 				      <label ></label>		
 				</td>									
 				<td style="color:white" >					
-				    <input type='number' step="10000" min="0" ng-model='payment.debit' class="form-control" placeholder='Jumlah Debet'/> 
+				    <input type='number' step="100000" min="0" ng-model='payment.debit' class="form-control" placeholder='Jumlah Debet'/> 
 				</td>													
 			</tr>
 			<tr>
@@ -209,14 +253,14 @@
 				      <label ></label>		
 				</td>									
 				<td style="color:white" >					
-				    <input type='number' step="10000" min="0" ng-model='payment.credit' class="form-control" placeholder='Jumlah Kredit'/> 
+				    <input type='number' step="100000" min="0" ng-model='payment.credit' class="form-control" placeholder='Jumlah Kredit'/> 
 				</td>													
 			</tr>
 		</table>
 		<hr>
 		<!-- END INPUT PEMBAYARAN -->
 		<div class="well well-lg">
-			<h2 style="color:blue">Kembali : {{(payment.cash + payment.debit + payment.credit) - (subTotal - payment.disc )  | currency :'Rp '}}</h2>
+			<h2 style="color:blue">Kembali : {{(payment.cash + payment.debit + payment.credit) - (payment.transactionTotal - payment.discTransaction + payment.pharmacyTotal - payment.discPharmacy )  | currency :'Rp '}}</h2>
 		</div>
 		<br>
 

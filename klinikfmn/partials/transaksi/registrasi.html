@@ -43,9 +43,10 @@
 					<td width="10%" ><button class="btn btn-block btn-default" >Jam</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >No Reg</button></td> 
 				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
-				    <td width="40%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="30%"><button class="btn btn-block btn-default" >Nama</button></td>	
 				    <td width="10%" ><button class="btn btn-block btn-default" >Tgl Lahir</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >Close</button></td>	
 				</tr>	
 			</thead>
 			<tbody>
@@ -57,7 +58,8 @@
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
 				    <td>{{registasi.patient.birthDate}}</td> 
-				    <td>{{registasi.isVoid}}</td>										    
+				    <td>{{registasi.isVoid}}</td>									
+				    <td><button class="btn" ng-click="gantiStatus(registasi.isClosed, registasi.idRegistration)" > {{registasi.isClosed}}</button> </td>									
 				</tr>		
 			</tbody>
 		</table>

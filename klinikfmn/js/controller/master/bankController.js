@@ -6,11 +6,16 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
     $scope.classForm='';
     $scope.banks=[];
     $scope.orderbank='id';
+    $scope.grup={
+    	idFieldGroup: 4,
+    	fieldGroupName: "BANK",
+    	active: "true"
+    }
     $scope.bank={
-        idField: 0,
-        fieldGroup : "4",      
+        idField: null,
+        fieldGroup: null,      
         fieldName: "",
-        active:true
+        active:""
     };
     $scope.search='';
 
@@ -29,17 +34,21 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
         $scope.jenisTransaksi=1;
         $scope.tutupGrid = !$scope.tutupGrid;
         $scope.classForm = 'formTambah';
-        $scope.bank.idField='[Automatic]';             
-        $scope.bank.fieldName='';
-        $scope.bank.active='true';
-        // $scope.bank={
-        //     idField: 0, 
-        //     fieldGroup : null,     
-        //     fieldName: "",
-        //     active:true
-        // };
+        // $scope.bank.id='[Automatic]';             
+        // $scope.bank.nama='';
+        // $scope.bank.active='true';
+        $scope.bank={
+            idField: null, 
+            fieldGroup: null,     
+            fieldName: "",
+            active:"true"
+        };
     };
 
+    $scope.cari=function(){
+        getAllbank();
+    };
+    
     function getAllbank(){
         //alert('get all kode arsip');
 
@@ -53,7 +62,7 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
                 });             
         }else{
             bankFactory
-                .getAllByPage($scope.search )
+                .getAllByName($scope.search)
                 .success(function (data){
                     $scope.banks = data ;                 
                 }).error(function(data){
@@ -75,15 +84,9 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
         bankFactory
             .getById(id)
             .success(function(data){
-                $scope.bank =data;   
-                // if($scope.bank.data==true){
-                //     $scope.bank.active=true 
-                // }else{
-                //     $scope.bank.active=false 
-                // }             
+                $scope.bank =data;                
+		   		$scope.bank.fieldGroup = null;
             });
-        
-        growl.addInfoMessage(urut);
 
     };
 
@@ -98,83 +101,55 @@ appControllers.controller('bankController', ['$scope', 'bankFactory','growl',
                 $scope.bank =data;                
             });
         
-        growl.addInfoMessage(urut);     
     };
 
     $scope.proses=function(){
-
-        var groupBank;
-
-        bankFactory    
-            .getGroupBank()
-            .success(function(data){
-                groupBank=data;
-                $scope.bank.fieldGroup=groupBank;
-
-                switch($scope.jenisTransaksi){
-                    case 1:
-
-                        //  $scope.bank={
-                        //     idField: null,
-                        //     fieldGroup : {
-                        //         idFieldGroup: 4,
-                        //         fieldGroupName: "BANK",
-                        //         active: true
-                        //         },      
-                        //     fieldName: "tes",
-                        //     active:true
-                        // };
-                        $scope.bank.idField=null;
-                        bankFactory
-                            .insert($scope.bank)
-                            .success(function(data){
-                                growl.addInfoMessage('insert success ' + data );
-                                // $scope.jenisTransaksi=2;
-                                // $scope.bank.idField =data.idField;
-                                // $scope.banks.push($scope.bank);
-                                $scope.tutupGrid = !$scope.tutupGrid;
-                                getAllbank();
-                            })
-                            .error(function(data){
-                                growl.addWarnMessage('Error insert ' + data);       
-                            })
-                        
-                        break;
-                    case 2:
-                        bankFactory
-                            .update($scope.bank.idField, $scope.bank)
-                            .success(function(data){
-                                growl.addInfoMessage('edit success');   
-                                // $scope.banks[idx]=$scope.bank;  
-                                $scope.tutupGrid = !$scope.tutupGrid;               
-                                getAllbank();
-                            })
-                            .error(function(data){
-                                growl.addWarnMessage('Error Updata ' + data);
-                                console.log(data);      
-                            })              
-                        break;
-                    case 3:
-                        bankFactory
-                            .deleteRec($scope.bank.idField)
-                            .success(function(data){
-                                growl.addInfoMessage('Delete success, silahkan refresh data ulang !!');     
-                                //delete $scope.banks[idx];
-                                // getAllDirektorat();
-                                $scope.tutupGrid = !$scope.tutupGrid;
-                                getAllbank();
-                            })
-                            .error(function(data){
-                                growl.addWarnMessage('Error Delete ' + data)                                
-                            });             
-                        break;          
-                }
-
-            })
-            .error(function(data){
-                growl.addWarnMessage('Error get Group Bank');                
-            })
-        
+        switch($scope.jenisTransaksi){
+            case 1:
+                $scope.bank.idField='';
+        		$scope.bank.fieldGroup = $scope.grup;
+                bankFactory
+                    .insert($scope.bank)
+                    .success(function(data){
+                        growl.addInfoMessage('insert success ' + data );
+                        $scope.jenisTransaksi=2;
+                        $scope.bank.idField=data.idField;
+                        $scope.banks.push($scope.bank);
+                        $scope.tutupGrid = !$scope.tutupGrid;
+		                getAllbank();
+                    })
+                    .error(function(data){
+                        growl.addWarnMessage('Error insert ' + data);       
+                    })
+                break;
+            case 2:
+        		$scope.bank.fieldGroup = $scope.grup;
+                bankFactory
+                    .update($scope.bank.idField, $scope.bank)
+                    .success(function(data){
+                        growl.addInfoMessage('edit success');   
+                        $scope.banks[idx]=$scope.bank;  
+                        $scope.tutupGrid = !$scope.tutupGrid;               
+                    })
+                    .error(function(data){
+                        growl.addWarnMessage('Error Updata ' + data);
+                        console.log(data);      
+                    })              
+                break;
+            case 3:
+                bankFactory
+                    .deleteRec($scope.bank.id)
+                    .success(function(data){
+                        growl.addInfoMessage('Delete success, silahkan refresh data ulang !!');     
+                        //delete $scope.banks[idx];
+                        getAllDirektorat();
+                        $scope.tutupGrid = !$scope.tutupGrid;
+                    })
+                    .error(function(data){
+                        growl.addWarnMessage('Error Delete ' + data)                                
+                    });             
+                break;          
+        }
 
     };
 

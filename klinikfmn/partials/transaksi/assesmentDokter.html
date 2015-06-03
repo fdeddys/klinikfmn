@@ -10,7 +10,10 @@
 		<br>
 		<div class='container-fluid' style="background-color:#CEECF5" >	
 		<br>
-		Cari no Reg     : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >		
+		Nama  : <input type='text' ng-model='searchNoUrut' ng-change='getAll()' >		
+		<label>
+	      	<input type="checkbox" ng-model="isTglReg"> 
+	    </label>
 		Tgl Reg  : 
 			<input type="text" 						
 				datepicker-popup="dd-MMM-yyyy" 
@@ -56,8 +59,8 @@
 				    <td>{{registasi.patient.patientName}}</td> 
 				    <td>{{registasi.isVoid}}</td>									    
 				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-				    	ng-click='proses()'
-				    	><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> Nak Action apo neh?</button></td>		    
+				    	ng-click='soap(registasi.registrationNo,registasi.isClosed)'
+				    	><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> SOAP </button></td>		    
 				</tr>		
 			</tbody>
 		</table>

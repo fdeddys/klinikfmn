@@ -1,4 +1,4 @@
-appControllers.controller('assessmentDokterController', ['$scope','assessmentFactory',
+appControllers.controller('assessmentDokterDetilController', ['$scope','assessmentFactory',
     function($scope,assessmentFactory){
         
 

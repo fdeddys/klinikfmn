@@ -1,5 +1,5 @@
-appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','fieldGroupFactory',
-    function($scope, pasienFactory, growl, $filter, $routeParams, fieldGroupFactory){
+appControllers.controller('pasienDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','fieldGroupFactory','$location',
+    function($scope, pasienFactory, growl, $filter, $routeParams, fieldGroupFactory, $location){
  
  	$scope.dataPendidikans=[];
  	$scope.dataPekerjaans=[];
@@ -137,6 +137,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				.success(function(data){
 					$scope.pasien=data;
 					growl.addWarnMessage('Save success !!!');
+					$location.path('/registrasiDetil/'+data.patientNo);
 				})
 				.error(function(data){
 					growl.addWarnMessage('Error Save !!!');				

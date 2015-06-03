@@ -1,5 +1,5 @@
-appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', '$location',
-    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory, $location){
+appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', '$location','$rootScope',
+    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory, $location, $rootScope){
         
     //untuk temp tarif group yg sudah di pilih    
     $scope.tarifSelected = '';
@@ -10,6 +10,9 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
  	$scope.selectedDokter;
 
  	$scope.transaksiDetils=[];
+
+ 	$scope.isTarifVariabel=false;
+ 	$scope.tarifVariabel='';
 
  	// jika sudah approve atau void tidak bisa edit transaksi
  	$scope.isVoided = false;
@@ -60,64 +63,94 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     };
 
     $scope.simpan=function(data){
-    	if($scope.transaksiHd.idTransactionHdr==='' || $scope.transaksiHd.idTransactionHdr===null){
-    		$scope.transaksiHd.registration = $scope.registrasi;
-    		transaksiFactory
-    			.insert($scope.transaksiHd)
-    			.success(function(data){
-    				$scope.transaksiHd 	= data;
-    				simpanDetil();
-    			})	
-    			.error(function(data){
-    				growl.addWarnMessage("Error save data !!");
-    			})
+    	if($scope.tarifSelected.variable==true && $scope.tarifVariabel===''){    		
+    		growl.addWarnMessage('tarif belum diisi !!!')    		
     	}else{
-    		simpanDetil();
+	    	if($scope.transaksiHd.idTransactionHdr==='' || $scope.transaksiHd.idTransactionHdr===null){
+	    		$scope.transaksiHd.registration = $scope.registrasi;
+	    		transaksiFactory
+	    			.insert($scope.transaksiHd)
+	    			.success(function(data){
+	    				$scope.transaksiHd 	= data;
+	    				simpanDetil();
+	    			})	
+	    			.error(function(data){
+	    				growl.addWarnMessage("Error save data !!");
+	    			})
+	    	}else{
+	    		simpanDetil();
+	    	}
     	}
+    	
     };
 
     function simpanDetil(){
 
-    	if($scope.isPaket==false){
-    		$scope.transaksiDt={    	
-				idTransactionDtl: null,
-				transactionHdr: $scope.transaksiHd,
-				tariff: $scope.tarifSelected,
-				rs: $scope.tarifSelected.rs,
-				dokter: $scope.tarifSelected.dokter,
-				harga: $scope.tarifSelected.dokter + $scope.tarifSelected.rs,
-				paket: 0,
-				idDokter: $scope.selectedDokter.id,
-				usrUpdate: null,
-				tglUpdate: null		
-	    	};	
+    	if($scope.tarifSelected.variable==true){
+    		if($scope.tarifVariabel===''){
+    			growl.addWarnMessage('tarif belum diisi !!!')
+    			return ;
+    		}else{
+    			$scope.transaksiDt={    	
+					idTransactionDtl: null,
+					transactionHdr: $scope.transaksiHd,
+					tariff: $scope.tarifSelected,
+					rs: $scope.tarifVariabel,
+					dokter: 0,
+					harga: $scope.tarifVariabel,
+					qty:1,
+					paket: 0,
+					idDokter: $scope.selectedDokter.id,
+					usrUpdate: null,
+					tglUpdate: null		
+		    	};	
+    		}
     	}else{
-    		$scope.transaksiDt={    	
-				idTransactionDtl: null,
-				transactionHdr: $scope.transaksiHd,
-				tariff: $scope.tarifSelected,
-				rs: 0,
-				dokter: 0,
-				harga: 0,
-				paket: 1,
-				idDokter: $scope.selectedDokter.id,
-				usrUpdate: null,
-				tglUpdate: null		
-	    	};
+			if($scope.isPaket==false){
+
+	    		$scope.transaksiDt={    	
+					idTransactionDtl: null,
+					transactionHdr: $scope.transaksiHd,
+					tariff: $scope.tarifSelected,
+					rs: $scope.tarifSelected.rs,
+					dokter: $scope.tarifSelected.dokter,
+					harga: $scope.tarifSelected.dokter + $scope.tarifSelected.rs,
+					qty:1,
+					paket: 0,
+					idDokter: $scope.selectedDokter.id,
+					usrUpdate: null,
+					tglUpdate: null		
+		    	};	
+	    	}else{
+	    		$scope.transaksiDt={    	
+					idTransactionDtl: null,
+					transactionHdr: $scope.transaksiHd,
+					tariff: $scope.tarifSelected,
+					rs: 0,
+					dokter: 0,
+					harga: 0,
+					qty:1,
+					paket: 1,
+					idDokter: $scope.selectedDokter.id,
+					usrUpdate: null,
+					tglUpdate: null		
+		    	};
+	    	}	    		    	
     	}
-    	
+
     	transaksiDetilFactory
-			.insert($scope.transaksiDt, $scope.transaksiHd.idTransactionHdr)
-			.success(function(data){
-				//$scope.transaksiHd 	= data;
-				// alert('success insert detil');
-				$scope.tarifSelected='';
-				$scope.isPaket=false;
-				isiTable();
-			})	
-			.error(function(data){
-				growl.addWarnMessage("Error save data !!");
-			})
+				.insert($scope.transaksiDt, $scope.transaksiHd.idTransactionHdr)
+				.success(function(data){
+					//$scope.transaksiHd 	= data;
+					// alert('success insert detil');
+					$scope.tarifSelected='';
+					$scope.isPaket=false;
+					isiTable();
+				})	
+				.error(function(data){
+					growl.addWarnMessage("Error save data !!");
+				})
+   
     };
 
     $scope.deleteDetil=function(idDetil){
@@ -132,26 +165,38 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     };
 
     $scope.approve=function(){
-    	var tmpTrns;
+    	var userName =$rootScope.globals.currentUser.username;
     	transaksiFactory
-			.getById($scope.transaksiHd.idTransactionHdr)
-			.success(function(data){				
-				tmpTrns=data;
-				tmpTrns.isApprove = true;
-				transaksiFactory
-					.update($scope.transaksiHd.idTransactionHdr, tmpTrns)
-					.success(function(data){
-						$scope.isApproved = true; 	
-						growl.addWarnMessage("success approve");
-						$scope.pesanStatus ="APPROVED";				
-					})
-					.error(function(data){
-						growl.addWarnMessage("error  approve");
-					})
-			})	
-			.error(function(data){
-				growl.addWarnMessage("Error save data !!");
-			})	
+    		.approveTransaksi($scope.transaksiHd.idTransactionHdr, userName)
+    		.success(function(data){
+    			$scope.isApproved = true; 	
+	 			growl.addWarnMessage("success approve");
+	 			$scope.pesanStatus ="APPROVED";	
+    		})
+    		.error(function(data){
+    			growl.addWarnMessage("Error approve data !!");
+    		})
+
+   //  	var tmpTrns;
+   //  	transaksiFactory
+			// .getById($scope.transaksiHd.idTransactionHdr)
+			// .success(function(data){				
+			// 	tmpTrns=data;
+			// 	tmpTrns.isApprove = true;
+			// 	transaksiFactory
+			// 		.update($scope.transaksiHd.idTransactionHdr, tmpTrns)
+			// 		.success(function(data){
+			// 			$scope.isApproved = true; 	
+			// 			growl.addWarnMessage("success approve");
+			// 			$scope.pesanStatus ="APPROVED";				
+			// 		})
+			// 		.error(function(data){
+			// 			growl.addWarnMessage("error  approve");
+			// 		})
+			// })	
+			// .error(function(data){
+			// 	growl.addWarnMessage("Error save data !!");
+			// })	
     };
 
     $scope.listPasien=function(){
@@ -159,26 +204,40 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     }
 
     $scope.void=function(){
-    	var tmpTrns;
+
+    	var userName =$rootScope.globals.currentUser.username;
     	transaksiFactory
-			.getById($scope.transaksiHd.idTransactionHdr)
-			.success(function(data){				
-				tmpTrns=data;
-				tmpTrns.isVoid = true;
-				transaksiFactory
-					.update($scope.transaksiHd.idTransactionHdr, tmpTrns)
-					.success(function(data){
-						growl.addWarnMessage("success void");						
-						$scope.isVoided = true;		
-						$scope.pesanStatus ="VOID";																						
-					})
-					.error(function(data){
-						growl.addWarnMessage("error  void");
-					})
-			})	
-			.error(function(data){
-				growl.addWarnMessage("Error save data !!");
-			})	
+    		.voidTransaksi($scope.transaksiHd.idTransactionHdr, userName)
+    		.success(function(data){
+    			$scope.isApproved = true; 	
+	 			growl.addWarnMessage("success void");
+	 			$scope.pesanStatus ="VOID";	
+    		})
+    		.error(function(data){
+    			growl.addWarnMessage("Error void data !!");
+    		})
+
+
+   //  	var tmpTrns;
+   //  	transaksiFactory
+			// .getById($scope.transaksiHd.idTransactionHdr)
+			// .success(function(data){				
+			// 	tmpTrns=data;
+			// 	tmpTrns.isVoid = true;
+			// 	transaksiFactory
+			// 		.update($scope.transaksiHd.idTransactionHdr, tmpTrns)
+			// 		.success(function(data){
+			// 			growl.addWarnMessage("success void");						
+			// 			$scope.isVoided = true;		
+			// 			$scope.pesanStatus ="VOID";																						
+			// 		})
+			// 		.error(function(data){
+			// 			growl.addWarnMessage("error  void");
+			// 		})
+			// })	
+			// .error(function(data){
+			// 	growl.addWarnMessage("Error save data !!");
+			// })	
     };
 
     
@@ -294,6 +353,17 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 		}		
 		getAllTindakan();
 	};
+
+	$scope.cekApakahVariable=function(){
+		if($scope.tarifSelected.variable==true){
+			$scope.isTarifVariabel=true;	
+		}else{
+			$scope.isTarifVariabel=false;	
+			$scope.tarifVariabel='';
+		}
+		
+	}
+	
 
     startModule();	
 	

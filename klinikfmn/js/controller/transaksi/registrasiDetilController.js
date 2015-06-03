@@ -1,8 +1,11 @@
 appControllers.controller('registrasiDetilController', ['$scope','pasienFactory','growl','$filter','$routeParams','registrasiFactory','fieldGroupFactory','$location',
     function($scope, pasienFactory, growl, $filter, $routeParams, registrasiFactory, fieldGroupFactory, $location){
  
- 	$scope.dokters=[];
+ 	$scope.dokters=[]; 	
  	$scope.selectedDokter;
+
+ 	$scope.floors=[];
+ 	$scope.selectedFloor;
 
  	$scope.pasien={ 		
 		idPatient: null,
@@ -32,11 +35,13 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		patient: null,
 		registrationDate: null,
 		registrationTime: null,
-		isVoid: 0,
+		isVoid: false,
+		isClosed: false,
 		usrUpdate: null,
 		dokter: null,
 		isAssess: 0,
-		lastUpdate: null
+		lastUpdate: null,
+		floor: 0
 	};
 
  	// tanggal
@@ -58,6 +63,7 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 
 	function startModule(){
 		getAllDokter();
+		getAllFloor();
 		var noPass=$routeParams.noPass;
 		if(!isNaN(parseFloat(noPass)) && isFinite(noPass)){
 			//alert('numeric');
@@ -111,7 +117,25 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 				$scope.selectedDokter=$scope.dokters[0];			
  			})
  			.error(function(data){
- 				growl.addWarnMessage("Error loading pekerjaan from server ");
+ 				growl.addWarnMessage("Error loading data dokter from server ");
+ 			})
+	};
+
+	function getAllFloor(){
+		fieldGroupFactory
+ 			.getAllFloor()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {
+					var floor={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};
+    				$scope.floors.push(floor);    				    				
+				});	
+				$scope.selectedFloor=$scope.floors[0];			
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading data floor from server ");
  			})
 	};
 

@@ -11,6 +11,13 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 		})
 	};
 
+	pembayaranFactory.getByNo=function(id){
+		return $http({
+			method:'GET',
+			url:urlApi + '/no/' + id		
+		});
+	};
+
 	pembayaranFactory.getAllByPage=function(hal, jumlah){		
 		return $http({
 			method:'GET',
@@ -47,8 +54,15 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 			method:'DELETE',
 			url:urlApi + '/' + id
 		});
+	};
 
-	}
+	//http://10.1.0.11:8080/fmn-clinic-server/api/payment
+	pembayaranFactory.getByNoRegPage= function (noReg, hal, jumlah){
+		return $http({
+			method:'GET',
+			url:urlApi + '/registrationno/' + noReg + '/size/' + jumlah + '/number/' + hal
+		});
+	};
 
 	return pembayaranFactory;
 

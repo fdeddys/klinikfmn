@@ -11,6 +11,13 @@ appServices.factory('bankFactory',['$http','$rootScope',
 		})
 	};
 
+	bankFactory.getAllByName=function(nama){
+		return $http({
+			method:'GET',
+			url : urlApi + '/idfieldgroup/4/fieldname/' + nama
+		})
+	};
+
 	bankFactory.getAllByPage=function(hal, jumlah){		
 		return $http({
 			method:'GET',
@@ -25,14 +32,6 @@ appServices.factory('bankFactory',['$http','$rootScope',
 		});
 	};
 
-	//http://localhost:8080/fmn-clinic-server/api/fieldgroup/id/4
-	bankFactory.getGroupBank=function(){
-		return $http({
-			method:'GET',
-			url:urlApi + '/id/4' 
-		});	
-	}
-
 	bankFactory.insert = function(bank){
 		return $http({
 			method:'POST',
@@ -45,7 +44,7 @@ appServices.factory('bankFactory',['$http','$rootScope',
 	bankFactory.update  = function(id,bank){
 		return $http({
 			method:'PUT',
-			url:urlApi + '/idfieldgroup/4/field/'+ id,
+			url:urlApi + '/idfieldgroup/4/field/idField/'+ id,
 			data:JSON.stringify(bank)
 		});
 	};
@@ -53,7 +52,7 @@ appServices.factory('bankFactory',['$http','$rootScope',
 	bankFactory.deleteRec = function (id){
 		return $http({
 			method:'DELETE',
-			url:urlApi + '/id/4/field/idField/' + id
+			url:urlApi + '/idfieldgroup/4/field/idField/' + id
 		});
 
 	}

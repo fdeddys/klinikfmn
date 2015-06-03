@@ -1,7 +1,10 @@
-appControllers.controller('pembayaranController', ['$scope','registrasiFactory','$location','growl','$filter',
-    function($scope, registrasiFactory, $location, growl, $filter){
+appControllers.controller('pembayaranController', ['$scope','registrasiFactory','$location','growl','$filter','pembayaranFactory',
+    function($scope, registrasiFactory, $location, growl, $filter, pembayaranFactory){
         
 	$scope.registrasis=[];
+	$scope.payments=[];
+
+	var noReg;
  	
  	// Paging 
 	$scope.totalItems;
@@ -11,6 +14,8 @@ appControllers.controller('pembayaranController', ['$scope','registrasiFactory',
 
 	$scope.isTglReg=true;
     $scope.searchNama='';   
+
+    $scope.isCollapsed=true;
 
 	$scope.pageChanged=function(){
  		getAll($scope.currentPage); 		  
@@ -57,7 +62,28 @@ appControllers.controller('pembayaranController', ['$scope','registrasiFactory',
 		// 	.error(function(data){
 		// 		growl.addWarnMessage('Error loading from server !!!');
 		// 	})		
+	};
+
+	function getByNoReg(halaman){
+		pembayaranFactory
+			.getByNoRegPage(noReg,halaman, $scope.itemsPerPage2)
+			.success(function(data){					
+				$scope.payments=data.content;
+				$scope.totalItems = data.totalElements;						
+			})
+			.error(function(data){
+				growl.addWarnMessage('Error loading from server !!!');
+			})	
 	}	
+
+	// Paging Detil
+	$scope.totalItems2;
+	$scope.itemsPerPage2= 5;
+	$scope.currentPage2 = 1;     
+	$scope.pageChanged2=function(){
+ 		getDetilAll($scope.currentPage2); 		  
+    };
+
 
 	// tanggal
 		$scope.today = function() {
@@ -81,10 +107,24 @@ appControllers.controller('pembayaranController', ['$scope','registrasiFactory',
 		$scope.today();				
 	};
 
-	$scope.bayar=function(idBayar){
-		
-		$location.path('/pembayaranDetil/'+idBayar)
-	}
+	$scope.bayar=function(idReg,isClose){
+		if(isClose==true){
+			growl.addWarnMessage('Registrasi telah di tutup, silahkan buka di menu Registrasi !!');
+		}else{
+			$location.path('/pembayaranDetil/'+idReg+'/status/new')
+		}
+	};
+
+	$scope.viewPanelDetil=function(noreg, norm, nama){
+    	noReg = noreg;
+		$scope.selectedNama = "No Reg : " + noreg;
+		$scope.selectedRM = "No RM : " + norm;
+		$scope.selectedNoReg= "Nama : " + nama;
+		//alert($scope.selectedNama);	
+    	getByNoReg(1);
+
+    	$scope.isCollapsed = false;
+    };
 	
 	startModule();
 	    	

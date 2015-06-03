@@ -31,8 +31,12 @@ appControllers.controller('transaksiController', ['$scope','registrasiFactory','
  		getDetilAll($scope.currentPage2); 		  
     };
 
-    $scope.proses=function(id){    	
-    	$location.path('/transaksiDetil/'+id+'/status/new')
+    $scope.proses=function(id,isClose){    
+    	if(isClose==true){
+			growl.addWarnMessage('Registrasi telah di tutup, silahkan buka di menu Registrasi !!');
+		}else{	
+    		$location.path('/transaksiDetil/'+id+'/status/new')
+    	};
     };
 
     $scope.viewPanelDetil=function(noreg, norm, nama){

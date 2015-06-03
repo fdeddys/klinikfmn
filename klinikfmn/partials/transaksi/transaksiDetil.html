@@ -3,7 +3,7 @@
 	<br>
 	<div class='container-fluid' style=" background-color:#99B2FF; "  >
 	<br>
-	<table border="0" style="width:100%;" >
+	<table border="0" style="width:100%;"  >
 		<!-- <thead>
 			<tr style="width:10%;"  ></tr>	
 			<tr style="width:40%;"></tr>	
@@ -60,8 +60,8 @@
 				      <label ></label>		
 				</td>									
 				<td style="color:white" >	
-				 	<button  class="btn btn-info" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved">Approve</button>
-				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided ">Void</button>
+				 	<button  class="btn btn-info" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved || transaksiHd.isPaid" >Approve</button>
+				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided  || transaksiHd.isPaid">Void</button>
 				 	<button  class="btn btn-default" style="width:30%" ng-click="listPasien()" >List </button>
 				</td>
 			</tr>								
@@ -90,9 +90,9 @@
 						<td>{{transaksiDetil.tariff.tariffName}}</td>				
 					    <!-- <td>{{transaksiDetil.harga}}</td> 
 					    <td>1</td>  -->
-					    <td>{{transaksiDetil.harga}}</td>					
+					    <td>{{transaksiDetil.harga | number}}</td>					
 					    <td>{{transaksiDetil.paket}}</td>
-					    <td><button class="btn btn-block btn-warning" ng-click="deleteDetil(transaksiDetil.idTransactionDtl)" ng-disabled="isVoided || isApproved">Delete</button></td>	
+					    <td><button class="btn btn-block btn-warning" ng-click="deleteDetil(transaksiDetil.idTransactionDtl)" ng-disabled="isVoided || isApproved || transaksiHd.isPaid">Delete</button></td>	
 					</tr>		
 				</tbody>
 			</table>			
@@ -103,22 +103,34 @@
 		<form class="form-inline">
 			<div class="form-group">
 		    	<label 	class="sr-only" for="tindakan"></label>
-		    	<input type="text" ng-model="tarifSelected" typeahead="tarif as tarif.tariffName for tarif in tarifs | filter:$viewValue | limitTo:8" class="form-control" style="width:400px" placeholder="Nama Tindakan">
+		    	<input type="text" ng-model="tarifSelected" typeahead="tarif as tarif.tariffName for tarif in tarifs | filter:$viewValue | limitTo:8" class="form-control" style="width:400px" placeholder="Nama Tindakan" ng-blur="cekApakahVariable()" >
 		  	</div>
 		  	<!-- <div class="form-group">
 		    	<label class="sr-only" for="jumlah">Jumlah</label>
 		    	<input type="number" class="form-control" id="jumlah" placeholder="Jumlah" style="width:100px">
 		  	</div> -->
 		  	<div class="form-group">
-				<label class="sr-only" for="Dokter">Dokter</label>				
+				 <label class="sr-only" for="Dokter">Dokter</label>				
 				  <select class="form-control" 
 				          id="Dokter"
 				          ng-model="selectedDokter"                   
 				          ng-options="dokter.name  for dokter in dokters  track by dokter.id"
 				          style="width:200px"
+				          ng-click="cekApakahVariable()"
 				          ></select>   
 				          <!-- {{selectedPendidikan}} -->                  				
 		    </div>
+			<div class="form-group">				
+				  <input type='text' 
+				  		class="form-control" 
+				    	ng-disabled='!isTarifVariabel' 
+				    	ng-model='tarifVariabel'						
+						size='15%'
+						placeholder="Isi Harga"
+				    	/> 
+		    </div>
+				    
+			
 
 		  	<!-- <div class="form-group">
 		    	<label class="sr-only" for="Dokter">Dokter</label>
@@ -129,7 +141,7 @@
 			      <input type="checkbox" ng-model="isPaket"> PAKET 
 			    </label>
 			</div>		  
-		  	<button  class="btn btn-primary" ng-click="simpan()" ng-disabled="isVoided || isApproved">Simpan</button>		  	
+		  	<button  class="btn btn-primary" ng-click="simpan()" ng-disabled="isVoided || isApproved || transaksiHd.isPaid">Simpan</button>		  	
 		  	<!-- {{tarifSelected}} -->
 		</form>
 		<!-- END INPUT TINDAKAN -->

@@ -40,12 +40,13 @@
 				<tr>								
 					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
 					<td width="10%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
-					<td width="10%" ><button class="btn btn-block btn-default" >Jam</button></td>
+					<td width="5%" ><button class="btn btn-block btn-default" >Jam</button></td>
 				    <td width="15%"><button class="btn btn-block btn-default" >No Reg</button></td> 
 				    <td width="10%"><button class="btn btn-block btn-default" >No RM</button></td>
-				    <td width="30%"><button class="btn btn-block btn-default" >Nama</button></td>	
+				    <td width="25%"><button class="btn btn-block btn-default" >Nama</button></td>	
 				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
-				    <td width="15%" ></td>
+				    <td width="10%" ></td>
+				    <td width="10%" ></td>
 				    <!-- <td width="10%"></td> -->
 				</tr>	
 			</thead>
@@ -58,9 +59,12 @@
 				    <td>{{registasi.patient.patientNo }}</td> 
 				    <td>{{registasi.patient.patientName}}</td> 
 				    <td>{{registasi.isVoid}}</td>									    
-				    <td><button type='button' class='btn btn-success btn-block btn-block'
-				    	ng-click='bayar(registasi.idRegistration)'
-				    	> <i class="glyphicon glyphicon-usd"></i> Bayar</button></td>		    
+				    <td><button type='button' class='btn btn-success btn-block '
+				    	ng-click='bayar(registasi.idRegistration,registasi.isClosed)'
+				    	> <i class="glyphicon glyphicon-usd"></i> Bayar</button></td>	
+				    <td><button type='button' class='btn btn-warning btn-block '
+				    	ng-click='viewPanelDetil(registasi.registrationNo,registasi.patient.patientNo,registasi.patient.patientName)'
+				    	> <i class="glyphicon glyphicon-usd"></i> List</button></td>		    
 				</tr>		
 			</tbody>
 		</table>
@@ -73,6 +77,50 @@
 
 	</div>	<!-- END Panel-Pencarian -->
 
+	<!-- ======================================================= -->
+	<!-- DETIL -->
+	<!-- ======================================================= -->
+	<div id="PanelDetil" class='container-fluid' style="background-color:#E0F8E0" collapse="isCollapsed"  >
+		<h3>detil data</h3>
+			{{selectedNama}} / {{selectedRM}} / {{selectedNoReg}}
+			<table class="table  table-striped  table-hover" style="background-color:#BCF5A9; width:80% " >
+				<thead>
+					<tr>								
+						<td width="5%" align="center">Id</td>
+						<td width="12%" >No Transaksi</td>
+						<td width="12%" >Tanggal</td>
+					    <td width="15%">Approve</td> 
+					    <td width="10%">Void</td>
+					    <td width="10%">Paid</td>	
+					    <td width="10%">Total</td>						   
+					    <!-- <td width="10%"></td> -->
+					</tr>	
+				</thead>
+				<tbody>
+					<tr ng-repeat='payment in payments ' >
+						<td><a href="#/pembayaranDetil/{{payment.paymentNo}}/status/edit"> {{payment.idPayment}}</a></td>
+						<td><a href="#/pembayaranDetil/{{payment.paymentNo}}/status/edit">{{payment.paymentNo}}</a></td>					
+						<td>{{payment.paymentDate | date:'dd-MMM-yy'}}</td>					
+						<td>{{payment.isApprove}}</td>				
+					    <td>{{payment.isVoid }}</td> 
+					    <td>{{payment.usrupdate}}</td> 
+					    <td>{{payment.total | number}}</td>									    		
+					</tr>		
+				</tbody>
+			</table>
+			<!-- PAGING -->
+			<div class="container">
+	        <pagination total-items="totalItems2" items-per-page="itemsPerPage2" 
+	         	ng-model="currentPage2" ng-change="pageChanged2()" max-size="10" boundary-links="true" rotate="false"></pagination>
+	    	</div> <!-- END PAGING -->
+
+		<button type='button' class='btn btn-warning' ng-click='isCollapsed=!isCollapsed'><span class="glyphicon glyphicon-resize-small" aria-hidden="true"> close</button>
+		<br>
+		<br>
+	</div>
+	<!-- ======================================================= -->
+	<!-- END DETIL -->
+	<!-- ======================================================= -->
 
   </div> <!-- END PANEL BODY -->
 
