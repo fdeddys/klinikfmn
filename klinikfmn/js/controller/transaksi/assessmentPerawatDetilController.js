@@ -103,7 +103,7 @@ appControllers.controller('assessmentPerawatDetilController', ['$scope','pasienF
 					.updateAssessment($scope.registrasi.idRegistration)
 					.success(function(data){
 						growl.addWarnMessage("save update status assessment");
-						$location.path('/assesmentPerawat');
+						//$location.path('/assesmentPerawat');
 					})
 					.error(function(data){
 

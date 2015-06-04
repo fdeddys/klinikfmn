@@ -20,7 +20,8 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		lastUpdate: null,
 		isApprove: false,
 		isVoid: false,
-		pharmacyTotal: 0
+		pharmacyTotal: 0,
+		disc:0
 	};
 	
 	$scope.showPreview=true;
@@ -43,10 +44,12 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 	function startModule()	{
 		//alert('start module');
 		getAllBank();
+		
 
 		var idReg = $routeParams.idReg;
 		var statusRec = $routeParams.statusRec;
 		if(statusRec==='new'){
+			
 
 			registrasiFactory
 				.getById(idReg)
@@ -60,6 +63,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 							$scope.transaksiHds=data.content;
 							$scope.totalItems = data.totalElements;		
 							getTotalKlinik($scope.registrasi.registrationNo);	
+							//getTotalFarmasi($scope.registrasi.registrationNo);							
 
 					})
 					.error(function(data){
@@ -101,6 +105,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
  		getAllTransaksiHd($scope.currentPage); 		  
     };
 
+
     function getTotalKlinik(id){
     	var totalAll=0;
     	transaksiFactory
@@ -110,11 +115,22 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 					totalAll = totalAll + value.total;					
 				});					
 				$scope.payment.transactionTotal=totalAll;
+
 				//ambil farmasi
 				$scope.payment.pharmacyTotal=0;
+				pembayaranFactory
+		    		.getFarmasiByNoReg(id)
+		    		.success(function(data){
+		    			$scope.payment.pharmacyTotal = Number(data);	
+		    			console.log('get total farmasi ' + data);
+		    			totalAll = totalAll + data;
+		    			// total in semua		
+		    			$scope.subTotal=totalAll;
+		    			//$scope.payment.transactionTotal + $scope.payment.pharmacyTotal;
+		    		})
 
-				// total in semua
-				$scope.subTotal=$scope.payment.transactionTotal + $scope.payment.pharmacyTotal;
+				
+				
 
 			})
 			.error(function(data){
@@ -144,10 +160,10 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 	};
 
 	$scope.approve=function(){
-		var totalKembali = -1;
+		var totalKembali = 0;
 		var userName =$rootScope.globals.currentUser.username;
 
-		totalKembali = ($scope.payment.cash + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal - $scope.payment.disc ) ;
+		//totalKembali = ($scope.payment.cash + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal - $scope.payment.disc ) ;
 		growl.addWarnMessage(totalKembali);
 		if(totalKembali==='NaN'){
 			growl.addWarnMessage("Error total pembayaran NAN !!!")
@@ -167,8 +183,8 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 				$scope.payment.isApprove=true;
 				$scope.payment.isVoid=false;
 				$scope.payment.usrupdate=userName;
-				$scope.payment.total = ($scope.payment.transactionTotal - $scope.payment.discTransaction + 
-									   	$scope.payment.pharmacyTotal - $scope.payment.discPharmacy)
+				$scope.payment.total = ($scope.payment.transactionTotal - $scope.payment.discTransaction) + 
+									   	($scope.payment.pharmacyTotal - $scope.payment.discPharmacy)
 				// $scope.payment={
 				// 	idPayment: '',
 				// 	paymentNo: null,

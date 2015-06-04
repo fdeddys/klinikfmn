@@ -175,7 +175,7 @@
 				<td></td>
 				<td style="color:white"  >
 				    <!-- <input type='text' ng-disabled='true' style="width:70%" ng-model='subTotal' class="form-control"/>  -->
-				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{payment.transactionTotal - payment.discTransaction + payment.pharmacyTotal - payment.discPharmacy | currency :'Rp '}} </span>
+				    <span class="form-control" style="width:90%; text-align:right; color:blue; background-color:whitesmoke"  >{{(payment.transactionTotal - payment.discTransaction) + (payment.pharmacyTotal - payment.discPharmacy) | currency :'Rp '}} </span>
 				</td>												
 			</tr>
 			<!-- <tr>
@@ -260,7 +260,7 @@
 		<hr>
 		<!-- END INPUT PEMBAYARAN -->
 		<div class="well well-lg">
-			<h2 style="color:blue">Kembali : {{(payment.cash + payment.debit + payment.credit) - (payment.transactionTotal - payment.discTransaction + payment.pharmacyTotal - payment.discPharmacy )  | currency :'Rp '}}</h2>
+			<h2 style="color:blue">Kembali : {{(payment.cash + payment.debit + payment.credit) - ( (payment.transactionTotal - payment.discTransaction) + (payment.pharmacyTotal - payment.discPharmacy) )  | currency :'Rp '}}</h2>
 		</div>
 		<br>
 

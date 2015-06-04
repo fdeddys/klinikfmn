@@ -34,7 +34,7 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 
 	pembayaranFactory.insert = function(pembayaran){
 		return $http({
-			method:'POST',
+			method:'PUT',
 			url:urlApi + '/',
 			data:JSON.stringify(pembayaran),
 			headers:{'Content-Type':'application/json'}
@@ -63,6 +63,15 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 			url:urlApi + '/registrationno/' + noReg + '/size/' + jumlah + '/number/' + hal
 		});
 	};
+
+	//http://10.1.0.11:8080/fmn-clinic-server/api/registrationno/{registrationNo}/sum
+	pembayaranFactory.getFarmasiByNoReg= function (noReg){
+		return $http({
+			method:'GET',
+			url:$rootScope.pathServerJSON + '/pharmacy/registrationno/' + noReg + '/sum'
+		});
+	};
+
 
 	return pembayaranFactory;
 
