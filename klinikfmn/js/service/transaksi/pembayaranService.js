@@ -34,7 +34,7 @@ appServices.factory('pembayaranFactory',['$http','$rootScope',
 
 	pembayaranFactory.insert = function(pembayaran){
 		return $http({
-			method:'PUT',
+			method:'POST',
 			url:urlApi + '/',
 			data:JSON.stringify(pembayaran),
 			headers:{'Content-Type':'application/json'}

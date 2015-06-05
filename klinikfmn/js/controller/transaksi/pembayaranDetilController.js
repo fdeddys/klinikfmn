@@ -1,7 +1,7 @@
 appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams','registrasiFactory', 'growl', 'fieldGroupFactory','transaksiFactory','pembayaranFactory','$filter','$rootScope','registrasiFactory','$window',
 	function($scope, $routeParams, registrasiFactory, growl, fieldGroupFactory, transaksiFactory, pembayaranFactory, $filter, $rootScope, registrasiFactory, $window){
 	
-	$scope.registrasi;
+	
 	$scope.payment={
 		idPayment: null,
 		paymentNo: null,
@@ -20,9 +20,11 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		lastUpdate: null,
 		isApprove: false,
 		isVoid: false,
-		pharmacyTotal: 0,
-		disc:0
-	};
+		pharmacyTotal: 0
+	};	
+
+	$scope.registrasi;
+	
 	
 	$scope.showPreview=true;
 
@@ -41,8 +43,10 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 	$scope.itemsPerPage= 5;
 	$scope.currentPage = 1;     
 
+
 	function startModule()	{
 		//alert('start module');
+		
 		getAllBank();
 		
 
@@ -57,19 +61,40 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 					$scope.registrasi = data;
 					growl.addWarnMessage("Success load registrasi");
 					
-					transaksiFactory
-						.getByNoRegPage($scope.registrasi.registrationNo,1,$scope.itemsPerPage)
-						.success(function(data){					
-							$scope.transaksiHds=data.content;
-							$scope.totalItems = data.totalElements;		
-							getTotalKlinik($scope.registrasi.registrationNo);	
-							//getTotalFarmasi($scope.registrasi.registrationNo);							
 
-					})
-					.error(function(data){
-						growl.addWarnMessage('Error loading from server !!!');
-					})	
 
+					// cek apakah sudah ada pembayaran, jika ya ambil
+					pembayaranFactory
+						.getByNoRegPage($scope.registrasi.registrationNo,1, 1)
+						.success(function(data){
+							//if(data.content ===null || data.content===''){
+							//growl.addWarnMessage("Success load pembayaran Factory");
+							if(data.totalElements>0){
+								$scope.payment=data.content[0];	
+								$scope.isApproved = true;
+							}else{
+								
+							}												
+							
+							//ambil isi
+							transaksiFactory
+								.getByNoRegPage($scope.registrasi.registrationNo,1,$scope.itemsPerPage)
+								.success(function(data){					
+									$scope.transaksiHds=data.content;
+									$scope.totalItems = data.totalElements;		
+									getTotalKlinik($scope.registrasi.registrationNo);	
+									//getTotalFarmasi($scope.registrasi.registrationNo);	
+															
+
+							})
+							.error(function(data){
+								growl.addWarnMessage('Error loading from server !!!');
+							})	
+
+						})
+						.error(function(data){
+							growl.addWarnMessage('Error loading from server !!!');
+						})	
 					
 				})
 				.error(function(data){
@@ -88,13 +113,14 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		};
 
 	};
-
+	
 	function getAllTransaksiHd(halaman){
 		transaksiFactory
 			.getByNoRegPage($scope.registrasi.registrationNo,halaman,$scope.itemsPerPage)
 			.success(function(data){					
 				$scope.transaksiHds=data.content;
-				$scope.totalItems = data.totalElements;						
+				$scope.totalItems = data.totalElements;	
+				growl.addWarnMessage('GET ALL TRANSAKSI HD !!!');					
 			})
 			.error(function(data){
 				growl.addWarnMessage('Error loading from server !!!');
@@ -114,8 +140,8 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 				angular.forEach(data.content, function(value, key) {
 					totalAll = totalAll + value.total;					
 				});					
+				//$scope.payment.transactionTotal
 				$scope.payment.transactionTotal=totalAll;
-
 				//ambil farmasi
 				$scope.payment.pharmacyTotal=0;
 				pembayaranFactory
@@ -126,11 +152,9 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		    			totalAll = totalAll + data;
 		    			// total in semua		
 		    			$scope.subTotal=totalAll;
+		    			growl.addWarnMessage('get farmasi !!!');
 		    			//$scope.payment.transactionTotal + $scope.payment.pharmacyTotal;
-		    		})
-
-				
-				
+		    		})						
 
 			})
 			.error(function(data){
@@ -152,7 +176,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 				});	
 				$scope.selectedBankKredit=$scope.banks[0];
 				$scope.selectedBankDebet=$scope.banks[0];
-							
+				growl.addWarnMessage('get all bank !!!');			
  			})
  			.error(function(data){
  				growl.addWarnMessage("Error loading pekerjaan from server ");
@@ -162,8 +186,14 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 	$scope.approve=function(){
 		var totalKembali = 0;
 		var userName =$rootScope.globals.currentUser.username;
-
-		//totalKembali = ($scope.payment.cash + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal - $scope.payment.disc ) ;
+		console.log('cash :' + $scope.payment.cash);
+		console.log('debit :' + $scope.payment.debit);
+		console.log('kredit :' + $scope.payment.credit);
+		$scope.subTotal= ($scope.payment.transactionTotal - $scope.payment.discTransaction) 
+		               + ($scope.payment.pharmacyTotal    - $scope.payment.discPharmacy) ;
+		console.log('kredit :' + $scope.subTotal);
+		
+		totalKembali = ($scope.payment.cash + $scope.payment.debit + $scope.payment.credit) - ($scope.subTotal ) ;
 		growl.addWarnMessage(totalKembali);
 		if(totalKembali==='NaN'){
 			growl.addWarnMessage("Error total pembayaran NAN !!!")
@@ -245,6 +275,6 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		 $window.open($rootScope.pathServerJSON + '/payment/report/transaction/id/'+$scope.payment.idPayment, '_blank');
 	};
 
-
 	startModule();
+
 }])
