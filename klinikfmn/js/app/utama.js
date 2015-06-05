@@ -131,7 +131,7 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pembayaranDetil.html',
 		    controller:'pembayaranDetilController'
 		}).
-		when('/laporan',{
+		when('/laporan/:idxlaporan',{
 			templateUrl:'partials/laporan/laporan.html',
 		    controller:'laporanController'
 		}).

@@ -70,13 +70,19 @@
     <div class="form-group">
       <label for="Floor" class="col-sm-2 control-label">Lantai</label>
       <div class="col-sm-10">
-          <select class="form-control" 
+          <!-- <select class="form-control" 
                   id="Floor"
                   ng-model="selectedFloor"                   
                   ng-options="floor.name  for floor in floors track by floor.id"
                   style="width:30%"
-                  ></select>   
+                  ></select>    -->
                   <!-- {{selectedPendidikan}} -->                  
+          <select class="form-control" 
+                  id="floor"
+                  ng-model="selectedFloor"                   
+                  ng-options="floor  for floor in floors "
+                  style="width:30%"
+                  ></select>   
       </div>
     </div>
 

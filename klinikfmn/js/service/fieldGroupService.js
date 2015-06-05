@@ -39,10 +39,11 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	//http://10.1.0.11:8080/fmn-clinic-server/api/floor
 	fieldGroupFactory.getAllFloor=function(){
 		return $http({
 			method:'GET',
-			url : urlApi + '/6/field'
+			url : $rootScope.pathServerJSON +'/floor'
 		})
 	};
 

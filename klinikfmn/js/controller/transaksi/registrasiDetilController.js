@@ -125,14 +125,17 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		fieldGroupFactory
  			.getAllFloor()
  			.success(function(data){ 				
- 			 	angular.forEach(data, function(value, key) {
-					var floor={
-				 		id:value.idField,
-				 		name:value.fieldName 
-				 	};
-    				$scope.floors.push(floor);    				    				
-				});	
-				$scope.selectedFloor=$scope.floors[0];			
+
+ 			//  	angular.forEach(data, function(value, key) {
+				// 	var floor={
+				//  		id:value.idField,
+				//  		name:value.fieldName 
+				//  	};
+    // 				$scope.floors.push(floor);    				    				
+				// });	
+				// $scope.selectedFloor=$scope.floors[0];			
+				$scope.floors=data;
+				$scope.selectedFloor=data[0];
  			})
  			.error(function(data){
  				growl.addWarnMessage("Error loading data floor from server ");
@@ -147,7 +150,8 @@ appControllers.controller('registrasiDetilController', ['$scope','pasienFactory'
 		// $scope.registrasi.registrationTime=vJam;
 		$scope.registrasi.patient = $scope.pasien;
 		// $scope.pasien;
-		$scope.registrasi.dokter = $scope.selectedDokter.id;;
+		$scope.registrasi.dokter = $scope.selectedDokter.id;
+		$scope.registrasi.floor= $scope.selectedFloor;
 		registrasiFactory
 			.insert($scope.registrasi )	
 			.success(function(data){
