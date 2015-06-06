@@ -4,6 +4,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
  	$scope.dataPendidikans=[];
  	$scope.dataPekerjaans=[];
  	$scope.dataAgamas=[];
+ 	$scope.dataStatuss=[];
  	
  	$scope.pasien={ 		
 		idPatient: null,
@@ -25,7 +26,11 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		emergencyPhone: '-',
 		emergencyJob: '-',
 		active: 1,
-		agama:null	
+		agama:null,
+		patientHP: '',
+		patientEmail: '',
+		patientStatus: null,
+		sumOfChild: 0
  	}; 	
 
  	// tanggal
@@ -63,7 +68,8 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 						console.log('jalankan cek ' + $scope.pasien.patientJob);
 						setPekerjaan($scope.pasien.patientJob);	
 						setPendidikan($scope.pasien.education);				
-						setAgama($scope.pasien.agama)
+						setAgama($scope.pasien.agama);
+						setStatusPasien($scope.pasien.patientStatus);
 					}					
 					
 				})
@@ -89,7 +95,11 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 						emergencyPhone: '-',
 						emergencyJob: '-',
 						active: 1,
-						agama:null				
+						agama:null,
+						patientHP: '',
+						patientEmail: '',
+						patientStatus: null,
+						sumOfChild: 0				
 				 	};		
 				})		
 		}else{
@@ -113,12 +123,17 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				emergencyPhone: '-',
 				emergencyJob: '-',
 				active: 1,
-				agama:null				
+				agama:null,
+				patientHP: '',
+				patientEmail: '',
+				patientStatus: null,
+				sumOfChild: 0				
 		 	};
 		};
 
 		getPendidikan();
 		getAgama();
+		getStatusPasien();
 		console.log('jalankan cek ' + $scope.pasien.patientJob);
 		getPekerjaan($scope.pasien.patientJob);
 		$scope.today();	
@@ -131,6 +146,7 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 		$scope.pasien.education=$scope.selectedPendidikan.id;
 		$scope.pasien.patientJob=$scope.selectedPekerjaan.id;
 		$scope.pasien.agama=$scope.selectedAgama.id;
+		$scope.pasien.patientStatus=$scope.selectedStatus.id;
 		if($scope.pasien.idPatient===null || $scope.pasien.idPatient==='' ){
 			pasienFactory
 				.insert($scope.pasien)	
@@ -310,7 +326,51 @@ appControllers.controller('pasienDetilController', ['$scope','pasienFactory','gr
 				}				
  			})
  			.error(function(data){
- 				growl.addWarnMessage("Error loading Agama from server ");
+ 				growl.addWarnMessage("Error loading set Agama from server ");
+ 			})
+ 	};
+
+ 	function getStatusPasien(){
+ 		
+ 		fieldGroupFactory
+ 			.getAllStatusPasien()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {
+					var dataStatus={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};
+    				$scope.dataStatuss.push(dataStatus);    				    				
+				});	
+				$scope.selectedStatus=$scope.dataStatuss[0];			
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading Status from server ");
+ 			})
+ 	};
+
+ 	function setStatusPasien(idRec){ 		
+ 		
+ 		var selRec=null; 		 		
+ 		fieldGroupFactory
+ 			.getAllStatusPasien()
+ 			.success(function(data){ 				
+ 			 	angular.forEach(data, function(value, key) {     				     				
+					var dataStatus={
+				 		id:value.idField,
+				 		name:value.fieldName 
+				 	};				    					 	
+				 	if(idRec==dataStatus.id){
+				 		selRec=dataStatus;				 		
+				 	}    				
+				});	
+				if(selRec==null){										
+				}else{
+					$scope.selectedStatus=selRec;				
+				}				
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("Error loading set Status from server ");
  			})
  	};
 

@@ -47,6 +47,13 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	fieldGroupFactory.getAllStatusPasien=function(){
+		return $http({
+			method:'GET',
+			url : urlApi + '/8/field'
+		})
+	};
+
 	return fieldGroupFactory;
 
 }]);
