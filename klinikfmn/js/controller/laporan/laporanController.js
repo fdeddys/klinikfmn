@@ -5,6 +5,7 @@ appControllers.controller('laporanController', ['$scope','$sce','$routeParams', 
     // 0 :
     // 1 : Jumlah Pasien
     // 2 : Jumlah Tindakan
+    // 3 : Penerimaan
 
     $scope.floors=[];
  	$scope.selectedFloor;
@@ -23,7 +24,10 @@ appControllers.controller('laporanController', ['$scope','$sce','$routeParams', 
     					break;
     		case '2': 	$scope.alamatReport= $sce.trustAsResourceUrl(
     					$rootScope.pathServerJSON + '/transaction/hdr/report/tgl1/'+vTgl1+'/tgl2/'+vTgl2+'/floor/'+lantai);    
-    					break;    					
+    					break;    
+			case '3': 	$scope.alamatReport= $sce.trustAsResourceUrl(
+    					$rootScope.pathServerJSON + '/report/penerimaan/tgl1/'+vTgl1+'/tgl2/'+vTgl2+'/floor/'+lantai);    
+    					break;        										
     	}
     	
     };
@@ -35,7 +39,9 @@ appControllers.controller('laporanController', ['$scope','$sce','$routeParams', 
     		case '1': 	$scope.namaLaporan='Laporan Jumlah Pasien';
     					break;
     		case '2': 	$scope.namaLaporan='Laporan Jumlah Tindakan';
-    					break;    					
+    					break;    	
+			case '3': 	$scope.namaLaporan='Laporan Penerimaan';
+					break;    					
     	};
 
     	getAllFloor();
