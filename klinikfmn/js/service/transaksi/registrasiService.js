@@ -66,7 +66,7 @@ appServices.factory('registrasiFactory',['$http','$rootScope',
 	registrasiFactory.update  = function(id,registrasi){
 		return $http({
 			method:'PUT',
-			url:urlApi + '/'+ id,
+			url:urlApi + '/id/'+ id,
 			data:JSON.stringify(registrasi)
 		});
 	};

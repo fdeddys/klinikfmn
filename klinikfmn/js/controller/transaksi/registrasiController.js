@@ -145,9 +145,60 @@ appControllers.controller('registrasiController', ['$scope','registrasiFactory',
 				.error(function(data){
 					growl.addWarnMessage('Error open status');	
 				})
-
 		}
-	}
+	};
+
+	$scope.gantiStatusVoid=function(statusSekarang, idReg){
+		if(statusSekarang==true){
+			// sekarang pas void, nak batal void
+			registrasiFactory
+				.getById(idReg)
+				.success(function(data){
+					var reg=data;
+					reg.isVoid=false;
+					registrasiFactory
+						.update(idReg, reg)
+						.success(function(data){
+							registrasiFactory
+							.openReg(idReg)
+							.success(function(data){
+								getAll(1);	
+							})
+							.error(function(data){
+								
+							})
+						})				
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error void status');	
+				})
+			
+		}else{
+			// sekarang idak void, nak void
+			registrasiFactory
+				.getById(idReg)
+				.success(function(data){
+					var reg=data;
+					reg.isVoid=true;
+					registrasiFactory
+						.update(idReg, reg)
+						.success(function(data){
+							registrasiFactory
+								.closeReg(idReg)
+								.success(function(data){
+									getAll(1);	
+								})
+								.error(function(data){
+									
+								})
+						})					
+				})
+				.error(function(data){
+					growl.addWarnMessage('Error void status');	
+				})
+			
+		}
+	};
 
 	
 	startModule();

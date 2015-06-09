@@ -4,6 +4,7 @@ var myApp = angular.module('appKlinikFMN',[
     'appServices',	
 	'ngCookies',
 	'angular-growl',	
+	'ngFileUpload',
 	'ui.bootstrap'
 ]);
 
@@ -94,6 +95,10 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/registrasi',{
 			templateUrl:'partials/transaksi/registrasi.html',
 		    controller:'registrasiController'
+		}).
+		when('/registrasi/info',{
+			templateUrl:'partials/transaksi/detilInfo.html',
+			controller:'MyCtrl'		    
 		}).
 		when('/registrasiDetil/:noPass',{
 			templateUrl:'partials/transaksi/registrasiDetil.html',

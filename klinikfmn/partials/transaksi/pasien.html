@@ -41,7 +41,7 @@
 		<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
 			<thead>
 				<tr>								
-					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+<!-- 					<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td> -->
 					<td width="10%"><button class="btn btn-block btn-default" >No</button></td>		
 				    <td width="15%"><button class="btn btn-block btn-default" >nama</button></td> 	
 				    <td width="10%"><button class="btn btn-block btn-default" >Tgl lahir</button></td>
@@ -55,7 +55,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat='pasien in pasiens | orderBy:orderPasien ' >
-					<td>{{pasien.idPatient}}</td>
+					<!-- <td>{{$index}}</td> -->
 					<td>{{pasien.patientNo}}</td>							    
 					<td>{{pasien.patientName}}</td>				
 				    <td>{{pasien.birthDate | date:'dd-MMM-yyyy'}}</td> 
