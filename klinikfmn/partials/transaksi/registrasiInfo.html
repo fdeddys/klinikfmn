@@ -1,0 +1,84 @@
+<div growl></div> 
+<div class="container-fluid" style="width: 80%; background-color:white" >
+<br>
+  <form class="form-horizontal" >
+  <div class="form-group">
+      <label for="patientNo" class="col-sm-2 control-label">Nomor Pasien</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="patientNo" placeholder="Nomor RM " ng-model="pasien.patientNo" ng-disabled="true" style="width:20%">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="patientName" class="col-sm-2 control-label">Nama</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="patientName" placeholder="Nama Pasien " ng-model="pasien.patientName"  style="width:70%" ng-disabled="true" >
+      </div>
+    </div>    
+    <div class="form-group">
+      <label for="birthDate" class="col-sm-2 control-label">Tgl Lahir</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="birthDate"ng-model="pasien.birthDate"  style="width:30%" ng-disabled="true" >
+      </div>
+    </div>    
+    <div class="form-group">
+      <label for="patientCity" class="col-sm-2 control-label">Kota</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="patientCity" placeholder="City" ng-model="pasien.patientCity"  style="width:40%" ng-disabled="true" >
+      </div>
+    </div>            
+
+    <hr>
+    <div class="form-group" >
+      <label for="patientCity" class="col-sm-2 control-label">Action</label>
+      <div class="col-sm-10">
+        <!-- <input type="button" class="btn btn-info" >Upload </input> 
+        <input type="button" class="btn btn-info" >List</input>  -->
+        <button type="button" class="btn btn-info" ng-click="showUpload=true">Insert Gambar</button>
+        <button type="button" class="btn btn-success" ng-click="showListUpload()">List Gambar</button>
+      </div>
+    </div>  
+    <hr>
+
+    <div class="well well-lg form-group" ng-hide="!showUpload" >
+      <!-- <div class="well well-lg"> form-group-->
+      <label for="patientCity" class="col-sm-2 control-label">Upload</label>
+      <div class="col-sm-10">
+        <input type="file"  class="btn " ngf-select ng-model="picFile" name="file" accept="image/*" required>
+        <img ng-show="picFile[0] != null" ngf-src="picFile[0]" class="thumb" alt="Mau tau ajah" height="30%" width="30%" >
+        <button type="button" class="btn btn-warning" ng-click="uploadPic(picFile)" >Upload</button>
+      <!-- </div> -->
+      </div>
+    </div>  
+
+    <div ng-hide="showUpload" class="well well-lg">
+    <!-- LIST GAMBAR  -->
+
+      <table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
+      <thead>
+        <tr>                
+          <td width="10%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+          <td width="25%" ><button class="btn btn-block btn-default" >Nama file</button></td>
+          <td width="25%" ><button class="btn btn-block btn-default" >Tipe</button></td>
+          <td width="20%"><button class="btn btn-block btn-default" >Ukuran</button></td> 
+          <td width="10%"></td>  
+          <td width="10%"></td>  
+        </tr> 
+      </thead>
+      <tbody>
+        <tr ng-repeat='upload in uploads ' >
+          <td>{{upload.idRegistrationAttach}}</td>
+          <td>{{upload.fileName}}</td>
+          <td>{{upload.contentType}}</td>
+          <td>{{upload.size / 1024  | number:1}} kb</td>
+          <td><button class="btn btn-danger btn-block" ng-click="delFile(upload.idRegistrationAttach)" > Hapus</button> </td>    
+          <td><button class="btn btn-primary btn-block" ng-click="preview(upload.idRegistrationAttach)" > Preview</button> </td>                 
+        </tr>   
+      </tbody>
+    </table>
+    <img  ng-src="{{picPreview}}" class="thumb" alt="Mau tau ajah" height="30%" width="30%" >
+    <!--  END LIST GAMBAR -->
+    </div>  
+
+
+  </form>
+</div>

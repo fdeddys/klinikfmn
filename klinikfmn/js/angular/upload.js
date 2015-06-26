@@ -10,17 +10,17 @@ appControllers.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 
     $scope.angularVersion = window.location.hash.length > 1 ? (window.location.hash.indexOf('/') === 1 ?
         window.location.hash.substring(2) : window.location.hash.substring(1)) : '1.2.20';
 
-    $scope.$watch('files', function (files) {
-        $scope.formUpload = false;
-        if (files != null) {
-            for (var i = 0; i < files.length; i++) {
-                $scope.errorMsg = null;
-                (function (file) {
-                    upload(file);
-                })(files[i]);
-            }
-        }
-    });
+    // $scope.$watch('files', function (files) {
+    //     $scope.formUpload = false;
+    //     if (files != null) {
+    //         for (var i = 0; i < files.length; i++) {
+    //             $scope.errorMsg = null;
+    //             (function (file) {
+    //                 upload(file);
+    //             })(files[i]);
+    //         }
+    //     }
+    // });
 
     $scope.uploadPic = function (files) {
         $scope.formUpload = true;
@@ -31,11 +31,18 @@ appControllers.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 
 
     function upload(file) {
         $scope.errorMsg = null;
+        if(file.size> (10 * 1024) ){
+            alert('Max size = ' + file.size /  1024 )
+        }
+            
+        uploadtes(file);
+
         //if ($scope.howToSend === 1) {
         //    uploadUsingUpload(file);
         //} else if ($scope.howToSend == 2) {
             // uploadUsing$http(file);
-            uploadtes(file);
+            
+            //uploadUsing$http(file);
         //} 
         // else {
         //     uploadS3(file);
@@ -43,16 +50,35 @@ appControllers.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 
     }
 
     function uploadtes(file){
+
+        // var fd = new FormData();
+        // fd.append('fileUpload', file);
+        // $http.post('http://10.1.0.11:8080/fmn-clinic-server/api/assessment/upload/save/1', fd, {
+        //     transformRequest: angular.identity,
+        //     headers: {'Content-Type': undefined}
+        // })
+        // .success(function(){
+        // })
+        // .error(function(){
+        // });
+
+        var fd = new FormData();
+        fd.append('fileUpload', file);
+
         $http({
             method: 'POST',
-            url: 'http://10.1.0.11:8080/fmn-clinic-server/api/assessment/upload/save/32',
+            url: 'http://10.1.0.11:8080/fmn-clinic-server/api/assessment/upload/save/1',
             headers: {
-                'Content-Type': 'multipart/form-data'                
+                //'Content-Type': 'multipart/form-data'                
+                'Content-Type': undefined                
                 },
-            data: file,
-            transformRequest: function(data, headersGetterFunction) {
-                return data; // do nothing! FormData is very good!
-            }
+            transformRequest: angular.identity,
+            //Content-Type: 'application/json',
+            data:fd
+            
+            // transformRequest: function(data, headersGetterFunction) {
+            //     return data; // do nothing! FormData is very good!
+            // }
         }).success(function(data, status) {
 
         }).error(function(data, status) {
@@ -71,8 +97,8 @@ appControllers.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 
             //     'my-header': 'my-header-value'
             // },
             // fields: {username: $scope.username},
-            file: file,
-            fileFormDataName: 'myFile'
+            //file: file,
+            fileUpload: file
         });
 
         file.upload.then(function (response) {
@@ -99,9 +125,9 @@ appControllers.controller('MyCtrl', ['$scope', '$http', '$timeout', '$compile', 
             url: 'http://10.1.0.11:8080/fmn-clinic-server/api/assessment/upload/save/1',
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'                
+                'Content-Type': 'multipart/*'                
             },
-            data: file,
+            fileUpload: file,            
             transformRequest: function(data, headersGetterFunction) {
                 return data; // do nothing! FormData is very good!
             }

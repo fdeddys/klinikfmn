@@ -15,7 +15,7 @@ appServices.factory('pasienFactory',['$http','$rootScope',
 	pasienFactory.getByNo=function(no){
 		return $http({
 			method:'GET',
-			url:urlApi + '/id/' + no		
+			url:urlApi + '/no/' + no		
 		});
 	};
 

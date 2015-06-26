@@ -1,0 +1,100 @@
+<div growl></div> 
+<div class='container' collapse="tutupGrid"  style="background-color:white"  >
+<br>
+	<div>
+		Cari Nama  : <input id='idCari' type='text' ng-model='search' ng-change='getAll()' style='width:30em'>
+		<input type='button' 				
+				class='btn btn-primary btn-xm'
+				ng-click='cari()'				
+				value=" Refresh " 
+				style='width:10em; height:3em; background-color:green'				
+				/>
+		<input type='button' 				
+				class='btn btn-primary btn-xm'
+				ng-click='tambah()'				
+				value=" Add New " 
+				style='width:10em; height:3em'				
+				/>
+	</div>
+	<br>
+	<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF"  >
+		<thead>
+			<tr>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default" >Id</button></td>	
+				<td width="15%" align="center"> <button class="btn btn-block btn-default" >Group</button></td>
+				<td width="50%" align="center"> <button class="btn btn-block btn-default" >Nama Header</button></td>
+				<td width="10%" align="center"> <button class="btn btn-block btn-default">Status</button></td>			    							   			    
+			    <td width="10%" ></td>
+			    <!-- <td width="10%"></td> -->
+			</tr>	
+		</thead>
+		<tbody>
+			<tr ng-repeat='header in headers  ' >
+				<td>{{header.idField}}</td>
+				<td>{{header.fieldGroup.fieldGroupName}}</td>
+				<td>{{header.fieldName}}</td>
+				<td>{{header.active}}</td>				
+			    <td><button type='button' class='btn btn-warning btn-block btn-sm'
+			    	ng-click='ubah(header.idField, header.fieldName, $index)'
+			    	><span> Edit </span></button></td>			    	    
+			</tr>		
+		</tbody>
+	</table>
+	<!-- <div class="row">
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+    </div> -->
+</div>
+
+<div collapse="!tutupGrid" ng-class='classForm' class='container-fluid' style='color:whitesmoke'  >
+
+
+	<div class="container-fluid" style="width: 80%">
+		<h3 >Detil</h3>
+		<hr>	
+		  <form class="form-horizontal" >
+		  <div class="form-group">
+		      <label for="idField" class="col-sm-2 control-label">ID</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="idField" placeholder="Kode Header " ng-model="header.idField" style="width:20%" ng-disabled="true">
+		      </div>
+		    </div>
+
+		  <div class="form-group">
+		      <label for="fieldGroup" class="col-sm-2 control-label">Group</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="fieldGroup" placeholder="HEADER " ng-model="header.fieldGroup" style="width:20%" ng-disabled="true">
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <label for="fieldName" class="col-sm-2 control-label">Nama Header</label>
+		      <div class="col-sm-10">
+		        <input type="text" class="form-control" id="fieldName" placeholder="Nama Header " ng-model="header.fieldName"  style="width:70%">
+		      </div>
+		    </div>
+
+		    
+		    <div class="form-group">
+		      <label for="active" class="col-sm-2 control-label">Status</label>
+		      <div class="col-sm-10">
+		        <select class="form-control" if="active" ng-model="header.active"  style="width:20%">
+		          <option value="true" >Aktif</option>
+		          <option value="false">Non Aktif</option>        
+		        </select>
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+		      <div class="col-sm-offset-2 col-sm-2">
+		        <button ng-click='proses()' class="btn btn-danger btn-block"><span class="glyphicon glyphicon-save" aria-hidden="true">  Simpan  </button>
+		      </div>
+		      <div class="col-sm-2">
+		        <button ng-click='tutupDetil()' class="btn  btn-block"><span class="glyphicon glyphicon-save" aria-hidden="true">  Close  </button>
+		      </div>
+		    </div>
+
+		  </form>
+	</div>
+
+</div>

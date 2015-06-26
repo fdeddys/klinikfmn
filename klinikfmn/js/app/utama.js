@@ -21,7 +21,7 @@ myApp.run(['$window', '$rootScope', '$location', '$cookieStore', '$http', functi
 	$rootScope.$on('$viewContentLoaded', function(){ window.scrollTo(0, 0); });
 
 	// Path server database	
-        $rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
+    $rootScope.pathServerJSON='http://10.1.0.11:8080/fmn-clinic-server/api';
 	//$rootScope.pathServerJSON='http://localhost:8080/fmn-clinic-server/api';
 
 
@@ -83,6 +83,14 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/pendidikan',{
 			templateUrl:'partials/master/pendidikan.html',
 		    controller:'pendidikanController'
+		}).
+		when('/floor',{
+			templateUrl:'partials/master/floor.html',
+		    controller:'floorController'
+		}).
+		when('/header',{
+			templateUrl:'partials/master/header.html',
+		    controller:'headerController'
 		}).		
 		when('/pasien',{
 			templateUrl:'partials/transaksi/pasien.html',
@@ -99,6 +107,10 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/registrasi/info',{
 			templateUrl:'partials/transaksi/detilInfo.html',
 			controller:'MyCtrl'		    
+		}).
+		when('/registrasiInfo/:idReg',{
+			templateUrl:'partials/transaksi/registrasiInfo.html',
+			controller:'registrasiInfoController'		    
 		}).
 		when('/registrasiDetil/:noPass',{
 			templateUrl:'partials/transaksi/registrasiDetil.html',
@@ -127,7 +139,7 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		when('/transaksiDetil/:idReg/status/:statusRec',{
 			templateUrl:'partials/transaksi/transaksiDetil.html',
 		    controller:'transaksiDetilController'
-		}).			
+		}).						
 		when('/pembayaran',{
 			templateUrl:'partials/transaksi/pembayaran.html',
 		    controller:'pembayaranController'
@@ -136,6 +148,19 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/transaksi/pembayaranDetil.html',
 		    controller:'pembayaranDetilController'
 		}).
+		when('/penerimaanApotik',{
+			templateUrl:'partials/apotik/penerimaanBarang.html',
+		    controller:'penerimaanBarangController'
+		}).
+		when('/penerimaanApotikDetil/:idTerima',{
+			templateUrl:'partials/apotik/penerimaanBarangDetil.html',
+		    controller:'penerimaanBarangDetilController'
+		}).
+		when('/productIssue',{
+			templateUrl:'partials/apotik/productIssue.html',
+		    controller:'productIssueController'
+		}).
+
 		when('/laporan/:idxlaporan',{
 			templateUrl:'partials/laporan/laporan.html',
 		    controller:'laporanController'

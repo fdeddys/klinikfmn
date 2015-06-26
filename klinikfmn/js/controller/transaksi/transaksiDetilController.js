@@ -1,15 +1,20 @@
-appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', '$location','$rootScope',
-    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory, $location, $rootScope){
+appControllers.controller('transaksiDetilController', ['$scope','transaksiFactory','registrasiFactory','$routeParams','growl','tindakanFactory','fieldGroupFactory','transaksiDetilFactory', '$location','$rootScope','penerimaanBarangFactory','$rootScope',
+    function($scope, transaksiFactory, registrasiFactory, $routeParams, growl, tindakanFactory, fieldGroupFactory, transaksiDetilFactory, $location, $rootScope, penerimaanBarangFactory, $rootScope){
         
     //untuk temp tarif group yg sudah di pilih    
     $scope.tarifSelected = '';
     $scope.tarifs;    
     $scope.isPaket=false;
 
+    
+    $scope.obats=[];
+	$scope.obatSelected ='';
+
 	$scope.dokters=[];
  	$scope.selectedDokter;
 
  	$scope.transaksiDetils=[];
+ 	$scope.transaksiObats=[];
 
  	$scope.isTarifVariabel=false;
  	$scope.tarifVariabel='';
@@ -28,13 +33,24 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 
 	function getAllTindakan(){
 		tindakanFactory
-			.getAllByNamePage('p',1,1000)
+			.getAll(1000,1)
 			.success(function(data){
 				$scope.tarifs=data.content;
 			})
 			.error(function(data){
-
+				growl.addWarnMessage('error loading tindakan from server ');
 			});
+	};
+
+	function getAllObat(){
+		penerimaanBarangFactory
+			.getProduct()
+			.success(function(data){
+				$scope.obats = data.content;
+			})
+			.error(function(data){
+				growl.addWarnMessage('error loading obat from server ');
+			})
 	};
 
     $scope.registrasi={
@@ -62,7 +78,18 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 		lastUpdate: null
     };
 
-    $scope.simpan=function(data){
+    $scope.transaksiObat={    
+		idProductTransactionDtl: null,
+		transactionHdr: null,
+		product: null,
+		qty: 0,
+		price: 0,
+		usrUpdate: '',
+		lastUpdate: null
+    };
+
+
+    $scope.simpan=function(){
     	if($scope.tarifSelected.variable==true && $scope.tarifVariabel===''){    		
     		growl.addWarnMessage('tarif belum diisi !!!')    		
     	}else{
@@ -83,6 +110,27 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     	}
     	
     };
+
+    $scope.simpanTransaksiObat=function(){
+    	if( $scope.obatSelected===''){    		
+    		growl.addWarnMessage('tarif belum diisi !!!')    		
+    	}else{
+	    	if($scope.transaksiHd.idTransactionHdr==='' || $scope.transaksiHd.idTransactionHdr===null){
+	    		$scope.transaksiHd.registration = $scope.registrasi;
+	    		transaksiFactory
+	    			.insert($scope.transaksiHd)
+	    			.success(function(data){
+	    				$scope.transaksiHd 	= data;
+	    				simpanDetilObat();
+	    			})	
+	    			.error(function(data){
+	    				growl.addWarnMessage("Error save data !!");
+	    			})
+	    	}else{
+	    		simpanDetilObat();
+	    	}
+    	}	
+    }
 
     function simpanDetil(){
 
@@ -139,18 +187,47 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     	}
 
     	transaksiDetilFactory
-				.insert($scope.transaksiDt, $scope.transaksiHd.idTransactionHdr)
-				.success(function(data){
-					//$scope.transaksiHd 	= data;
-					// alert('success insert detil');
-					$scope.tarifSelected='';
-					$scope.isPaket=false;
-					isiTable();
-				})	
-				.error(function(data){
-					growl.addWarnMessage("Error save data !!");
-				})
-   
+			.insert($scope.transaksiDt, $scope.transaksiHd.idTransactionHdr)
+			.success(function(data){
+				//$scope.transaksiHd 	= data;
+				// alert('success insert detil');
+				$scope.tarifSelected='';
+				$scope.isPaket=false;
+				isiTable();
+			})	
+			.error(function(data){
+				growl.addWarnMessage("Error save data !!");
+			})
+
+    };
+
+    function simpanDetilObat(){
+    	$scope.transaksiObat.transactionHdr = $scope.transaksiHd;
+    	$scope.transaksiObat.usrUpdate = $rootScope.globals.currentUser.username;
+    	transaksiDetilFactory
+			.insertObat($scope.transaksiObat, $scope.transaksiHd.idTransactionHdr)
+			.success(function(data){
+				//$scope.transaksiHd 	= data;
+				// alert('success insert detil');
+				$scope.obatSelected='';
+				$scope.transaksiObat='';
+				isiTableTransaksiObat();
+			})	
+			.error(function(data){
+				growl.addWarnMessage("Error save data !!");
+			})
+    	//console.log($scope.transaksiObat)			
+    }
+
+    $scope.deleteDetilTransaksiObat=function(idDetil){
+    	transaksiDetilFactory
+			.deleteTransaksiObat(idDetil, $scope.transaksiHd.idTransactionHdr)
+			.success(function(data){				
+				isiTableTransaksiObat();
+			})	
+			.error(function(data){
+				growl.addWarnMessage("Error save data !!");
+			})
     };
 
     $scope.deleteDetil=function(idDetil){
@@ -298,9 +375,22 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
  			})
  			.error(function(data){
  				growl.addWarnMessage("error loading isi table");
- 			})
- 		
+ 			}) 		
  	};
+
+ 	function isiTableTransaksiObat(){
+ 		transaksiDetilFactory
+ 			.getAllTransaksiObat($scope.transaksiHd.idTransactionHdr)
+ 			.success(function(data){
+ 				$scope.transaksiObats=data;		
+ 				growl.addWarnMessage("success loading isi table - obat");
+ 			})
+ 			.error(function(data){
+ 				growl.addWarnMessage("error loading isi table - obat");
+ 			}) 		
+ 	};
+
+
 
 	function startModule(){
 		getAllDokter();
@@ -337,6 +427,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 						setDokter($scope.registrasi.dokter);	
 						growl.addWarnMessage('Success loading !!!');	
 						isiTable();
+						isiTableTransaksiObat();
 						if($scope.transaksiHd.isApprove==true){
 							$scope.isApproved = true; 	
 							$scope.pesanStatus ="APPROVED";											
@@ -352,6 +443,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 			}
 		}		
 		getAllTindakan();
+		getAllObat();
 	};
 
 	$scope.cekApakahVariable=function(){

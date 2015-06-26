@@ -27,6 +27,33 @@ appServices.factory('transaksiDetilFactory',['$http','$rootScope',
     });
   };
 
+  //http://10.1.0.11:8080/fmn-clinic-server/api/transaction/hdr/idTransactionHdr/{idTransactionHdr}/product/dtl
+  transaksiDetilFactory.insertObat = function(transaksiObat, hdrId){
+    return $http({
+      method:'POST',
+      url:urlApi +'/idTransactionHdr/' + hdrId + '/product/dtl',
+      data:JSON.stringify(transaksiObat),
+      headers:{'Content-Type':'application/json'}
+    });
+  };
+
+  ///idTransactionHdr/{idTransactionHdr}/product/dtl
+  transaksiDetilFactory.getAllTransaksiObat=function(hdrId){
+    return $http({
+      method:'GET',
+      url:urlApi + '/idTransactionHdr/' + hdrId + '/product/dtl'
+    });
+  }; 
+
+  //api/transaction/hdr/idTransactionHdr/{idTransactionHdr)/product/dtl/{idProductTransactionDtl}
+  transaksiDetilFactory.deleteTransaksiObat = function (id, hdrId){
+    return $http({
+      method:'DELETE',
+      url:urlApi +'/idTransactionHdr/' + hdrId + '/product/dtl/' + id 
+    });
+  }
+
+
   transaksiDetilFactory.update  = function(id,transaksi, hdrId){
     return $http({
       method:'PUT',

@@ -1,0 +1,92 @@
+<div growl></div> 
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Produk Issue </h3>
+  </div>
+  <div class="panel-body">
+
+	<div id="PanelPencarian" class='container-fluid' collapse="tutupGrid" style="background-color:whitesmoke" >
+		<br>
+		<div class='container-fluid' style="background-color:#CEECF5" >	
+		<br>
+		Nama  : <input type='text' ng-model='searchSupplier' ng-change='searchAll()' >		
+		<label>
+	      	<input type="checkbox" ng-model="isTgl"> 
+	    </label>
+		Tgl Terima  : 
+			<input type="text" 						
+				datepicker-popup="dd-MMM-yyyy" 
+				ng-model="tgl1" 
+				is-open="opened1" 
+				datepicker-options="dateOptions" 
+				date-disabled="disabled(date, mode)" 
+				ng-required="true" 
+				id='tgl1'
+				close-text="Tutup" 					
+				size='15%'
+				/>
+				<button type="button" class="btn btn-info" ng-click="open1($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>			
+			<input type="text" 						
+				datepicker-popup="dd-MMM-yyyy" 
+				ng-model="tgl2" 
+				is-open="opened2" 
+				datepicker-options="dateOptions" 
+				date-disabled="disabled(date, mode)" 
+				ng-required="true" 
+				id='tgl2'
+				close-text="Tutup" 					
+				size='15%'
+				/>
+				<button type="button" class="btn btn-info" ng-click="open2($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>			
+		<button class="btn btn-default " size='15%' ng-click='getAll()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Refresh   </button>
+		<button class="btn btn-danger " size='15%' ng-click='baru()'  ><span class="glyphicon glyphicon-refresh" aria-hidden="true">    Baru   </button>
+		
+		<br>	
+		<br>	
+		</div>
+
+		<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#D6EBFF" >
+			<thead>
+				<tr>								
+					<td width="10%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+					<td width="20%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
+					<td width="20%" ><button class="btn btn-block btn-default" >No Transaksi</button></td>				    				    
+				    <td width="20%"><button class="btn btn-block btn-default" >Approve</button></td>	
+				    <td width="20%"><button class="btn btn-block btn-default" >Batal</button></td>	
+				    <td width="10%" ></td>
+				    <!-- <td width="10%"></td> -->
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat='produkIssue in produkIssues | orderBy:orderPenerimaan ' >
+					<td>{{produkIssue.idProductRecieveHdr}}</td>
+					<td>{{produkIssue.productRecieveDate | date:'dd-MMM-yyyy'}}</td>					
+					<td>{{produkIssue.productRecieveNo}}</td>					
+					<td>{{produkIssue.invoiceNo}}</td>				
+				    <td>{{produkIssue.supplier.supplierName}} - {{produkIssue.supplier.city}} </td> 
+				    <td>{{produkIssue.isApprove}}</td> 
+				    <td>{{produkIssue.isVoid}}</td>									    
+				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
+				    	ng-click='ubah(penerimaan.idProductRecieveHdr)'
+				    	><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> EDIT </button></td>		    
+				</tr>		
+			</tbody>
+		</table>
+
+		<!-- PAGING -->
+		<div class="container">
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+    	</div> <!-- END PAGING -->
+
+	</div>	<!-- END Panel-Pencarian -->
+
+
+  </div> <!-- END PANEL BODY -->
+
+</div>

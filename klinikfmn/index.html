@@ -35,6 +35,8 @@
 		<script type="text/javascript" src="js/service/master/agamaService.js"></script>
 		<script type="text/javascript" src="js/service/master/pekerjaanService.js"></script>
 		<script type="text/javascript" src="js/service/master/pendidikanService.js"></script>
+		<script type="text/javascript" src="js/service/master/headerService.js"></script>
+		<script type="text/javascript" src="js/service/master/floorService.js"></script>
 		<!-- TRANSAKSI -->
 		<script type="text/javascript" src='js/service/transaksi/pasienService.js'></script>
 		<script type="text/javascript" src='js/service/transaksi/registrasiService.js'></script>
@@ -42,6 +44,8 @@
 		<script type="text/javascript" src='js/service/transaksi/transaksiService.js'></script>
 		<script type="text/javascript" src='js/service/transaksi/transaksiDetilService.js'></script>
 		<script type="text/javascript" src='js/service/transaksi/pembayaranService.js'></script>
+		<!-- APOTIK -->
+		<script type="text/javascript" src='js/service/apotik/penerimaanBarangService.js'></script>
 		<!-- UTILITY -->
 		<script type="text/javascript" src="js/service/utility/userService.js"></script>
 		<script type="text/javascript" src="js/service/utility/Base64.js"></script>
@@ -60,10 +64,13 @@
 		<script type="text/javascript" src='js/controller/master/agamaController.js'></script>
 		<script type="text/javascript" src='js/controller/master/pekerjaanController.js'></script>
 		<script type="text/javascript" src='js/controller/master/pendidikanController.js'></script>
+		<script type="text/javascript" src='js/controller/master/headerController.js'></script>
+		<script type="text/javascript" src='js/controller/master/floorController.js'></script>
 		<!-- TRANSAKSI -->
 		<script type="text/javascript" src='js/controller/transaksi/pasienController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/pasienDetilController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/registrasiController.js'></script>
+		<script type="text/javascript" src='js/controller/transaksi/registrasiInfoController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/registrasiDetilController.js'></script>
 
 		<script type="text/javascript" src='js/controller/transaksi/assessmentPerawatController.js'></script>
@@ -74,6 +81,11 @@
 		<script type="text/javascript" src='js/controller/transaksi/transaksiDetilController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/pembayaranController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/pembayaranDetilController.js'></script>
+
+		<!-- APOTIK -->
+		<script type="text/javascript" src='js/controller/apotik/penerimaanBarangController.js'></script>
+		<script type="text/javascript" src='js/controller/apotik/penerimaanBarangDetilController.js'></script>
+
 		<!-- UTILITY -->
 		<script type="text/javascript" src='js/controller/utility/userController.js'></script>
 		<!-- UPLOAD FILE -->
@@ -117,7 +129,13 @@
 		                <!-- <li><a href="#/groupTindakan"><span class='glyphicon glyphicon-home'></span> Group Tindakan</a></li> -->
 		                <li><a href="#/tindakan"><span class='glyphicon glyphicon-repeat'></span> Tindakan</a></li>
 		                <li><a href="#/bank"><span class='glyphicon glyphicon-gbp'></span> Bank</a></li>
-		                <li><a href="#/dokter"><span class='glyphicon glyphicon-eye-open'></span> Dokter</a></li>		                	                
+		                <li><a href="#/dokter"><span class='glyphicon glyphicon-eye-open'></span> Dokter</a></li>		         
+		                <li class="divider"></li>
+		                <li><a href="#/floor"><span class='glyphicon glyphicon-gbp'></span> Floor</a></li>
+		                 <li><a href="#/header"><span class='glyphicon glyphicon-gbp'></span> Header Report</a></li>
+		                 <li class="divider"></li>
+		                <li><a href="#/supplier"><span class='glyphicon glyphicon-gbp'></span> Supplier</a></li>
+		                 <li><a href="#/unit"><span class='glyphicon glyphicon-gbp'></span> Unit</a></li>
 		              </ul>
 		            </li>
 
@@ -129,10 +147,19 @@
 			              <li><a href="#/registrasi"><span class='glyphicon glyphicon-list-alt'></span> Info</a></li>		  			                                      
 			              <li><a href="#/assesmentPerawat"><span class='glyphicon glyphicon-th-list'></span> Assessment Nurse</a></li>		  			                                      
 			              <li><a href="#/assesmentDokter"><span class='glyphicon glyphicon-th'></span> Assessment Dokter</a></li>	
-			              <li><a href="#/transaksi"><span class='glyphicon glyphicon-pencil'></span> Transaksi</a></li>	
-			              <li class="divider"></li>	  			             
+			              <li><a href="#/transaksi"><span class='glyphicon glyphicon-pencil'></span> Transaksi </a></li>	
+			              <!-- <li><a href="#/penjualanObat"><span class='glyphicon glyphicon-pencil'></span> Transaksi Obat Farmasi</a></li>	
+			              <li class="divider"></li>	  --> 			             
 			              <li><a href="#/pembayaran"><span class='glyphicon glyphicon-usd'></span> Pembayaran</a></li>		  			                                      
+		              </ul>
+		            </li>
 
+		            <li class="dropdown">
+		              <a ng-click="$event.preventDefault()" href="#" class="dropdown-toggle" data-toggle="dropdown" ><span class='glyphicon glyphicon-leaf'></span>  Apotik <span class="caret"></span></a>
+		              <ul class="dropdown-menu">
+		              		<li ><a href="#/penerimaanApotik"><span class='glyphicon glyphicon-globe'></span> Penerimaan Barang</a></li>
+			              <li><a href="#/"><span class='glyphicon glyphicon-list-alt'></span> Pemakaian Barang</a></li>		  			                                      
+			              <li><a href="#/"><span class='glyphicon glyphicon-th-list'></span> Penyesuaian Stock</a></li>		   
 		              </ul>
 		            </li>
 
@@ -143,7 +170,6 @@
 		                <li><a href="#/laporan/2"><span class='glyphicon glyphicon-forward'></span> Jumlah Tindakan</a></li>		   
 		                <li><a href="#/laporan/3"><span class='glyphicon glyphicon-forward'></span> Penerimaan</a></li>		                             
 		              </ul>
-
 		            </li>
 
 		            <li class="dropdown">
