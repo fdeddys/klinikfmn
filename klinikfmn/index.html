@@ -46,6 +46,8 @@
 		<script type="text/javascript" src='js/service/transaksi/pembayaranService.js'></script>
 		<!-- APOTIK -->
 		<script type="text/javascript" src='js/service/apotik/penerimaanBarangService.js'></script>
+		<script type="text/javascript" src='js/service/apotik/adjustmentStockService.js'></script>
+
 		<!-- UTILITY -->
 		<script type="text/javascript" src="js/service/utility/userService.js"></script>
 		<script type="text/javascript" src="js/service/utility/Base64.js"></script>
@@ -75,7 +77,6 @@
 
 		<script type="text/javascript" src='js/controller/transaksi/assessmentPerawatController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/assessmentPerawatDetilController.js'></script>
-
 		<script type="text/javascript" src='js/controller/transaksi/assessmentDokterController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/transaksiController.js'></script>
 		<script type="text/javascript" src='js/controller/transaksi/transaksiDetilController.js'></script>
@@ -84,7 +85,9 @@
 
 		<!-- APOTIK -->
 		<script type="text/javascript" src='js/controller/apotik/penerimaanBarangController.js'></script>
-		<script type="text/javascript" src='js/controller/apotik/penerimaanBarangDetilController.js'></script>
+		<script type="text/javascript" src='js/controller/apotik/penerimaanBarangDetilController.js'></script>	
+		<script type="text/javascript" src='js/controller/apotik/penyesuaianStockController.js'></script>
+		<script type="text/javascript" src='js/controller/apotik/penyesuaianStockDetilController.js'></script>	
 
 		<!-- UTILITY -->
 		<script type="text/javascript" src='js/controller/utility/userController.js'></script>
@@ -133,9 +136,9 @@
 		                <li class="divider"></li>
 		                <li><a href="#/floor"><span class='glyphicon glyphicon-gbp'></span> Floor</a></li>
 		                 <li><a href="#/header"><span class='glyphicon glyphicon-gbp'></span> Header Report</a></li>
-		                 <li class="divider"></li>
+		                <li class="divider"></li>
 		                <li><a href="#/supplier"><span class='glyphicon glyphicon-gbp'></span> Supplier</a></li>
-		                 <li><a href="#/unit"><span class='glyphicon glyphicon-gbp'></span> Unit</a></li>
+		                <li><a href="#/unit"><span class='glyphicon glyphicon-gbp'></span> Unit</a></li>
 		              </ul>
 		            </li>
 
@@ -148,8 +151,8 @@
 			              <li><a href="#/assesmentPerawat"><span class='glyphicon glyphicon-th-list'></span> Assessment Nurse</a></li>		  			                                      
 			              <li><a href="#/assesmentDokter"><span class='glyphicon glyphicon-th'></span> Assessment Dokter</a></li>	
 			              <li><a href="#/transaksi"><span class='glyphicon glyphicon-pencil'></span> Transaksi </a></li>	
-			              <!-- <li><a href="#/penjualanObat"><span class='glyphicon glyphicon-pencil'></span> Transaksi Obat Farmasi</a></li>	
-			              <li class="divider"></li>	  --> 			             
+			              <!-- <li><a href="#/penjualanObat"><span class='glyphicon glyphicon-pencil'></span> Transaksi Obat Farmasi</a></li>	-->
+			              <li class="divider"></li> 
 			              <li><a href="#/pembayaran"><span class='glyphicon glyphicon-usd'></span> Pembayaran</a></li>		  			                                      
 		              </ul>
 		            </li>
@@ -158,8 +161,8 @@
 		              <a ng-click="$event.preventDefault()" href="#" class="dropdown-toggle" data-toggle="dropdown" ><span class='glyphicon glyphicon-leaf'></span>  Apotik <span class="caret"></span></a>
 		              <ul class="dropdown-menu">
 		              		<li ><a href="#/penerimaanApotik"><span class='glyphicon glyphicon-globe'></span> Penerimaan Barang</a></li>
-			              <li><a href="#/"><span class='glyphicon glyphicon-list-alt'></span> Pemakaian Barang</a></li>		  			                                      
-			              <li><a href="#/"><span class='glyphicon glyphicon-th-list'></span> Penyesuaian Stock</a></li>		   
+			              <li><a href="#/"><span class='glyphicon glyphicon-list-alt'></span> Pemakaian Barang</a></li>		  		
+			              <li><a href="#/adjustmentStock"><span class='glyphicon glyphicon-th-list'></span> Penyesuaian Stock</a></li>		   
 		              </ul>
 		            </li>
 

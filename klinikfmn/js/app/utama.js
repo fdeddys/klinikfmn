@@ -160,7 +160,14 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 			templateUrl:'partials/apotik/productIssue.html',
 		    controller:'productIssueController'
 		}).
-
+		when('/adjustmentStock',{
+			templateUrl:'partials/apotik/penyesuaianStock.html',
+		    controller:'penyesuaianStockController'
+		}).
+		when('/adjustmentStockDetil/:idAdjust',{
+			templateUrl:'partials/apotik/penyesuaianStockDetil.html',
+		    controller:'penyesuaianStockDetilController'
+		}).
 		when('/laporan/:idxlaporan',{
 			templateUrl:'partials/laporan/laporan.html',
 		    controller:'laporanController'

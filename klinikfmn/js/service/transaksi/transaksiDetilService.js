@@ -18,6 +18,13 @@ appServices.factory('transaksiDetilFactory',['$http','$rootScope',
     });
   };  
   
+  transaksiDetilFactory.getAllPage=function(hdrId, pageSize, pageNumber){
+    return $http({
+      method:'GET',
+      url:urlApi + '/idTransactionHdr/' + hdrId + '/dtl/size/'+ pageSize +'/number/'+pageNumber
+    });
+  };  
+  
   transaksiDetilFactory.insert = function(transaksi, hdrId){
     return $http({
       method:'POST',
@@ -42,6 +49,13 @@ appServices.factory('transaksiDetilFactory',['$http','$rootScope',
     return $http({
       method:'GET',
       url:urlApi + '/idTransactionHdr/' + hdrId + '/product/dtl'
+    });
+  }; 
+
+  transaksiDetilFactory.getAllTransaksiObatPage=function(hdrId, pageSize, pageNumber){
+    return $http({
+      method:'GET',
+      url:urlApi + '/idTransactionHdr/' + hdrId + '/product/dtl/size/'+ pageSize +'/number/'+pageNumber
     });
   }; 
 

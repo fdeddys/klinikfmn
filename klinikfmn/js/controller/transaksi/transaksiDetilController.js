@@ -31,6 +31,25 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 	// 		startingDay: 1
 	// 	};
 
+	// Paging Transaksi
+	$scope.totalItems;
+	$scope.itemsPerPage= 5;
+	$scope.currentPage = 1;   
+	$scope.pageChanged=function(){
+
+ 		isiTable($scope.currentPage); 		  
+    }; 
+
+    // Paging Transaksi Obat
+	$scope.totalItems2;
+	$scope.itemsPerPage2= 5;
+	$scope.currentPage2 = 1;   
+	$scope.pageChanged2=function(){
+
+ 		isiTableTransaksiObat($scope.currentPage2); 		  
+    }; 
+
+
 	function getAllTindakan(){
 		tindakanFactory
 			.getAll(1000,1)
@@ -113,7 +132,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 
     $scope.simpanTransaksiObat=function(){
     	if( $scope.obatSelected===''){    		
-    		growl.addWarnMessage('tarif belum diisi !!!')    		
+    		growl.addWarnMessage('Obat belum diisi !!!')    		
     	}else{
 	    	if($scope.transaksiHd.idTransactionHdr==='' || $scope.transaksiHd.idTransactionHdr===null){
 	    		$scope.transaksiHd.registration = $scope.registrasi;
@@ -193,7 +212,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 				// alert('success insert detil');
 				$scope.tarifSelected='';
 				$scope.isPaket=false;
-				isiTable();
+				isiTable(1);
 			})	
 			.error(function(data){
 				growl.addWarnMessage("Error save data !!");
@@ -204,6 +223,8 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     function simpanDetilObat(){
     	$scope.transaksiObat.transactionHdr = $scope.transaksiHd;
     	$scope.transaksiObat.usrUpdate = $rootScope.globals.currentUser.username;
+    	$scope.transaksiObat.product = $scope.obatSelected;
+    	$scope.transaksiObat.price = $scope.salesPrice
     	transaksiDetilFactory
 			.insertObat($scope.transaksiObat, $scope.transaksiHd.idTransactionHdr)
 			.success(function(data){
@@ -211,7 +232,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 				// alert('success insert detil');
 				$scope.obatSelected='';
 				$scope.transaksiObat='';
-				isiTableTransaksiObat();
+				isiTableTransaksiObat(1);
 			})	
 			.error(function(data){
 				growl.addWarnMessage("Error save data !!");
@@ -219,11 +240,11 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     	//console.log($scope.transaksiObat)			
     }
 
-    $scope.deleteDetilTransaksiObat=function(idDetil){
+    $scope.deleteTransaksiObat=function(idDetil){
     	transaksiDetilFactory
 			.deleteTransaksiObat(idDetil, $scope.transaksiHd.idTransactionHdr)
 			.success(function(data){				
-				isiTableTransaksiObat();
+				isiTableTransaksiObat(1);
 			})	
 			.error(function(data){
 				growl.addWarnMessage("Error save data !!");
@@ -234,7 +255,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     	transaksiDetilFactory
 			.deleteRec(idDetil, $scope.transaksiHd.idTransactionHdr)
 			.success(function(data){				
-				isiTable();
+				isiTable(1);
 			})	
 			.error(function(data){
 				growl.addWarnMessage("Error save data !!");
@@ -366,23 +387,27 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
  			})
  	};
 
- 	function isiTable(){
+ 	function isiTable(hal){
  		transaksiDetilFactory
- 			.getAll($scope.transaksiHd.idTransactionHdr)
+ 			.getAllPage($scope.transaksiHd.idTransactionHdr,$scope.itemsPerPage, hal  )
  			.success(function(data){
- 				$scope.transaksiDetils=data;		
- 				growl.addWarnMessage("success loading isi table");
+ 				// $scope.transaksiDetils=data;		
+ 				// growl.addWarnMessage("success loading isi table");
+ 				$scope.transaksiDetils=data.content;	
+ 				$scope.totalItems = data.totalElements;		
+
  			})
  			.error(function(data){
  				growl.addWarnMessage("error loading isi table");
  			}) 		
  	};
 
- 	function isiTableTransaksiObat(){
+ 	function isiTableTransaksiObat(hal){
  		transaksiDetilFactory
- 			.getAllTransaksiObat($scope.transaksiHd.idTransactionHdr)
+ 			.getAllTransaksiObatPage($scope.transaksiHd.idTransactionHdr,$scope.itemsPerPage2, hal)
  			.success(function(data){
- 				$scope.transaksiObats=data;		
+ 				$scope.transaksiObats=data.content;		
+ 				$scope.totalItems2 = data.totalElements;		
  				growl.addWarnMessage("success loading isi table - obat");
  			})
  			.error(function(data){
@@ -426,8 +451,8 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 						$scope.registrasi=data.registration;
 						setDokter($scope.registrasi.dokter);	
 						growl.addWarnMessage('Success loading !!!');	
-						isiTable();
-						isiTableTransaksiObat();
+						isiTable(1);
+						isiTableTransaksiObat(1);
 						if($scope.transaksiHd.isApprove==true){
 							$scope.isApproved = true; 	
 							$scope.pesanStatus ="APPROVED";											

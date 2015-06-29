@@ -1,0 +1,160 @@
+<div growl></div> 
+<div class='container' style="background-color:white" >		
+	<br>
+	<div class='container-fluid' style=" background-color:#99B2FF; "  >
+	<br>
+	<table border="0" style="width:100%;"  >
+
+		<col width="10%">
+		<col width="40%">
+  		<col width="10%">
+  		<col width="40%">
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label  >No Adjust</label>
+				</td>									
+				<td style="color:white"  >
+				    <input   type='text' ng-disabled='true' size='5%' ng-model='adjusmentHd.productAdjustNo' class="form-control" style="width:40%"/> 
+				</td>
+				<td style="color:white" >					
+				      <label >No Id </label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true' ng-model='adjusmentHd.idProductAdjustHdr' size="12" class="form-control" style="width:20%"/> 				    
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label >Tanggal</label>
+				</td>									
+				<td style="color:white"  >
+					<input type="text" 						
+						datepicker-popup="dd-MMM-yyyy" 
+						ng-model="adjusmentHd.productAdjustDate" 
+						is-open="opened" 
+						datepicker-options="dateOptions" 
+						date-disabled="disabled(date, mode)" 
+						ng-required="true" 
+						id='tgl'
+						close-text="Tutup" 					
+						style="width:150px"
+
+						/>
+					<button type="button" class="btn btn-info" ng-click="open($event)">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>						    
+				</td>
+				<td style="color:white" >					
+				      <label >Status</label>		
+				</td>									
+				<td style="color:white" >					
+				    <input type='text' ng-disabled='true' ng-model='pesanStatus'  class="form-control" style="width:40%"/> 		
+				</td>
+			</tr>
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label >Note</label>
+				</td>									
+				<td style="color:white"  >
+					<input   type='text' size='5%' ng-model='adjusmentHd.notes' class="form-control" style="width:90%"/>    
+				</td>
+				<td style="color:white" height="25" >					
+				    <label >User</label>
+				</td>									
+				<td style="color:white"  >
+				    <input type='text' ng-disabled='true'  ng-model='adjusmentHd.usrUpdate' class="form-control" style="width:40%"/> 
+				</td>
+			</tr>			
+			<tr>
+				<td style="color:white" height="25" >					
+				    <label ></label>
+				</td>									
+				<td style="color:white"  >
+				    
+				</td>
+				<td style="color:white" >					
+				      <label ></label>		
+				</td>									
+				<td style="color:white" >	
+				 	<button  class="btn btn-info" style="width:30%" ng-click="approve()" ng-disabled="isVoided || isApproved " >Approve</button>
+				 	<button  class="btn btn-danger" style="width:30%" ng-click="void()" ng-disabled="isVoided  ">Void</button>
+				 	<button  class="btn btn-default" style="width:30%" ng-click="listPenerimaan()" >List </button>
+				</td>
+			</tr>								
+		<!-- </tbody> -->
+	</table>		
+	<!-- <hr> -->
+	<br>
+		<div style="height:300px; background-color:white" >
+			<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#FFFFC2" >
+				<thead>
+					<tr>								
+						<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
+						<td width="35%"><button class="btn btn-block btn-default" >Nama</button></td>		
+					    <td width="10%"><button class="btn btn-block btn-default" >Qty</button></td> 
+					    <td width="10%"><button class="btn btn-block btn-default" >Unit</button></td> 
+					    <td width="10%"><button class="btn btn-block btn-default" >Harga</button></td>
+					    <td width="10%"><button class="btn btn-block btn-default" >Total</button></td>
+					    <td width="10%"><button class="btn btn-block btn-default" >user</button></td>	
+					    <td width="10%">Action</td>	
+					</tr>	
+				</thead>
+				<tbody>
+					<tr ng-repeat='adjusmentDetil in adjusmentDetils  ' >
+						<td>{{adjusmentDetil.idProductAdjustDtl}}</td>
+						<td>{{adjusmentDetil.product.productName}}</td>	
+						<td>{{adjusmentDetil.qty}}</td>				
+						<td>{{adjusmentDetil.product.unit}}</td>
+					    <td>{{adjusmentDetil.price | number}}</td>					
+					    <td>{{adjusmentDetil.price * adjusmentDetil.qty | number}}</td>
+					    <td>{{adjusmentDetil.usrUpdate}}</td>				
+					    <td><button class="btn btn-block btn-warning" ng-click="deleteDetil(adjusmentDetil.idProductAdjustDtl)" ng-disabled="isVoided || isApproved ">Delete</button></td>	
+					</tr>		
+				</tbody>
+			</table>			
+		</div>
+		<hr>
+		
+		<!--  INPUT Barang -->
+		<form class="form-inline">
+			<div class="form-group">
+		    	<label 	class="sr-only" ></label>
+		    	<input type="text" ng-model="obatSelected" typeahead="obat as obat.productName for obat in obats | filter:$viewValue | limitTo:8" class="form-control" style="width:400px" placeholder="Nama Barang"  >
+		  	</div>
+		  	<div class="form-group">				
+				<input type='text' 
+				  		class="form-control" 
+				    	ng-disabled='true' 
+				    	ng-model='obatSelected.unit'						
+						size='10%'
+						placeholder="Kode"
+				    	/> 
+		    </div>		  	
+			<div class="form-group">	
+				<span class="form-control"   style="width:150px; text-align:right; color:blue; background-color:whitesmoke" placeholder=" Harga">{{obatSelected.averagePrice | number}}</span>			
+				<!-- <input type='text' 
+			  		class="form-control" 
+			  		ng-disabled='true' 				    	
+			    	ng-model='obatSelected.salesPrice'						
+					size='15%'
+					placeholder=" Harga"
+			    	/>  -->
+		    </div>
+		  	<div class="form-group">				
+				<input type='number'
+				step= '1'
+			  		class="form-control" 				    	
+			    	ng-model='adjusmentDt.qty'						
+					size='5%'
+					placeholder="Qty"
+			    	/> 
+		    </div>
+
+		  	<button  class="btn btn-warning" ng-click="simpan()" ng-disabled="isVoided || isApproved ">Simpan</button>		  	
+		  	<!-- {{tarifSelected}} -->
+		</form>
+		<!-- END INPUT TINDAKAN -->
+		<br>
+	</div>
+	<br>
+</div>

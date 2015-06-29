@@ -1,10 +1,8 @@
-appControllers.controller('penerimaanBarangController', ['$scope','$filter', 'penerimaanBarangFactory','growl','$location',
-	function($scope, $filter, penerimaanBarangFactory, growl,$location){
-	
+appControllers.controller('penyesuaianStockController', ['$scope', '$filter', 'adjustmentStockFactory', 'growl','$location',
+	function($scope,$filter, adjustmentStockFactory, growl,$location){
 
 	//VARIABEL
-	$scope.penerimaans=[];
-	$scope.searchSupplier="";
+	$scope.adjustments=[];	
 
 	// PAGING
 	$scope.totalItems;
@@ -40,32 +38,28 @@ appControllers.controller('penerimaanBarangController', ['$scope','$filter', 'pe
 	// END tanggal  
 
 	function startModule(){	
-		console.log("Masuk penerimaan controlle");	
+		
 		$scope.today();		
 		$scope.isTgl=true;
 		getAll(1);		
 	};
 
 	function getAll(hal){
-		var kriteriaSupplier="--";
+		
 		var kriteriaTgl1="--";
 		var kriteriaTgl2="--";
 		var vTgl1 = $filter('date')($scope.tgl1,'yyyy-MM-dd');
 		var vTgl2 = $filter('date')($scope.tgl2,'yyyy-MM-dd');
-
-		if($scope.searchSupplier!==""){
-			kriteriaSupplier=$scope.searchSupplier;
-		};
 
 		if($scope.isTgl==true){
 			kriteriaTgl1=vTgl1;
 			kriteriaTgl2=vTgl2;
 		};
 
-		penerimaanBarangFactory
-			.getAll(kriteriaTgl1, kriteriaTgl2, kriteriaSupplier,hal, $scope.itemsPerPage)
+		adjustmentStockFactory
+			.getByDate(kriteriaTgl1, kriteriaTgl2, $scope.itemsPerPage, hal)
 			.success(function(data){
-				$scope.penerimaans=data.content;
+				$scope.adjustments=data.content;
 				$scope.totalItems = data.totalElements;		
 			})
 			.error(function(data){
@@ -74,11 +68,11 @@ appControllers.controller('penerimaanBarangController', ['$scope','$filter', 'pe
 	};
 
 	$scope.baru=function(){
-		$location.path('/penerimaanApotikDetil/0');
+		$location.path('/adjustmentStockDetil/0');
 	};
 
 	$scope.ubah=function(id){
-		$location.path('/penerimaanApotikDetil/'+id);
+		$location.path('/adjustmentStockDetil/'+id);
 	};
 
 	$scope.searchAll=function(){
