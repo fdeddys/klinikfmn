@@ -101,9 +101,10 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
 		idProductTransactionDtl: null,
 		transactionHdr: null,
 		product: null,
-		qty: 0,
-		price: 0,
-		usrUpdate: '',
+		qty: null,
+		price: null,
+		unit: null,
+		usrUpdate: null,
 		lastUpdate: null
     };
 
@@ -224,19 +225,35 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     	$scope.transaksiObat.transactionHdr = $scope.transaksiHd;
     	$scope.transaksiObat.usrUpdate = $rootScope.globals.currentUser.username;
     	$scope.transaksiObat.product = $scope.obatSelected;
-    	$scope.transaksiObat.price = $scope.salesPrice
-    	transaksiDetilFactory
-			.insertObat($scope.transaksiObat, $scope.transaksiHd.idTransactionHdr)
-			.success(function(data){
-				//$scope.transaksiHd 	= data;
-				// alert('success insert detil');
-				$scope.obatSelected='';
-				$scope.transaksiObat='';
-				isiTableTransaksiObat(1);
-			})	
-			.error(function(data){
-				growl.addWarnMessage("Error save data !!");
-			})
+    	$scope.transaksiObat.price = $scope.obatSelected.salesPrice;
+
+    	fieldGroupFactory
+    		.getUnitByIdField(11,$scope.obatSelected.unit)
+    		.success(function(data){
+    			
+
+				$scope.transaksiObat.unit = data.fieldName;			
+				console.log($scope.transaksiObat.unit);
+
+		    	transaksiDetilFactory
+					.insertObat($scope.transaksiObat, $scope.transaksiHd.idTransactionHdr)
+					.success(function(data){
+						//$scope.transaksiHd 	= data;
+						// alert('success insert detil');
+						$scope.obatSelected='';
+						$scope.transaksiObat='';
+						isiTableTransaksiObat(1);
+					})	
+					.error(function(data){
+						growl.addWarnMessage("Error save data !!");
+					})				
+    			
+    		})
+    		.error(function(data){
+    			growl.addWarnMessage("error satuan obat !!!")
+    		}) 			
+
+
     	//console.log($scope.transaksiObat)			
     }
 
@@ -308,6 +325,7 @@ appControllers.controller('transaksiDetilController', ['$scope','transaksiFactor
     		.voidTransaksi($scope.transaksiHd.idTransactionHdr, userName)
     		.success(function(data){
     			$scope.isApproved = true; 	
+    			$scope.isVoided = true;
 	 			growl.addWarnMessage("success void");
 	 			$scope.pesanStatus ="VOID";	
     		})

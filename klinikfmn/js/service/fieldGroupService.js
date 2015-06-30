@@ -54,6 +54,14 @@ appServices.factory('fieldGroupFactory',['$http','$rootScope',
 		})
 	};
 
+	//fieldgroup/idfieldgroup/9/idfield/32
+	fieldGroupFactory.getUnitByIdField=function(idfieldgroup, idfield){
+		return $http({
+			method:'GET',
+			url : urlApi + '/' + idfieldgroup + '/idfield/'+idfield
+		})
+	};	
+
 	return fieldGroupFactory;
 
 }]);

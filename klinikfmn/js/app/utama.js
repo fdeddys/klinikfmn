@@ -157,8 +157,12 @@ myApp.config(['$routeProvider','$locationProvider','growlProvider',function($rou
 		    controller:'penerimaanBarangDetilController'
 		}).
 		when('/productIssue',{
-			templateUrl:'partials/apotik/productIssue.html',
+			templateUrl:'partials/apotik/produkIssue.html',
 		    controller:'productIssueController'
+		}).
+		when('/productIssueDetil/:idIssue',{
+			templateUrl:'partials/apotik/produkIssueDetil.html',
+		    controller:'productIssueDetilController'
 		}).
 		when('/adjustmentStock',{
 			templateUrl:'partials/apotik/penyesuaianStock.html',

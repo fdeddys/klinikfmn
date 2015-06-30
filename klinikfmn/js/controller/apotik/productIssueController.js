@@ -1,5 +1,5 @@
-appControllers.controller('productIssueController', ['$scope', 'growl','$location',
-	function($scope,growl,$location){
+appControllers.controller('productIssueController', ['$scope', 'growl','$location','$filter', 'productIssueFactory',
+	function($scope, growl, $location, $filter, productIssueFactory){
 
 		//VARIABEL
 	$scope.produkIssues=[];
@@ -38,33 +38,28 @@ appControllers.controller('productIssueController', ['$scope', 'growl','$locatio
 		};
 	// END tanggal  
 
-	function startModule(){	
-		console.log("Masuk penerimaan controlle");	
+	function startModule(){			
 		$scope.today();		
 		$scope.isTgl=true;
 		getAll(1);		
 	};
 
 	function getAll(hal){
-		var kriteriaSupplier="--";
+		
 		var kriteriaTgl1="--";
 		var kriteriaTgl2="--";
 		var vTgl1 = $filter('date')($scope.tgl1,'yyyy-MM-dd');
-		var vTgl2 = $filter('date')($scope.tgl2,'yyyy-MM-dd');
-
-		if($scope.searchSupplier!==""){
-			kriteriaSupplier=$scope.searchSupplier;
-		};
+		var vTgl2 = $filter('date')($scope.tgl2,'yyyy-MM-dd');		
 
 		if($scope.isTgl==true){
 			kriteriaTgl1=vTgl1;
-			kriteriaTgl1=vTgl2;
+			kriteriaTgl2=vTgl2;
 		};
 
-		penerimaanBarangFactory
-			.getAll(kriteriaTgl1, kriteriaTgl2, kriteriaSupplier,hal, $scope.itemsPerPage)
+		productIssueFactory
+			.getByDate(kriteriaTgl1, kriteriaTgl2, $scope.itemsPerPage,hal)
 			.success(function(data){
-				$scope.penerimaans=data.content;
+				$scope.produkIssues=data.content;
 				$scope.totalItems = data.totalElements;		
 			})
 			.error(function(data){
@@ -73,11 +68,11 @@ appControllers.controller('productIssueController', ['$scope', 'growl','$locatio
 	};
 
 	$scope.baru=function(){
-		$location.path('/penerimaanApotikDetil/0');
+		$location.path('/productIssueDetil/0');
 	};
 
 	$scope.ubah=function(id){
-		$location.path('/penerimaanApotikDetil/'+id);
+		$location.path('/productIssueDetil/'+id);
 	};
 
 	$scope.searchAll=function(){

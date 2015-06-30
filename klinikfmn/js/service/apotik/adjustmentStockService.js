@@ -51,10 +51,10 @@ appServices.factory('adjustmentStockFactory', ['$rootScope', '$http',
 		})
 	};	
 
-	adjustmentStockFactory.batalApprove=function(idAdjust, userName){
+	adjustmentStockFactory.void=function(idAdjust, userName){
 		return $http({
 			method:'PUT',
-			url:$urlApi + '/id/' + idAdjust + '/update/approveStatus/false/user/'+ userName
+			url:urlApi + '/id/' + idAdjust + '/update/approveStatus/false/user/'+ userName
 		})
 	};	
 

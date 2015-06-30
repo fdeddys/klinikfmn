@@ -87,7 +87,7 @@ appControllers.controller('penyesuaianStockDetilController', ['$scope','$filter'
 						}else{
 							var userId=$rootScope.globals.currentUser.username;
 
-							$scope.adjusmentDt.price=$scope.obatSelected.salesPrice;
+							$scope.adjusmentDt.price=$scope.obatSelected.averagePrice;
 							$scope.adjusmentDt.product=$scope.obatSelected;
 							$scope.adjusmentDt.productAdjustHdr=$scope.adjusmentHd;
 							$scope.adjusmentDt.usrUpdate=userId;
@@ -213,6 +213,21 @@ appControllers.controller('penyesuaianStockDetilController', ['$scope','$filter'
 		}
 	}
 
+	$scope.void=function(){
+
+    	var userName =$rootScope.globals.currentUser.username;
+    	adjustmentStockFactory
+    		.void($scope.adjusmentHd.idProductAdjustHdr, userName)
+    		.success(function(data){
+    			$scope.isVoided = true; 	
+	 			growl.addWarnMessage("success void");
+	 			$scope.pesanStatus ="VOID";	
+    		})
+    		.error(function(data){
+    			growl.addWarnMessage("Error void data !!");
+    		})
+    };
+    
 	function startModule(){			
 		$scope.today();		
 				

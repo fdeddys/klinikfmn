@@ -10,7 +10,7 @@
 		<br>
 		<div class='container-fluid' style="background-color:#CEECF5" >	
 		<br>
-		Nama  : <input type='text' ng-model='searchSupplier' ng-change='searchAll()' >		
+		Nama  : <input type='text' ng-model='cari' ng-change='searchAll()' >		
 		<label>
 	      	<input type="checkbox" ng-model="isTgl"> 
 	    </label>
@@ -55,24 +55,24 @@
 				<tr>								
 					<td width="10%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
 					<td width="20%" ><button class="btn btn-block btn-default" >Tanggal</button></td>
-					<td width="20%" ><button class="btn btn-block btn-default" >No Transaksi</button></td>				    				    
-				    <td width="20%"><button class="btn btn-block btn-default" >Approve</button></td>	
-				    <td width="20%"><button class="btn btn-block btn-default" >Batal</button></td>	
+					<td width="25%" ><button class="btn btn-block btn-default" >No Transaksi</button></td>				    				    
+				    <td width="10%"><button class="btn btn-block btn-default" >Approve</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>	
+				    <td width="10%"><button class="btn btn-block btn-default" >User</button></td>	
 				    <td width="10%" ></td>
 				    <!-- <td width="10%"></td> -->
 				</tr>	
 			</thead>
 			<tbody>
-				<tr ng-repeat='produkIssue in produkIssues | orderBy:orderPenerimaan ' >
-					<td>{{produkIssue.idProductRecieveHdr}}</td>
-					<td>{{produkIssue.productRecieveDate | date:'dd-MMM-yyyy'}}</td>					
-					<td>{{produkIssue.productRecieveNo}}</td>					
-					<td>{{produkIssue.invoiceNo}}</td>				
-				    <td>{{produkIssue.supplier.supplierName}} - {{produkIssue.supplier.city}} </td> 
+				<tr ng-repeat='produkIssue in produkIssues ' >
+					<td>{{produkIssue.idProductIssueHdr}}</td>
+					<td>{{produkIssue.productIssueDate | date:'dd-MMM-yyyy'}}</td>	
+					<td>{{produkIssue.productIssueNo}}</td>				
 				    <td>{{produkIssue.isApprove}}</td> 
-				    <td>{{produkIssue.isVoid}}</td>									    
+				    <td>{{produkIssue.isVoid}}</td>		
+					<td>{{produkIssue.usrUpdate}}</td>						   			    
 				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
-				    	ng-click='ubah(penerimaan.idProductRecieveHdr)'
+				    	ng-click='ubah(produkIssue.idProductIssueHdr)'
 				    	><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> EDIT </button></td>		    
 				</tr>		
 			</tbody>

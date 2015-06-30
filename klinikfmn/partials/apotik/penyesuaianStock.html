@@ -58,7 +58,8 @@
 					<td width="10%" ><button class="btn btn-block btn-default" >No</button></td>
 				    <td width="10%"><button class="btn btn-block btn-default" >Approve</button></td>				    
 				    <td width="10%"><button class="btn btn-block btn-default" >Batal</button></td>
-				    <td width="45%"><button class="btn btn-block btn-default" >Notes</button></td>	
+				    <td width="35%"><button class="btn btn-block btn-default" >Notes</button></td>
+				    <td width="10%"><button class="btn btn-block btn-default" >User</button></td>	
 				    <td width="10%" ></td>
 				    <!-- <td width="10%"></td> -->
 				</tr>	
@@ -70,7 +71,8 @@
 					<td>{{adjustment.productAdjustNo}}</td>					
 					<td>{{adjustment.isApprove}}</td> 
 				    <td>{{adjustment.isVoid}}</td>
-				    <td>{{adjustment.isVoid}}</td>
+				    <td>{{adjustment.notes}}</td>
+				    <td>{{adjustment.usrUpdate}}</td>
 				    <td><button type='button' class='btn btn-warning btn-block btn-sm'
 				    	ng-click='ubah(adjustment.idProductAdjustHdr)'
 				    	><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> EDIT </button></td>		    

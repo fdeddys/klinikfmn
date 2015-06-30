@@ -103,6 +103,7 @@ appControllers.controller('penerimaanBarangDetilController', ['$scope','$filter'
 				
 				$scope.penerimaanHd.productRecieveDate=vTgl;
 				$scope.penerimaanHd.usrUpdate=userId;
+				$scope.penerimaanHd.idProductRecieveHdr=null;
 				//$scope.penerimaanHd.lastUpdate=vTglUpdate;
 				penerimaanBarangFactory
 					.saveHdr($scope.penerimaanHd)

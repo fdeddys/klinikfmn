@@ -81,7 +81,7 @@
 		<!-- TRANSAKSI  -->
 		<div ng-hide="viewTransaksi">
 
-			<div style="height:300px; background-color:white" >
+			<div style="height:250px; background-color:white" >
 				<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#FFFFC2" >
 					<thead>
 						<tr>								
@@ -109,6 +109,11 @@
 					</tbody>
 				</table>			
 			</div>
+			<!-- PAGING -->
+			<div class="container-fluid" style="background-color:white">
+	        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+	         	ng-model="currentPage" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+	    	</div> <!-- END PAGING -->
 		<hr>
 
 			<!--  INPUT TINDAKAN -->
@@ -162,12 +167,12 @@
 
 		<!--  FARMASI -->
 		<div ng-hide="!viewTransaksi">
-			<div style="height:300px; background-color:white" >
+			<div style="height:250px; background-color:white" >
 				<table class="table table-bordered table-striped table-condensed table-hover" style="background-color:#FFFFC2" >
 					<thead>
 						<tr>								
 							<td width="5%" align="center"><button class="btn btn-block btn-default" >Id</button></td>
-							<td width="45%"><button class="btn btn-block btn-default" >Nama Paket</button></td>		
+							<td width="45%"><button class="btn btn-block btn-default" >Nama Obat</button></td>		
 						    <td width="10%"><button class="btn btn-block btn-default" >Unit</button></td> 
 						    <td width="10%"><button class="btn btn-block btn-default" >Harga</button></td> 
 						    <td width="10%"><button class="btn btn-block btn-default" >qty</button></td>
@@ -179,15 +184,21 @@
 						<tr ng-repeat='transaksiObat in transaksiObats | orderBy:orderTransaksiDetil ' >
 							<td>{{transaksiObat.idProductTransactionDtl}}</td>
 							<td>{{transaksiObat.product.productName}}</td>	
-							<td>{{transaksiObat.product.unit}}</td>				
+							<td>{{transaksiObat.unit}}</td>				
 						    <td>{{transaksiObat.price | number }}</td> 
 						    <td>{{transaksiObat.qty | number }}</td> 
-						    <td>{{transaksiObat.price * transaksiDetil.qty | number}}</td>
+						    <td>{{transaksiObat.price * transaksiObat.qty | number}}</td>
 						    <td><button class="btn btn-block btn-warning" ng-click="deleteTransaksiObat(transaksiObat.idProductTransactionDtl)" ng-disabled="isVoided || isApproved || transaksiHd.isPaid">Delete</button></td>	
 						</tr>		
 					</tbody>
-				</table>			
+				</table>	
 			</div>
+			<!-- PAGING -->
+			<div class="container-fluid" style="background-color:white">
+	        <pagination total-items="totalItems2" items-per-page="itemsPerPage2" 
+	         	ng-model="currentPage2" ng-change="pageChanged2()" max-size="10" boundary-links="true" rotate="false"></pagination>
+	    	</div> <!-- END PAGING -->
+
 		<hr>
 
 		<!--  INPUT TINDAKAN -->

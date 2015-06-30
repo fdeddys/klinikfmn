@@ -54,15 +54,12 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 		var statusRec = $routeParams.statusRec;
 		if(statusRec==='new'){
 			
-
 			registrasiFactory
 				.getById(idReg)
 				.success(function(data){
 					$scope.registrasi = data;
 					growl.addWarnMessage("Success load registrasi");
 					
-
-
 					// cek apakah sudah ada pembayaran, jika ya ambil
 					pembayaranFactory
 						.getByNoRegPage($scope.registrasi.registrationNo,1, 1)
@@ -134,27 +131,30 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 
     function getTotalKlinik(id){
     	var totalAll=0;
+    	var totalFm=0;
     	transaksiFactory
 			.getByNoRegPage(id,1,1000)
 			.success(function(data){					
 				angular.forEach(data.content, function(value, key) {
-					totalAll = totalAll + value.total;					
+					totalAll = totalAll + value.totalTransaction;					
+					totalFm = totalFm + value.totalProduct;					
 				});					
 				//$scope.payment.transactionTotal
 				$scope.payment.transactionTotal=totalAll;
 				//ambil farmasi
-				$scope.payment.pharmacyTotal=0;
-				pembayaranFactory
-		    		.getFarmasiByNoReg(id)
-		    		.success(function(data){
-		    			$scope.payment.pharmacyTotal = Number(data);	
-		    			console.log('get total farmasi ' + data);
-		    			totalAll = totalAll + data;
-		    			// total in semua		
-		    			$scope.subTotal=totalAll;
-		    			growl.addWarnMessage('get farmasi !!!');
-		    			//$scope.payment.transactionTotal + $scope.payment.pharmacyTotal;
-		    		})						
+				$scope.payment.pharmacyTotal=totalFm;
+
+				// pembayaranFactory
+		  //   		.getFarmasiByNoReg(id)
+		  //   		.success(function(data){
+		  //   			$scope.payment.pharmacyTotal = Number(data);	
+		  //   			console.log('get total farmasi ' + data);
+		  //   			totalAll = totalAll + data;
+		  //   			// total in semua		
+		  //   			$scope.subTotal=totalAll;
+		  //   			growl.addWarnMessage('get farmasi !!!');
+		  //   			//$scope.payment.transactionTotal + $scope.payment.pharmacyTotal;
+		  //   		})						
 
 			})
 			.error(function(data){
@@ -268,7 +268,7 @@ appControllers.controller('pembayaranDetilController', ['$scope', '$routeParams'
 	};
 
 	$scope.printkwitansi=function(){
-		 $window.open($rootScope.pathServerJSON + '/payment/report/kwitansi/id/'+$scope.payment.idPayment, '_blank');
+		 $window.open($rootScope.pathServerJSON + '/payment/report/kwitansi/id/'+$scope.payment.idPayment, 'kwitansi');
 	};
 
 	$scope.printRincian=function(){
